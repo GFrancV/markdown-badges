@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/Layout.astro"
+import badgets from "../consts/badgets.json"
+
+const sortedBadges = badgets.sort((a, b) => a.name.localeCompare(b.name))
+---
+
+<Layout title="Welcome to Astro.">
+	<script is:inline src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
+
+	<section id="badgetContainer">
+		{
+			sortedBadges.map(badget => (
+				<div>
+					<h2>{badget.name}</h2>
+					<img
+						class="lazyload"
+						src={badget.url}
+						data-src={badget.url}
+						alt={badget.name}
+						loading="lazy"
+						decoding="async"
+						height="28"
+					/>
+				</div>
+			))
+		}
+	</section>
+</Layout>
