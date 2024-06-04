@@ -1,13 +1,20 @@
 ---
 import NavMenu from "../components/NavMenu.astro"
+import SEO from "../components/SEO.astro"
 import Typography from "../components/Typography.astro"
 import MarkdownIcon from "../icons/markdown.astro"
 
 interface Props {
 	title: string
+	description?: string
+	image?: string
 }
 
-const { title } = Astro.props
+const {
+	title,
+	description = "	This project is a simple tool to search and copy markdown badgets to use in your profile or projects.",
+	image = "/images/banners/open-graph.jpg",
+} = Astro.props
 
 const year = new Date().getFullYear()
 ---
@@ -15,12 +22,7 @@ const year = new Date().getFullYear()
 <!doctype html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+		<SEO title={title} description={description} image={image} />
 	</head>
 	<body
 		class="bg-[#121212] bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"
