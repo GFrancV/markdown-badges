@@ -1,0 +1,11 @@
+---
+import MenuItem from "./MenuItem.astro"
+
+const pathname = new URL(Astro.request.url).pathname
+const currentPath = pathname.slice(1)
+---
+
+<ul class="flex">
+	<MenuItem route="/badgets"> All Badgets </MenuItem>
+	<MenuItem route="/about"> About </MenuItem>
+</ul>

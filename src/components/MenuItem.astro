@@ -1,0 +1,56 @@
+---
+interface Props {
+	route: string
+}
+
+const { route } = Astro.props
+
+const pathname = new URL(Astro.request.url).pathname
+
+const ariaCurrent = pathname === route ? "page" : undefined
+
+const classes = [
+	"py-2 px-3  transition duration-300 hover:text-white",
+	pathname === route ? "text-white active" : "text-neutral-400",
+]
+---
+
+<li>
+	<a href={route} class:list={classes} aria-current={ariaCurrent}>
+		<slot />
+	</a>
+</li>
+
+<style>
+	a {
+		background-image: linear-gradient(transparent, transparent), linear-gradient(white 20%, white 80%);
+		background-size: 0 1px;
+		background-position: 100% 100%;
+		background-repeat: no-repeat;
+		transition: background-size 0.3s ease-in-out;
+	}
+
+	@media (prefers-reduced-motion) {
+		a {
+			transition: none;
+		}
+	}
+	a:hover,
+	a.active {
+		background-size: 100% 1px;
+		background-position: 0 100%;
+	}
+	@media (prefers-reduced-motion) {
+		a {
+			background-image: linear-gradient(transparent, transparent), linear-gradient(white 20%, white 80%);
+			background-size: 0 3px;
+			background-position: 100% 100%;
+			background-repeat: no-repeat;
+			transition: background-size 0s;
+		}
+		a:hover {
+			background-size: 100% 3px;
+			background-position: 0 100%;
+		}
+	}
+</style>

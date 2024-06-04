@@ -1,9 +1,15 @@
 ---
+import NavMenu from "../components/NavMenu.astro"
+import Typography from "../components/Typography.astro"
+import MarkdownIcon from "../icons/markdown.astro"
+
 interface Props {
 	title: string
 }
 
 const { title } = Astro.props
+
+const year = new Date().getFullYear()
 ---
 
 <!doctype html>
@@ -16,9 +22,40 @@ const { title } = Astro.props
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body>
-		<main class="container mx-auto py-12 px-4">
+	<body
+		class="bg-[#121212] bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"
+	>
+		<header>
+			<nav class="fixed w-full z-20 top-0 start-0 backdrop-blur-lg">
+				<div class="max-w-screen-lg flex flex-wrap items-center justify-between mx-auto p-4">
+					<a href="/" class="flex items-center space-x-3">
+						<MarkdownIcon class="stroke-[#f1f1ef]" />
+						<Typography as="span" variant="h3" color="white" class="self-center whitespace-nowrap">
+							Markdown Badges
+						</Typography>
+					</a>
+					<NavMenu />
+					<div>
+						<button
+							type="button"
+							class="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center focus:ring-blue-800"
+						>
+							Search badget
+						</button>
+					</div>
+				</div>
+			</nav>
+		</header>
+		<main class="max-w-screen-lg min-h-screen mx-auto pt-36 pb-12 px-4">
 			<slot />
 		</main>
+		<footer class="p-4 text-white flex align-middle justify-center">
+			<Typography as="p" variant="body" color="neutral" class="text-center">
+				Created with ❤️ by
+				<a href="https://gfrancv.com" class="hover:underline" target="_blank">GFrancV</a>
+				<br />
+				©GFrancV - {year}
+			</Typography>
+		</footer>
 	</body>
 </html>
