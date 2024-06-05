@@ -1,0 +1,38 @@
+---
+import Typography from "../components/Typography.astro"
+import Layout from "../layouts/Layout.astro"
+---
+
+<Layout title="About - Markdown Badges">
+	<section class="mb-8">
+		<Typography as="h1" variant="big" color="white" class="mb-4"> About this Project</Typography>
+		<Typography as="p" variant="body" color="white">
+			This project is a simple tool to search and copy markdown badgets to use in your profile or projects.
+			You can search by name.
+		</Typography>
+		<Typography as="p" variant="body" color="white">
+			All badges provided by this project were extracted from <a
+				href="https://github.com/Ileriayo/markdown-badges"
+				class="underline"
+				target="_blank"
+				>Ileriayo/markdown-badges GitHub repository
+			</a>
+			, which come from <a href="https://shields.io/" class="underline" target="_blank">shields.io</a>.
+		</Typography>
+		<Typography as="p" variant="body" color="white">
+			Alternatively to this site you can visit: <a
+				href="https://ileriayo.github.io/markdown-badges/"
+				class="underline"
+				target="_blank">ileriayo.github.io/markdown-badges/</a
+			>, the official site of the repository where you can find all the badges as well
+		</Typography>
+	</section>
+
+	<section class="mb-8">
+		<Typography as="h2" variant="h2" color="white" class="mb-4"> How to contribute</Typography>
+		<Typography as="p" variant="body" color="white">
+			You can contribute to this project by adding new badges or improving the code. You can find the
+			repository on <a href="https://github.com/GFrancV/markdown-badges" class="underline" target="_blank">GitHub</a>.
+		</Typography>
+	</section>
+</Layout>
