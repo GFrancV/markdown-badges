@@ -1,10 +1,22 @@
 ---
 import Layout from "../layouts/Layout.astro"
 import Search from "../components/SearchComponent.vue"
+import Typography from "../components/Typography.astro"
+import MarkdownIcon from "../icons/markdown.astro"
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Markdown Badges">
 	<section>
-		<Search client:load/>
+		<header class="mb-8">
+			<Typography as="h1" variant="h2" color="white" class="flex items-center justify-center gap-2">
+				<MarkdownIcon class="w-16 h-16 stroke-white" />
+				Markdown Badges
+			</Typography>
+			<Typography as="p" variant="body" color="neutral" class="text-center">
+				Awesome site to copy markdown badges for your readmes and other markdown files.
+			</Typography>
+		</header>
+
+		<Search client:load />
 	</section>
 </Layout>
