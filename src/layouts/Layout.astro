@@ -59,5 +59,41 @@ const year = new Date().getFullYear()
 				©GFrancV - {year}
 			</Typography>
 		</footer>
+		<style is:global>
+			@supports selector(::-webkit-scrollbar) {
+				@media (hover: hover) {
+					::-webkit-scrollbar {
+						width: 10px;
+						border-radius: 10px;
+					}
+
+					::-webkit-scrollbar-thumb {
+						border-radius: 10px;
+						background-color: #666;
+						border: 2px solid transparent;
+						background-clip: content-box;
+					}
+
+					::-webkit-scrollbar-thumb:active {
+						background-color: #666;
+					}
+
+					::-webkit-scrollbar-track {
+						background: #1e1e1e;
+					}
+
+					::-webkit-scrollbar-corner {
+						background: #1e1e1e;
+					}
+				}
+			}
+
+			@supports not selector(::-webkit-scrollbar) {
+				* {
+					scrollbar-color: #1e1e1e transparent;
+					scrollbar-width: thin;
+				}
+			}
+		</style>
 	</body>
 </html>
