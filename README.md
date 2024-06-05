@@ -32,6 +32,10 @@ All badges provided by this project were extracted from
 <a href="https://github.com/Ileriayo/markdown-badges"				target="_blank">Ileriayo/markdown-badges GitHub repository</a>
 , which come from <a href="https://shields.io/" class="underline" target="_blank">shields.io</a>.
 
+![desktop](https://github.com/GFrancV/markdown-badges/assets/35277540/f96a93f5-cdb1-4042-a7d5-a8f7961d6a7a)
+![mobile](https://github.com/GFrancV/markdown-badges/assets/35277540/9a774bbe-d473-43ae-9e23-f2068b1186c5)
+
+
 ## Contribute to the project
 
 Please consult our [contribution guide](./CONTRIBUTING.md) to find out how you can get started in the best way and by following good practices.
