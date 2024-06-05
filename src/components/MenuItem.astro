@@ -6,13 +6,13 @@ interface Props {
 const { route } = Astro.props
 
 const pathname = new URL(Astro.request.url).pathname
-const currentPath = pathname.slice(1); 
+const currentPath = pathname.slice(1)
 
 const ariaCurrent = pathname === route ? "page" : undefined
 
 const classes = [
 	"py-2 px-3  transition duration-300 hover:text-white",
-	pathname === route ? "text-white active" : "text-neutral-400",
+	currentPath === route ? "text-white active" : "text-neutral-400",
 ]
 ---
 
