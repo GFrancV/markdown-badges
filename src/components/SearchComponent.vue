@@ -55,7 +55,7 @@
 		@input="searchBadget"
 		placeholder="Search for a badget"
 	/>
-	<div v-if="results" class="grid grid-cols-4 gap-4">
+	<div v-if="results" class="grid md:grid-cols-4 grid-cols-2 gap-4">
 		<div
 			v-for="badge in results"
 			:key="badge.name"

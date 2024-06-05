@@ -10,12 +10,12 @@ const sortedBadges = badgets.sort((a, b) => a.name.localeCompare(b.name))
 	<script is:inline src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
 
 	<section id="badgetContainer">
-		<div class="grid grid-cols-4 gap-4">
+		<div class="grid md:grid-cols-4 grid-cols-2 gap-4">
 			{
 				sortedBadges.map(badget => (
 					<astro-copy-clipboard>
 						<div
-							class="relative group bg-[#1e1e1e] cursor-pointer text-white rounded border border-transparent transition p-6 text-center flex flex-col hover:bg-fuchsia-300/30 hover:border-fuchsia-200 badget-element"
+							class="relative group bg-[#1e1e1e] cursor-pointer text-white rounded border border-transparent transition p-6 text-center flex flex-col hover:bg-fuchsia-300/30 hover:border-fuchsia-200 badget-element h-full"
 							data-copy-clipboard
 							data-markdown={badget.markdown}
 						>
