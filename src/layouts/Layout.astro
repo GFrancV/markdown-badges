@@ -12,7 +12,7 @@ interface Props {
 
 const {
 	title,
-	description = "	This project is a simple tool to search and copy markdown badgets to use in your profile or projects.",
+	description = "This project is a simple tool to search and copy markdown badgets to use in your profile or projects.",
 	image = "/images/banners/open-graph.jpg",
 } = Astro.props
 
@@ -48,10 +48,10 @@ const year = new Date().getFullYear()
 				</div>
 			</nav>
 		</header>
-		<main class="max-w-screen-lg min-h-screen mx-auto pt-36 pb-12 px-4">
+		<main class="max-w-screen-lg min-h-screen mx-auto pt-36 pb-12 px-6">
 			<slot />
 		</main>
-		<footer class="p-4 text-white flex align-middle justify-center">
+		<footer class="p-4 flex align-middle justify-center">
 			<Typography as="p" variant="body" color="neutral" class="text-center">
 				Created with ❤️ by
 				<a href="https://gfrancv.com" class="hover:underline" target="_blank">GFrancV</a>
