@@ -15,6 +15,7 @@ const variantClasses = {
 	h3: "text-2xl font-semibold",
 	body: "text-lg",
 	small: "text-sm",
+	anchor: "text-lg font-semibold underline",
 }
 
 const colorClasses = {
@@ -26,7 +27,7 @@ const classes = [
 	variantClasses[variant as keyof typeof variantClasses],
 	colorClasses[color as keyof typeof colorClasses],
 	className,
-];
+]
 ---
 
 <Element class:list={classes} {...props} tabindex="0">
