@@ -6,6 +6,7 @@ interface Props {
 const { route } = Astro.props
 
 const pathname = new URL(Astro.request.url).pathname
+const currentPath = pathname.slice(1); 
 
 const ariaCurrent = pathname === route ? "page" : undefined
 
@@ -18,7 +19,6 @@ const classes = [
 <li>
 	<a href={route} class:list={classes} aria-current={ariaCurrent}>
 		<slot />
-		{pathname}
 	</a>
 </li>
 
