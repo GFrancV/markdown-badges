@@ -47,14 +47,35 @@
 </script>
 
 <template>
-	<input
-		type="search"
-		name="query"
-		v-model="query"
-		class="bg-[#1e1e1e] rounded w-full border-0 text-[#f1f1ef] focus:ring focus:ring-fuchsia-200 placeholder:text-neutral-600 mb-10 shadow-lg"
-		@input="searchBadget"
-		placeholder="Search for a badget"
-	/>
+	<div class="relative">
+		<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="24"
+				height="24"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="inherit"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				class="stroke-gray-600"
+			>
+				<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+				<path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+				<path d="M21 21l-6 -6"></path>
+			</svg>
+		</div>
+
+		<input
+			type="search"
+			name="query"
+			v-model="query"
+			class="block ps-12 bg-[#1e1e1e] rounded w-full border-0 text-[#f1f1ef] focus:ring focus:ring-fuchsia-200 placeholder:text-neutral-600 mb-10 shadow-lg"
+			@input="searchBadget"
+			placeholder="Search for a badget"
+		/>
+	</div>
 	<div v-if="results" class="grid md:grid-cols-4 grid-cols-2 gap-4">
 		<div
 			v-for="badge in results"
