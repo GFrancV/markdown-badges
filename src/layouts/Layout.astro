@@ -2,6 +2,7 @@
 import NavMenu from "../components/NavMenu.astro"
 import SEO from "../components/SEO.astro"
 import Typography from "../components/Typography.astro"
+import GithubIcon from "../icons/github.astro"
 import MarkdownIcon from "../icons/markdown.astro"
 
 interface Props {
@@ -40,12 +41,14 @@ const year = new Date().getFullYear()
 					</a>
 					<NavMenu />
 					<div>
-						<button
-							type="button"
-							class="md:block hidden text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center focus:ring-blue-800"
+						<a
+							href="https://github.com/Ileriayo/markdown-badges"
+							class="gap-2 md:flex items-center hidden text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center focus:ring-blue-800"
+							target="_blank"
 						>
+							<GithubIcon class="w-6 fill-white" />
 							Search badget
-						</button>
+						</a>
 					</div>
 				</div>
 			</nav>
