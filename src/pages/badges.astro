@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro"
 import badgets from "../consts/badges.json"
 import ClipboardIcon from "../icons/clipboard.astro"
+import Typography from "../components/Typography.astro"
 
 const sortedBadges = badgets.sort((a, b) => a.name.localeCompare(b.name))
 ---
@@ -10,6 +11,7 @@ const sortedBadges = badgets.sort((a, b) => a.name.localeCompare(b.name))
 	<script is:inline src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
 
 	<section id="badgetContainer">
+		<Typography as="h1" variant="big" color="white" class="mb-8"> Badges </Typography>
 		<div class="grid md:grid-cols-4 grid-cols-2 gap-4">
 			{
 				sortedBadges.map(badget => (
