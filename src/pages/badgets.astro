@@ -20,12 +20,7 @@ const sortedBadges = badgets.sort((a, b) => a.name.localeCompare(b.name))
 							data-markdown={badget.markdown}
 						>
 							<h2 class="text-xl font-semibold text-[#f1f1ef] mb-3">{badget.name}</h2>
-							<img
-								src={badget.url}
-								alt={badget.name}
-								class="mt-auto aspect-[4/1] w-3/4 mx-auto"
-								loading="lazy"
-							/>
+							<img src={badget.url} alt={badget.name} class="mt-auto h-8 mx-auto" loading="lazy" />
 							<button class="absolute top-0 right-0 m-2 stroke-gray-600 transition duration-300 group-hover:stroke-fuchsia-300">
 								<ClipboardIcon />
 							</button>
