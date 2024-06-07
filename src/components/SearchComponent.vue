@@ -3,6 +3,7 @@
 	import Mousetrap from "mousetrap"
 	import badges from "../consts/badges.json"
 	import type { Badge } from "../env"
+	import debounce from "debounce"
 
 	const query = ref("")
 	const results: Ref<Badge[] | null> = ref(null)
@@ -15,24 +16,22 @@
 			.toLowerCase()
 	}
 
-	const searchBadget = () => {
-		setTimeout(() => {
-			const url = new URL(window.location.href)
+	const searchBadget = debounce(() => {
+		const url = new URL(window.location.href)
 
-			if (query.value.length > 0) {
-				const result = badges.filter(badge => sanitizeText(badge.name).includes(sanitizeText(query.value)))
-				results.value = result
-				console.log(result)
+		if (query.value.length > 0) {
+			const result = badges.filter(badge => sanitizeText(badge.name).includes(sanitizeText(query.value)))
+			results.value = result
+			console.log(result)
 
-				url.searchParams.set("query", query.value)
-				window.history.replaceState({}, "", url)
-			} else {
-				results.value = null
-				url.searchParams.delete("query")
-				window.history.replaceState({}, "", url)
-			}
-		}, 800)
-	}
+			url.searchParams.set("query", query.value)
+			window.history.replaceState({}, "", url)
+		} else {
+			results.value = null
+			url.searchParams.delete("query")
+			window.history.replaceState({}, "", url)
+		}
+	}, 600)
 
 	const clearSearch = () => {
 		query.value = ""
@@ -134,7 +133,7 @@
 			<span class="text-[17px]"> K </span>
 		</div>
 	</div>
-	<div v-if="results" class="grid md:grid-cols-4 grid-cols-2 gap-4">
+	<div v-if="results && results.length > 0" class="grid md:grid-cols-4 grid-cols-2 gap-4">
 		<div
 			v-for="badge in results"
 			:key="badge.name"
@@ -161,7 +160,7 @@
 			</svg>
 		</div>
 	</div>
-	<div v-if="results && results.length == 0 && query.length > 0" class="font-semibold text-center mt-12">
+	<div v-else-if="results && results.length == 0 && query.length > 0" class="font-semibold text-center mt-12">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 24 24"
