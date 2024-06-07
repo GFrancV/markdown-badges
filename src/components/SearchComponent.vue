@@ -6,7 +6,9 @@
 	import debounce from "debounce"
 
 	const query = ref("")
+	const categoryQuery = ref("All")
 	const results: Ref<Badge[] | null> = ref(null)
+	const categories: Ref<string[] | null> = ref(["All", ...new Set(badges.map(badge => badge.category))])
 
 	const sanitizeText = (text: string) => {
 		return text
@@ -22,13 +24,26 @@
 		if (query.value.length > 0) {
 			const result = badges.filter(badge => sanitizeText(badge.name).includes(sanitizeText(query.value)))
 			results.value = result
-			console.log(result)
 
 			url.searchParams.set("query", query.value)
 			window.history.replaceState({}, "", url)
 		} else {
 			results.value = null
 			url.searchParams.delete("query")
+			window.history.replaceState({}, "", url)
+		}
+
+		if (categoryQuery.value !== "All") {
+			if (results.value == null) {
+				results.value = badges
+			}
+
+			results.value = results.value?.filter(badge => badge.category === categoryQuery.value)
+
+			url.searchParams.set("category", categoryQuery.value)
+			window.history.replaceState({}, "", url)
+		} else {
+			url.searchParams.delete("category")
 			window.history.replaceState({}, "", url)
 		}
 	}, 600)
@@ -60,10 +75,16 @@
 
 	onMounted(() => {
 		const url = new URL(window.location.href)
-		url.searchParams.get("query")
+
 		const queryParam = url.searchParams.get("query")
+		const categoryQueryParam = url.searchParams.get("category")
+
 		if (queryParam) {
 			query.value = queryParam
+			searchBadget()
+		}
+		if (categoryQueryParam) {
+			categoryQuery.value = categoryQueryParam
 			searchBadget()
 		}
 
@@ -85,56 +106,71 @@
 </script>
 
 <template>
-	<div class="relative">
-		<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="24"
-				height="24"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="inherit"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				class="stroke-gray-600"
+	<div class="flex gap-2 mb-10">
+		<div class="relative grow">
+			<div
+				class="pointer-events-none absolute translate-y-[-50%] left-0 flex items-center pl-3 h-fit inset-y-1/2"
 			>
-				<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-				<path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
-				<path d="M21 21l-6 -6"></path>
-			</svg>
-		</div>
-
-		<input
-			type="text"
-			name="query"
-			v-model="query"
-			class="block ps-12 bg-[#1e1e1e] rounded w-full border-0 text-[#f1f1ef] focus:ring focus:ring-fuchsia-200 placeholder:text-neutral-600 mb-10 shadow-lg"
-			@input="searchBadget"
-			:placeholder="`Search in ${badges.length} badges`"
-		/>
-
-		<div class="absolute inset-y-0 right-0 flex items-center pr-3">
-			<span v-if="!query && query.length <= 0" class="flex items-center pointer-events-none text-gray-600">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
 					height="24"
 					viewBox="0 0 24 24"
 					fill="none"
-					stroke="currentColor"
+					stroke="inherit"
 					stroke-width="2"
 					stroke-linecap="round"
 					stroke-linejoin="round"
 					class="stroke-gray-600"
 				>
-					<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-					<path d="M7 9a2 2 0 1 1 2 -2v10a2 2 0 1 1 -2 -2h10a2 2 0 1 1 -2 2v-10a2 2 0 1 1 2 2h-10" />
+					<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+					<path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+					<path d="M21 21l-6 -6"></path>
 				</svg>
-				<span class="text-[17px]"> K </span>
-			</span>
-			<button v-else @click="clearSearch" class="text-white">x</button>
+			</div>
+
+			<input
+				type="text"
+				name="query"
+				v-model="query"
+				class="block ps-12 bg-[#1e1e1e] rounded w-full border-0 text-[#f1f1ef] focus:ring focus:ring-fuchsia-200 placeholder:text-neutral-600 shadow-lg"
+				@input="searchBadget"
+				:placeholder="`Search in ${badges.length} badges`"
+			/>
+
+			<div class="absolute inset-y-1/2 translate-y-[-50%] right-0 flex items-center pr-3 h-fit">
+				<span v-if="!query && query.length <= 0" class="flex items-center pointer-events-none text-gray-600">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="stroke-gray-600"
+					>
+						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+						<path d="M7 9a2 2 0 1 1 2 -2v10a2 2 0 1 1 -2 -2h10a2 2 0 1 1 -2 2v-10a2 2 0 1 1 2 2h-10" />
+					</svg>
+					<span class="text-[17px]"> K </span>
+				</span>
+				<button v-else @click="clearSearch" class="text-white">x</button>
+			</div>
 		</div>
+
+		<select
+			v-model="categoryQuery"
+			@input="searchBadget"
+			name="category"
+			class="py-1 px-6 bg-[#1e1e1e] rounded border-0 text-[#f1f1ef] focus:ring focus:ring-fuchsia-200 placeholder:text-neutral-600 shadow-lg"
+		>
+			<option v-for="category of categories" :key="category" :value="category">
+				{{ category }}
+			</option>
+		</select>
 	</div>
 	<div v-if="results && results.length > 0" class="grid md:grid-cols-4 grid-cols-2 gap-4">
 		<div
