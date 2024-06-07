@@ -34,6 +34,11 @@
 		}, 800)
 	}
 
+	const clearSearch = () => {
+		query.value = ""
+		searchBadget()
+	}
+
 	const copy = (markdown: string, event: Event) => {
 		if (event == null) {
 			return
@@ -185,7 +190,7 @@
 			</a>
 			<button
 				class="border border-transparent back rounded-full px-3 py-2 transition bg-[#1e1e1e] hover:bg-fuchsia-300/30 hover:border-fuchsia-200"
-				@click="query = ''"
+				@click="clearSearch"
 			>
 				Clear search
 			</button>
