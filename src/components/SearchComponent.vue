@@ -22,6 +22,7 @@
 			if (query.value.length > 0) {
 				const result = badges.filter(badge => sanitizeText(badge.name).includes(sanitizeText(query.value)))
 				results.value = result
+				console.log(result)
 
 				url.searchParams.set("query", query.value)
 				window.history.replaceState({}, "", url)
@@ -153,6 +154,41 @@
 				<path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
 				<path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
 			</svg>
+		</div>
+	</div>
+	<div v-if="results && results.length == 0 && query.length > 0" class="font-semibold text-center mt-12">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			class="stroke-gray-500 mx-auto mb-4 w-16"
+		>
+			<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+			<path d="M7 7v10l5 3l5 -3m0 -4v-9l-5 3l-2.496 -1.497" />
+			<path d="M3 3l18 18" />
+		</svg>
+
+		<p class="text-gray-500 text-lg">Don't exist any badge with this name</p>
+		<p class="text-gray-500 text">"{{ query }}"</p>
+
+		<div class="flex justify-center items-center gap-4 mt-4 text-neutral-300">
+			<a
+				href="https://github.com/gfrancv/markdown-badges/issues/new?labels=request&title=%5BRequest%5D%3A"
+				target="_blank"
+				class="border border-transparent back rounded-full px-3 py-2 transition bg-[#1e1e1e] hover:bg-fuchsia-300/30 hover:border-fuchsia-200"
+			>
+				Request Badge
+			</a>
+			<button
+				class="border border-transparent back rounded-full px-3 py-2 transition bg-[#1e1e1e] hover:bg-fuchsia-300/30 hover:border-fuchsia-200"
+				@click="query = ''"
+			>
+				Clear search
+			</button>
 		</div>
 	</div>
 </template>
