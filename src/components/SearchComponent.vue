@@ -17,11 +17,18 @@
 
 	const searchBadget = () => {
 		setTimeout(() => {
+			const url = new URL(window.location.href)
+
 			if (query.value.length > 0) {
 				const result = badges.filter(badge => sanitizeText(badge.name).includes(sanitizeText(query.value)))
 				results.value = result
+
+				url.searchParams.set("query", query.value)
+				window.history.replaceState({}, "", url)
 			} else {
 				results.value = null
+				url.searchParams.delete("query")
+				window.history.replaceState({}, "", url)
 			}
 		}, 800)
 	}
@@ -47,6 +54,14 @@
 	}
 
 	onMounted(() => {
+		const url = new URL(window.location.href)
+		url.searchParams.get("query")
+		const queryParam = url.searchParams.get("query")
+		if (queryParam) {
+			query.value = queryParam
+			searchBadget()
+		}
+
 		Mousetrap.bind("ctrl+k", (e: Event) => {
 			if (e.preventDefault) {
 				e.preventDefault()
@@ -121,12 +136,7 @@
 			@click="copy(badge.markdown, $event)"
 		>
 			<h2 class="text-xl font-semibold text-[#f1f1ef] mb-3">{{ badge.name }}</h2>
-			<img
-				:src="badge.url"
-				:alt="badge.name"
-				class="mt-auto aspect-[4/1] w-3/4 mx-auto mb-4"
-				loading="lazy"
-			/>
+			<img :src="badge.url" :alt="badge.name" class="mt-auto h-8 mx-auto mb-4" loading="lazy" />
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="24"
