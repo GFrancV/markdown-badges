@@ -24,9 +24,9 @@ const sortedBadges = badges.sort((a, b) => a.name.localeCompare(b.name))
 							<h2 class="text-xl font-semibold text-[#f1f1ef] mb-3">{badges.name}</h2>
 							<img src={badges.url} alt={badges.name} class="mt-auto h-8 mx-auto mb-4" loading="lazy" />
 							<div class="mt-2">
-								<span class="rounded-full border border-neutral-300 px-2 py-1 text-sm text-neutral-300 group-hover:border-fuchsia-300 group-hover:text-fuchsia-300 transition duration-300 w-auto">
+								<div class="rounded-full border border-neutral-300 px-2 py-1 text-sm text-neutral-300 group-hover:border-fuchsia-300 group-hover:text-fuchsia-300 transition duration-300 w-auto">
 									{badges.category}
-								</span>
+								</div>
 							</div>
 							<button class="absolute top-0 right-0 m-2 stroke-gray-600 transition duration-300 group-hover:stroke-fuchsia-300">
 								<ClipboardIcon />

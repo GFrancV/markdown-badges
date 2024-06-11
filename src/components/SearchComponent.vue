@@ -187,11 +187,11 @@
 				<h2 class="text-xl font-semibold text-[#f1f1ef] mb-3">{{ badge.name }}</h2>
 				<img :src="badge.url" :alt="badge.name" class="mt-auto h-8 mx-auto mb-4" loading="lazy" />
 				<div class="mt-2">
-					<span
+					<div
 						class="rounded-full border border-neutral-300 px-2 py-1 text-sm text-neutral-300 group-hover:border-fuchsia-300 group-hover:text-fuchsia-300 transition duration-300 w-auto"
 					>
 						{{ badge.category }}
-					</span>
+					</div>
 				</div>
 				<button
 					ref="clipBoardButtons"
