@@ -1,38 +1,37 @@
 <script setup lang="ts">
-	import { onMounted, onUnmounted, ref, type Ref } from "vue"
+	import { computed, onMounted, onUnmounted, ref } from "vue"
 	import Mousetrap from "mousetrap"
 	import badges from "../consts/badges.json"
-	import type { Badge } from "../env"
 	import debounce from "debounce"
 	import { sanitizeText } from "../utils/sanitize-text"
 
 	const query = ref("")
 	const categoryQuery = ref("All")
-	const results = ref<Badge[] | null>(null)
 	const categories = ref(["All", ...new Set(badges.map(badge => badge.category))])
 	const searchInput = ref<HTMLInputElement | null>(null)
 	const clipBoardButtons = ref<HTMLButtonElement[] | null>(null)
 
+	const results = computed(() => {
+		let result = badges
+		if (query.value.length > 0) {
+			result = result.filter(badge => sanitizeText(badge.name).includes(sanitizeText(query.value)))
+		}
+		if (categoryQuery.value !== "All") {
+			result = result.filter(badge => badge.category === categoryQuery.value)
+		}
+		return result
+	})
+
 	const searchBadget = debounce(() => {
 		const url = new URL(window.location.href)
 
-		if (query.value.length >= 1 || categoryQuery.value !== "All") {
-			results.value = badges
-		} else {
-			results.value = null
-		}
-
 		if (query.value.length > 0) {
-			results.value = results.value?.filter(badge =>
-				sanitizeText(badge.name).includes(sanitizeText(query.value))
-			)
 			url.searchParams.set("query", query.value)
 		} else {
 			url.searchParams.delete("query")
 		}
 
 		if (categoryQuery.value !== "All") {
-			results.value = results.value?.filter(badge => badge.category === categoryQuery.value)
 			url.searchParams.set("category", categoryQuery.value)
 		} else {
 			url.searchParams.delete("category")
@@ -65,24 +64,21 @@
 		}, 1500)
 	}
 
-	onMounted(() => {
+	const initializeSearch = () => {
 		const url = new URL(window.location.href)
-
 		const queryParam = url.searchParams.get("query")
 		const categoryQueryParam = url.searchParams.get("category")
-
-		if (queryParam || categoryQueryParam) {
-			if (queryParam) {
-				query.value = queryParam
-			}
-
-			if (categoryQueryParam) {
-				categoryQuery.value = categoryQueryParam
-			}
-
-			searchBadget()
+		if (queryParam) {
+			query.value = queryParam
 		}
+		if (categoryQueryParam) {
+			categoryQuery.value = categoryQueryParam
+		}
+		searchBadget()
+	}
 
+	onMounted(() => {
+		initializeSearch()
 		Mousetrap.bind("ctrl+k", (e: Event) => {
 			if (e.preventDefault) {
 				e.preventDefault()
@@ -155,7 +151,7 @@
 					</svg>
 					<span class="text-[17px]"> K </span>
 				</span>
-				<button v-else @click="clearSearch" class="text-white">x</button>
+				<button v-show="query.length > 0" @click="clearSearch" class="text-white">x</button>
 			</div>
 		</div>
 
