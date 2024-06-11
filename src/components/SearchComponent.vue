@@ -21,31 +21,29 @@
 	const searchBadget = debounce(() => {
 		const url = new URL(window.location.href)
 
-		if (query.value.length > 0) {
-			const result = badges.filter(badge => sanitizeText(badge.name).includes(sanitizeText(query.value)))
-			results.value = result
-
-			url.searchParams.set("query", query.value)
-			window.history.replaceState({}, "", url)
+		if (query.value.length >= 1 || categoryQuery.value !== "All") {
+			results.value = badges
 		} else {
 			results.value = null
+		}
+
+		if (query.value.length > 0) {
+			results.value = results.value?.filter(badge =>
+				sanitizeText(badge.name).includes(sanitizeText(query.value))
+			)
+			url.searchParams.set("query", query.value)
+		} else {
 			url.searchParams.delete("query")
-			window.history.replaceState({}, "", url)
 		}
 
 		if (categoryQuery.value !== "All") {
-			if (results.value == null) {
-				results.value = badges
-			}
-
 			results.value = results.value?.filter(badge => badge.category === categoryQuery.value)
-
 			url.searchParams.set("category", categoryQuery.value)
-			window.history.replaceState({}, "", url)
 		} else {
 			url.searchParams.delete("category")
-			window.history.replaceState({}, "", url)
 		}
+
+		window.history.replaceState({}, "", url)
 	}, 600)
 
 	const clearSearch = () => {
