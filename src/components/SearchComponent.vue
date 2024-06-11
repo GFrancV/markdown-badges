@@ -12,6 +12,7 @@
 	const searchInput = ref<HTMLInputElement | null>(null)
 	const clipBoardButtons = ref<HTMLButtonElement[] | null>(null)
 	const results = ref<Badge[]>([])
+	const resultsAmount = ref(20)
 
 	const filterResults = () => {
 		let result = badges
@@ -21,7 +22,7 @@
 		if (categoryQuery.value !== "All") {
 			result = result.filter(badge => badge.category === categoryQuery.value)
 		}
-		results.value = result.slice(0, 20)
+		results.value = result.slice(0, resultsAmount.value)
 	}
 
 	const searchBadget = debounce(() => {
@@ -40,12 +41,18 @@
 		}
 
 		window.history.replaceState({}, "", url)
+		resultsAmount.value = 20
 		filterResults()
 	}, 600)
 
 	const clearSearch = () => {
 		query.value = ""
 		searchBadget()
+	}
+
+	const loadMoreResults = () => {
+		resultsAmount.value += 20
+		filterResults()
 	}
 
 	const copy = (markdown: string, badgeIndex: number, event: Event) => {
@@ -209,13 +216,29 @@
 			</div>
 		</div>
 
-		<div v-if="results.length >= 20" class="flex justify-center items-center gap-4 mt-8">
-			<a
-				href="/badges"
-				class="border border-transparent back rounded-full px-4 py-2 transition text-white bg-[#1e1e1e] hover:bg-fuchsia-300/30 hover:border-fuchsia-200"
+		<div v-if="results.length >= resultsAmount" class="flex justify-center items-center gap-4 mt-8">
+			<button
+				@click="loadMoreResults"
+				class="flex gap-1 border border-transparent back rounded-full px-4 py-2 transition text-white bg-[#1e1e1e] hover:bg-fuchsia-300/30 hover:border-fuchsia-200"
 			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="motion-safe:animate-bounce"
+				>
+					<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+					<path d="M7 7l5 5l5 -5" />
+					<path d="M7 13l5 5l5 -5" />
+				</svg>
 				All Badges
-			</a>
+			</button>
 		</div>
 	</template>
 	<div v-else-if="results && results.length == 0 && query.length > 0" class="font-semibold text-center mt-12">
