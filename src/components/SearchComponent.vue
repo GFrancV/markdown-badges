@@ -7,8 +7,8 @@
 
 	const query = ref("")
 	const categoryQuery = ref("All")
-	const results: Ref<Badge[] | null> = ref(null)
-	const categories: Ref<string[] | null> = ref(["All", ...new Set(badges.map(badge => badge.category))])
+	const results = ref<Badge[] | null>(null)
+	const categories = ref(["All", ...new Set(badges.map(badge => badge.category))])
 
 	const sanitizeText = (text: string) => {
 		return text
@@ -106,7 +106,7 @@
 </script>
 
 <template>
-	<div class="flex gap-2 mb-10">
+	<div class="flex md:flex-row flex-col gap-2 mb-10">
 		<div class="relative grow">
 			<div
 				class="pointer-events-none absolute translate-y-[-50%] left-0 flex items-center pl-3 h-fit inset-y-1/2"
@@ -165,9 +165,9 @@
 			v-model="categoryQuery"
 			@input="searchBadget"
 			name="category"
-			class="py-1 px-6 bg-[#1e1e1e] rounded border-0 text-[#f1f1ef] focus:ring focus:ring-fuchsia-200 placeholder:text-neutral-600 shadow-lg"
+			class="py-2 px-6 bg-[#1e1e1e] rounded border-0 text-[#f1f1ef] focus:ring focus:ring-fuchsia-200 shadow-lg"
 		>
-			<option v-for="category of categories" :key="category" :value="category">
+			<option v-for="category of categories" :value="category">
 				{{ category }}
 			</option>
 		</select>
@@ -181,6 +181,13 @@
 		>
 			<h2 class="text-xl font-semibold text-[#f1f1ef] mb-3">{{ badge.name }}</h2>
 			<img :src="badge.url" :alt="badge.name" class="mt-auto h-8 mx-auto mb-4" loading="lazy" />
+			<div class="mt-2">
+				<span
+					class="rounded-full border border-neutral-300 px-2 py-1 text-sm text-neutral-300 group-hover:border-fuchsia-300 group-hover:text-fuchsia-300 transition duration-300 w-auto"
+				>
+					{{ badge.category }}
+				</span>
+			</div>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="24"

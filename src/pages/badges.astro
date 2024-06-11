@@ -1,10 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro"
-import badgets from "../consts/badges.json"
+import badges from "../consts/badges.json"
 import ClipboardIcon from "../icons/clipboard.astro"
 import Typography from "../components/Typography.astro"
 
-const sortedBadges = badgets.sort((a, b) => a.name.localeCompare(b.name))
+const sortedBadges = badges.sort((a, b) => a.name.localeCompare(b.name))
 ---
 
 <Layout title="Badges - Markdown Badges">
@@ -14,15 +14,20 @@ const sortedBadges = badgets.sort((a, b) => a.name.localeCompare(b.name))
 		<Typography as="h1" variant="big" color="white" class="mb-8"> Badges </Typography>
 		<div class="grid md:grid-cols-4 grid-cols-2 gap-4">
 			{
-				sortedBadges.map(badget => (
+				sortedBadges.map(badges => (
 					<astro-copy-clipboard>
 						<div
 							class="relative group bg-[#1e1e1e] cursor-pointer text-white rounded border border-transparent transition p-6 text-center flex flex-col hover:bg-fuchsia-300/30 hover:border-fuchsia-200 badget-element h-full"
 							data-copy-clipboard
-							data-markdown={badget.markdown}
+							data-markdown={badges.markdown}
 						>
-							<h2 class="text-xl font-semibold text-[#f1f1ef] mb-3">{badget.name}</h2>
-							<img src={badget.url} alt={badget.name} class="mt-auto h-8 mx-auto" loading="lazy" />
+							<h2 class="text-xl font-semibold text-[#f1f1ef] mb-3">{badges.name}</h2>
+							<img src={badges.url} alt={badges.name} class="mt-auto h-8 mx-auto mb-4" loading="lazy" />
+							<div class="mt-2">
+								<span class="rounded-full border border-neutral-300 px-2 py-1 text-sm text-neutral-300 group-hover:border-fuchsia-300 group-hover:text-fuchsia-300 transition duration-300 w-auto">
+									{badges.category}
+								</span>
+							</div>
 							<button class="absolute top-0 right-0 m-2 stroke-gray-600 transition duration-300 group-hover:stroke-fuchsia-300">
 								<ClipboardIcon />
 							</button>
