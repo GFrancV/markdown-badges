@@ -4,19 +4,14 @@
 	import badges from "../consts/badges.json"
 	import type { Badge } from "../env"
 	import debounce from "debounce"
+	import { sanitizeText } from "../utils/sanitize-text"
 
 	const query = ref("")
 	const categoryQuery = ref("All")
 	const results = ref<Badge[] | null>(null)
 	const categories = ref(["All", ...new Set(badges.map(badge => badge.category))])
-
-	const sanitizeText = (text: string) => {
-		return text
-			.replace(/[^a-zA-Z0-9\s]/g, " ")
-			.replace(/\s+/g, " ")
-			.trim()
-			.toLowerCase()
-	}
+	const searchInput = ref<HTMLInputElement | null>(null)
+	const clipBoardButtons = ref<HTMLButtonElement[] | null>(null)
 
 	const searchBadget = debounce(() => {
 		const url = new URL(window.location.href)
@@ -51,24 +46,23 @@
 		searchBadget()
 	}
 
-	const copy = (markdown: string, event: Event) => {
-		if (event == null) {
+	const copy = (markdown: string, badgeIndex: number, event: Event) => {
+		if (event == null || clipBoardButtons.value == null) {
 			return
 		}
 
 		navigator.clipboard.writeText(markdown)
 
-		const button = (event.target as HTMLElement).querySelector("svg")
-		if (button == null) {
-			return
-		}
-
-		button.innerHTML =
+		clipBoardButtons.value[badgeIndex].innerHTML =
 			'<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="inherit"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M9 14l2 2l4 -4" /></svg>'
 		setTimeout(() => {
-			button.innerHTML =
+			if (clipBoardButtons.value == null) {
+				return
+			}
+
+			clipBoardButtons.value[badgeIndex].innerHTML =
 				'<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="inherit"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /></svg>'
-		}, 1000)
+		}, 1500)
 	}
 
 	onMounted(() => {
@@ -77,12 +71,15 @@
 		const queryParam = url.searchParams.get("query")
 		const categoryQueryParam = url.searchParams.get("category")
 
-		if (queryParam) {
-			query.value = queryParam
-			searchBadget()
-		}
-		if (categoryQueryParam) {
-			categoryQuery.value = categoryQueryParam
+		if (queryParam || categoryQueryParam) {
+			if (queryParam) {
+				query.value = queryParam
+			}
+
+			if (categoryQueryParam) {
+				categoryQuery.value = categoryQueryParam
+			}
+
 			searchBadget()
 		}
 
@@ -90,12 +87,14 @@
 			if (e.preventDefault) {
 				e.preventDefault()
 			}
-
-			const searchInput = document.querySelector('input[name="query"]') as HTMLInputElement
-			if (searchInput) {
-				searchInput.focus()
+			if (searchInput.value) {
+				searchInput.value.focus()
 			}
 		})
+
+		if (searchInput.value) {
+			searchInput.value.focus()
+		}
 	})
 
 	onUnmounted(() => {
@@ -131,6 +130,7 @@
 				type="text"
 				name="query"
 				v-model="query"
+				ref="searchInput"
 				class="block ps-12 bg-[#1e1e1e] rounded w-full border-0 text-[#f1f1ef] focus:ring focus:ring-fuchsia-200 placeholder:text-neutral-600 shadow-lg"
 				@input="searchBadget"
 				:placeholder="`Search in ${badges.length} badges`"
@@ -172,10 +172,10 @@
 	</div>
 	<div v-if="results && results.length > 0" class="grid md:grid-cols-4 grid-cols-2 gap-4">
 		<div
-			v-for="badge in results"
+			v-for="(badge, badgeIndex) in results"
 			:key="badge.name"
 			class="relative group bg-[#1e1e1e] cursor-pointer text-white rounded border border-transparent transition p-6 text-center flex flex-col hover:bg-fuchsia-300/30 hover:border-fuchsia-200"
-			@click="copy(badge.markdown, $event)"
+			@click="copy(badge.markdown, badgeIndex, $event)"
 		>
 			<h2 class="text-xl font-semibold text-[#f1f1ef] mb-3">{{ badge.name }}</h2>
 			<img :src="badge.url" :alt="badge.name" class="mt-auto h-8 mx-auto mb-4" loading="lazy" />
@@ -186,22 +186,26 @@
 					{{ badge.category }}
 				</span>
 			</div>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="24"
-				height="24"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="inherit"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+			<button
+				ref="clipBoardButtons"
 				class="absolute top-0 right-0 m-2 stroke-gray-600 transition duration-300 group-hover:stroke-fuchsia-300"
 			>
-				<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-				<path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
-				<path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-			</svg>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="inherit"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+					<path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+					<path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+				</svg>
+			</button>
 		</div>
 	</div>
 	<div v-else-if="results && results.length == 0 && query.length > 0" class="font-semibold text-center mt-12">
