@@ -22,7 +22,12 @@ const sortedBadges = badges.sort((a, b) => a.name.localeCompare(b.name))
 							data-markdown={badges.markdown}
 						>
 							<h2 class="text-xl font-semibold text-[#f1f1ef] mb-3">{badges.name}</h2>
-							<img src={badges.url} alt={badges.name} class="mt-auto h-8 mx-auto mb-4" loading="lazy" />
+							<img
+								src={badges.url}
+								alt={badges.name}
+								class="mt-auto h-7 w-auto mx-auto mb-4"
+								loading="lazy"
+							/>
 							<div class="mt-2">
 								<div class="rounded-full border border-neutral-300 px-2 py-1 text-sm text-neutral-300 group-hover:border-fuchsia-300 group-hover:text-fuchsia-300 transition duration-300 w-auto">
 									{badges.category}
