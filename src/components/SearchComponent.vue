@@ -170,6 +170,7 @@
 			@input="searchBadget"
 			name="category"
 			class="py-2 px-6 bg-[#1e1e1e] rounded border-0 text-[#f1f1ef] focus:ring focus:ring-fuchsia-200 shadow-lg"
+			aria-label="Category"
 		>
 			<option v-for="category of categories" :value="category">
 				{{ category }}
@@ -196,6 +197,7 @@
 				<button
 					ref="clipBoardButtons"
 					class="absolute top-0 right-0 m-2 stroke-gray-600 transition duration-300 group-hover:stroke-fuchsia-300"
+					aria-label="Copy to clipboard"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
