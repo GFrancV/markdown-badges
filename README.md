@@ -1,10 +1,6 @@
 <div align="center">
 
-<img src="public/favicon.ico" />
-
-# Markdown Badge
-
-Awesome site to copy markdown badges for your readmes and other markdown files.
+<img src="public/images/banners/og.png" />
 
 ![Astro](https://img.shields.io/badge/astro-%232C2052.svg?style=for-the-badge&logo=astro&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
@@ -13,14 +9,6 @@ Awesome site to copy markdown badges for your readmes and other markdown files.
 <a href="#overview">Overview</a>
 •
 <a href="#contribute-to-the-project">Contribute to the project</a>
-•
-<a href="#features">Features</a>
-•
-<a href="#design">Design</a>
-•
-<a href="#external-use">External use</a>
-•
-<a href="#useful-links">Useful links</a>
 
 </div>
 
@@ -33,8 +21,6 @@ All badges provided by this project were extracted from
 , which come from <a href="https://shields.io/" class="underline" target="_blank">shields.io</a>.
 
 ![desktop](https://github.com/GFrancV/markdown-badges/assets/35277540/f96a93f5-cdb1-4042-a7d5-a8f7961d6a7a)
-![mobile](https://github.com/GFrancV/markdown-badges/assets/35277540/9a774bbe-d473-43ae-9e23-f2068b1186c5)
-
 
 ## Contribute to the project
 
