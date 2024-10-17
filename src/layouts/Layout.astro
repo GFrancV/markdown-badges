@@ -1,104 +1,111 @@
 ---
-import NavMenu from "../components/NavMenu.astro"
-import SEO from "../components/SEO.astro"
-import Typography from "../components/Typography.astro"
-import GithubIcon from "../icons/github.astro"
-import MarkdownIcon from "../icons/markdown.astro"
+import NavMenu from "../components/NavMenu.astro";
+import SEO from "../components/SEO.astro";
+import Typography from "../components/Typography.astro";
+import GithubIcon from "../icons/github.astro";
+import MarkdownIcon from "../icons/markdown.astro";
 
 interface Props {
-	title: string
-	description?: string
-	image?: string
+  title: string;
+  description?: string;
+  image?: string;
 }
 
 const {
-	title,
-	description = "This project is a simple tool to search and copy markdown badgets to use in your profile or projects.",
-	image = "/images/banners/og.png",
-} = Astro.props
+  title,
+  description = "This project is a simple tool to search and copy markdown badgets to use in your profile or projects.",
+  image = "/images/banners/og.png",
+} = Astro.props;
 
-const year = new Date().getFullYear()
+const year = new Date().getFullYear();
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<SEO title={title} description={description} image={image} />
-	</head>
-	<body
-		class="bg-[#121212] bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"
-	>
-		<header>
-			<nav class="fixed w-full z-20 top-0 start-0 backdrop-blur-lg">
-				<div
-					class="max-w-screen-lg flex flex-wrap items-center md:justify-between justify-center md:gap-0 gap-4 mx-auto p-4"
-				>
-					<a href="/" class="flex items-center space-x-3">
-						<MarkdownIcon class="stroke-[#f1f1ef]" />
-						<Typography as="span" variant="h3" color="white" class="self-center whitespace-nowrap">
-							Markdown Badges
-						</Typography>
-					</a>
-					<NavMenu />
-					<div>
-						<a
-							href="https://github.com/GFrancV/markdown-badges"
-							class="gap-2 md:flex items-center hidden text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center focus:ring-blue-800"
-							target="_blank"
-						>
-							<GithubIcon class="w-6 fill-white" />
-							View Repo
-						</a>
-					</div>
-				</div>
-			</nav>
-		</header>
-		<main class="max-w-screen-lg min-h-screen mx-auto pt-36 pb-12 px-6">
-			<slot />
-		</main>
-		<footer class="p-4 flex align-middle justify-center">
-			<Typography as="p" variant="body" color="neutral" class="text-center">
-				Created with ❤️ by
-				<a href="https://gfrancv.com" class="hover:underline" target="_blank">GFrancV</a>
-				<br />
-				©GFrancV - {year}
-			</Typography>
-		</footer>
-		<style is:global>
-			@supports selector(::-webkit-scrollbar) {
-				@media (hover: hover) {
-					::-webkit-scrollbar {
-						width: 10px;
-						border-radius: 10px;
-					}
+  <head>
+    <SEO title={title} description={description} image={image} />
+  </head>
+  <body
+    class="bg-[#121212] bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] flex flex-col min-h-screen"
+  >
+    <header>
+      <nav class="fixed w-full z-20 top-0 start-0 backdrop-blur-lg">
+        <div
+          class="max-w-screen-lg flex flex-wrap items-center md:justify-between justify-center md:gap-0 gap-4 mx-auto p-4"
+        >
+          <a href="/" class="flex items-center space-x-3">
+            <MarkdownIcon class="stroke-[#f1f1ef]" />
+            <Typography
+              as="span"
+              variant="h3"
+              color="white"
+              class="self-center whitespace-nowrap"
+            >
+              Markdown Badges
+            </Typography>
+          </a>
+          <NavMenu />
+          <div>
+            <a
+              href="https://github.com/GFrancV/markdown-badges"
+              class="gap-2 md:flex items-center hidden text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center focus:ring-blue-800"
+              target="_blank"
+            >
+              <GithubIcon class="w-6 fill-white" />
+              View Repo
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="flex-grow max-w-screen-lg mx-auto pt-36 pb-12 px-6">
+      <slot />
+    </main>
+    <footer class="p-4 flex align-middle justify-center">
+      <Typography as="p" variant="body" color="neutral" class="text-center">
+        Created with ❤️ by
+        <a href="https://gfrancv.com" class="hover:underline" target="_blank">
+          GFrancV
+        </a>
+        <br />
+        ©GFrancV - {year}
+      </Typography>
+    </footer>
+    <style is:global>
+      @supports selector(::-webkit-scrollbar) {
+        @media (hover: hover) {
+          ::-webkit-scrollbar {
+            width: 10px;
+            border-radius: 10px;
+          }
 
-					::-webkit-scrollbar-thumb {
-						border-radius: 10px;
-						background-color: #666;
-						border: 2px solid transparent;
-						background-clip: content-box;
-					}
+          ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-color: #666;
+            border: 2px solid transparent;
+            background-clip: content-box;
+          }
 
-					::-webkit-scrollbar-thumb:active {
-						background-color: #666;
-					}
+          ::-webkit-scrollbar-thumb:active {
+            background-color: #666;
+          }
 
-					::-webkit-scrollbar-track {
-						background: #1e1e1e;
-					}
+          ::-webkit-scrollbar-track {
+            background: #1e1e1e;
+          }
 
-					::-webkit-scrollbar-corner {
-						background: #1e1e1e;
-					}
-				}
-			}
+          ::-webkit-scrollbar-corner {
+            background: #1e1e1e;
+          }
+        }
+      }
 
-			@supports not selector(::-webkit-scrollbar) {
-				* {
-					scrollbar-color: #1e1e1e transparent;
-					scrollbar-width: thin;
-				}
-			}
-		</style>
-	</body>
+      @supports not selector(::-webkit-scrollbar) {
+        * {
+          scrollbar-color: #1e1e1e transparent;
+          scrollbar-width: thin;
+        }
+      }
+    </style>
+  </body>
 </html>
