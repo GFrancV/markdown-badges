@@ -18,6 +18,12 @@
     "category": "Artificial Intelligence"
   },
   {
+    "name": "GitHub Copilot",
+    "url": "https://img.shields.io/badge/GitHub_Copilot-8957E5?style=for-the-badge&logo=github-copilot&logoColor=white",
+    "markdown": "![GitHub Copilot](https://img.shields.io/badge/GitHub_Copilot-8957E5?style=for-the-badge&logo=github-copilot&logoColor=white)",
+    "category": "Artificial Intelligence"
+  },
+  {
     "name": "Google Assistant",
     "url": "https://img.shields.io/badge/google%20assistant-4285F4?style=for-the-badge&logo=google%20assistant&logoColor=white",
     "markdown": "![Google Assistant](https://img.shields.io/badge/google%20assistant-4285F4?style=for-the-badge&logo=google%20assistant&logoColor=white)",
@@ -729,6 +735,18 @@
     "name": "Bookstack",
     "url": "https://img.shields.io/badge/Bookstack-%230288D1.svg?style=for-the-badge&logo=bookstack&logoColor=white",
     "markdown": "![Bookstack](https://img.shields.io/badge/Bookstack-%230288D1.svg?style=for-the-badge&logo=bookstack&logoColor=white)",
+    "category": "Documentation Platforms"
+  },
+  {
+    "name": "GitBook",
+    "url": "https://img.shields.io/badge/GitBook-%23000000.svg?style=for-the-badge&logo=gitbook&logoColor=white",
+    "markdown": "![GitBook](https://img.shields.io/badge/GitBook-%23000000.svg?style=for-the-badge&logo=gitbook&logoColor=white)",
+    "category": "Documentation Platforms"
+  },
+  {
+    "name": "ReadTheDocs ",
+    "url": "https://img.shields.io/badge/Readthedocs-%23000000.svg?style=for-the-badge&logo=readthedocs&logoColor=white",
+    "markdown": "![ReadTheDocs](https://img.shields.io/badge/Readthedocs-%23000000.svg?style=for-the-badge&logo=readthedocs&logoColor=white)",
     "category": "Documentation Platforms"
   },
   {
@@ -1503,6 +1521,12 @@
     "name": "Strapi",
     "url": "https://img.shields.io/badge/strapi-%232E7EEA.svg?style=for-the-badge&logo=strapi&logoColor=white",
     "markdown": "![Strapi](https://img.shields.io/badge/strapi-%232E7EEA.svg?style=for-the-badge&logo=strapi&logoColor=white)",
+    "category": "Frameworks"
+  },
+  {
+    "name": "Streamlit",
+    "url": "https://img.shields.io/badge/Streamlit-%23FE4B4B.svg?style=for-the-badge&logo=streamlit&logoColor=white",
+    "markdown": "![Streamlit](https://img.shields.io/badge/Streamlit-%23FE4B4B.svg?style=for-the-badge&logo=streamlit&logoColor=white)",
     "category": "Frameworks"
   },
   {
