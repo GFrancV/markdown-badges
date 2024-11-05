@@ -204,6 +204,12 @@
     "category": "CD"
   },
   {
+    "name": "Amazon S3",
+    "url": "https://img.shields.io/badge/Amazon%20S3-FF9900?style=for-the-badge&logo=amazons3&logoColor=white",
+    "markdown": "![Amazon S3](https://img.shields.io/badge/Amazon%20S3-FF9900?style=for-the-badge&logo=amazons3&logoColor=white)",
+    "category": "Cloud Storage"
+  },
+  {
     "name": "Dropbox",
     "url": "https://img.shields.io/badge/Dropbox-%233B4D98.svg?style=for-the-badge&logo=Dropbox&logoColor=white",
     "markdown": "![Dropbox](https://img.shields.io/badge/Dropbox-%233B4D98.svg?style=for-the-badge&logo=Dropbox&logoColor=white)",
