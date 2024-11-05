@@ -3654,9 +3654,21 @@
     "category": "Streaming"
   },
   {
+    "name": "Fandango At Home",
+    "url": "https://img.shields.io/badge/Fandango%20At%20Home-3478C1?style=for-the-badge&logo=fandango&logoColor=white",
+    "markdown": "![Fandango At Home](https://img.shields.io/badge/Fandango%20At%20Home-3478C1?style=for-the-badge&logo=fandango&logoColor=white)",
+    "category": "Streaming"
+  },
+  {
     "name": "Fire TV",
     "url": "https://img.shields.io/badge/fire%20tv-fc3b2d?style=for-the-badge&logo=amazon%20fire%20tv&logoColor=white",
     "markdown": "![Fire TV](https://img.shields.io/badge/fire%20tv-fc3b2d?style=for-the-badge&logo=amazon%20fire%20tv&logoColor=white)",
+    "category": "Streaming"
+  },
+  {
+    "name": "Fubo",
+    "url": "https://img.shields.io/badge/Fubo-E64526?style=for-the-badge&logo=fubo&logoColor=white",
+    "markdown": "![Fubo](https://img.shields.io/badge/Fubo-E64526?style=for-the-badge&logo=fubo&logoColor=white)",
     "category": "Streaming"
   },
   {
@@ -3669,6 +3681,12 @@
     "name": "Netflix",
     "url": "https://img.shields.io/badge/Netflix-E50914?style=for-the-badge&logo=netflix&logoColor=white",
     "markdown": "![Netflix](https://img.shields.io/badge/Netflix-E50914?style=for-the-badge&logo=netflix&logoColor=white)",
+    "category": "Streaming"
+  },
+  {
+    "name": "Tubi",
+    "url": "https://img.shields.io/badge/Tubi-6A18F5?style=for-the-badge&logo=tubi&logoColor=white",
+    "markdown": "![Tubi](https://img.shields.io/badge/Tubi-6A18F5?style=for-the-badge&logo=tubi&logoColor=white)",
     "category": "Streaming"
   },
   {
