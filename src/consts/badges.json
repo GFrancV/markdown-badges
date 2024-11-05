@@ -360,6 +360,18 @@
     "category": "Databases"
   },
   {
+    "name": "Appwrite",
+    "url": "https://img.shields.io/badge/Appwrite-%23FD366E.svg?style=for-the-badge&logo=appwrite&logoColor=white",
+    "markdown": "![Appwrite](https://img.shields.io/badge/Appwrite-%23FD366E.svg?style=for-the-badge&logo=appwrite&logoColor=white)",
+    "category": "Databases"
+  },
+  {
+    "name": "ArangoDB",
+    "url": "https://img.shields.io/badge/ArangoDB-DDE072?style=for-the-badge&logo=arangodb&logoColor=white",
+    "markdown": "![Arango DB](https://img.shields.io/badge/ArangoDB-DDE072?style=for-the-badge&logo=arangodb&logoColor=white)",
+    "category": "Databases"
+  },
+  {
     "name": "Cassandra",
     "url": "https://img.shields.io/badge/cassandra-%231287B1.svg?style=for-the-badge&logo=apache-cassandra&logoColor=white",
     "markdown": "![ApacheCassandra](https://img.shields.io/badge/cassandra-%231287B1.svg?style=for-the-badge&logo=apache-cassandra&logoColor=white)",
