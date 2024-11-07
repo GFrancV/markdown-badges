@@ -6,6 +6,6 @@ const currentPath = pathname.slice(1)
 ---
 
 <ul class="flex">
-	<MenuItem route="/badges"> Badges </MenuItem>
-	<MenuItem route="/about"> About </MenuItem>
+	<MenuItem route="/badges" active={currentPath == 'badges'}> Badges </MenuItem>
+	<MenuItem route="/about" active={currentPath == 'about'}> About </MenuItem>
 </ul>
