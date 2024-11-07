@@ -156,6 +156,12 @@
     "category": "Browsers"
   },
   {
+    "name": "Arc",
+    "url": "https://img.shields.io/badge/Arc-000000?style=for-the-badge&logo=arc&logoColor=white",
+    "markdown": "![Arc](https://img.shields.io/badge/Arc-000000?style=for-the-badge&logo=arc&logoColor=white)",
+    "category": "Browsers"
+  },
+  {
     "name": "CircleCI",
     "url": "https://img.shields.io/badge/circleci-%23161616.svg?style=for-the-badge&logo=circleci&logoColor=white",
     "markdown": "![CircleCI](https://img.shields.io/badge/circleci-%23161616.svg?style=for-the-badge&logo=circleci&logoColor=white)",
