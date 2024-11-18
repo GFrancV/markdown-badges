@@ -5,11 +5,13 @@
 	import debounce from "debounce"
 	import { sanitizeText } from "../utils/sanitize-text"
 	import type { Badge } from "../env"
+	import ToastComponent from './ToastComponent.vue'
 
 	const query = ref("")
 	const categoryQuery = ref("All")
 	const categories = ref(["All", ...new Set(badges.map(badge => badge.category))])
 	const searchInput = ref<HTMLInputElement | null>(null)
+	const toastRef = ref<InstanceType<typeof ToastComponent> | null>(null)
 	const clipBoardButtons = ref<HTMLButtonElement[] | null>(null)
 	const results = ref<Badge[]>([])
 	const resultsAmount = ref(20)
@@ -72,6 +74,8 @@
 			clipBoardButtons.value[badgeIndex].innerHTML =
 				'<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="inherit"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /></svg>'
 		}, 1500)
+
+		toastRef.value?.addToast("Copied to clipboard")
 	}
 
 	const initializeSearch = () => {
@@ -278,4 +282,6 @@
 			</button>
 		</div>
 	</div>
+	
+	<ToastComponent ref="toastRef" />
 </template>
