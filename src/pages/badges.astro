@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from "../layouts/Layout.astro"
 import badges from "../consts/badges.json"
 import ClipboardIcon from "../icons/clipboard.astro"
@@ -8,23 +9,19 @@ const sortedBadges = badges.sort((a, b) => a.name.localeCompare(b.name))
 ---
 
 <Layout title="Badges - Markdown Badges">
-	<script is:inline src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
-
 	<section id="badgetContainer">
 		<Typography as="h1" variant="big" color="white" class="mb-8"> Badges </Typography>
 		<div class="grid md:grid-cols-4 grid-cols-2 gap-4">
 			{
 				sortedBadges.map(badges => (
-					<astro-copy-clipboard>
-						<div
-							class="relative group bg-[#1e1e1e] cursor-pointer text-white rounded border border-transparent transition p-6 text-center flex flex-col hover:bg-fuchsia-300/30 hover:border-fuchsia-200 badget-element h-full"
-							data-copy-clipboard
-							data-markdown={badges.markdown}
-						>
-							<h2 class="text-xl font-semibold text-[#f1f1ef] mb-3">{badges.name}</h2>
-							<img
+					<markdown-copy-button data-markdown={badges.markdown}>
+						<div class="relative group bg-[#1e1e1e] cursor-pointer text-white rounded border border-transparent transition p-6 text-center flex flex-col hover:bg-fuchsia-300/30 hover:border-fuchsia-200 badget-element h-full">
+							<Typography as="h2" variant="body" color="white" class="font-semibold mt-1 mb-3"> {badges.name} </Typography>
+							<Image
 								src={badges.url}
 								alt={badges.name}
+								width={100}
+								height={28}
 								class="mt-auto h-7 w-auto mx-auto mb-4"
 								loading="lazy"
 							/>
@@ -37,7 +34,7 @@ const sortedBadges = badges.sort((a, b) => a.name.localeCompare(b.name))
 								<ClipboardIcon />
 							</button>
 						</div>
-					</astro-copy-clipboard>
+					</markdown-copy-button>
 				))
 			}
 		</div>
@@ -46,34 +43,32 @@ const sortedBadges = badges.sort((a, b) => a.name.localeCompare(b.name))
 
 <script>
 	import { $ } from "../utils/dom-selector"
-
 	const clipboardIcon =
-		'<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="inherit"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /></svg>'
+		'<svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="inherit" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /></svg>'
 	const clipboardCheckIcon =
-		'<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="inherit"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M9 14l2 2l4 -4" /></svg>'
+		'<svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="inherit" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M9 14l2 2l4 -4" /></svg>'
 
-	class AstroCopyClipboard extends HTMLElement {
+	class MarkdownCopyButton extends HTMLElement {
 		constructor() {
 			super()
+			const markdown = this.dataset.markdown
+			this.addEventListener("click", this.handleClick.bind(this, markdown))
+		}
 
-			const divElement = $("div", this)
-			const copyClipboardElement = $("button", this)
+		async handleClick(markdown: string | undefined) {
+			if (!markdown) return
 
-			divElement?.addEventListener("click", () => {
-				const markdown = divElement.getAttribute("data-markdown")
-				if (markdown) {
-					navigator.clipboard.writeText(markdown)
+			const icon = $('button', this)
+			await navigator.clipboard.writeText(markdown)
 
-					if (copyClipboardElement) {
-						copyClipboardElement.innerHTML = clipboardCheckIcon
-						setTimeout(() => {
-							copyClipboardElement.innerHTML = clipboardIcon
-						}, 700)
-					}
-				}
-			})
+			if (icon) {
+				icon.innerHTML = clipboardCheckIcon
+				setTimeout(() => {
+					icon.innerHTML = clipboardIcon
+				}, 700)
+			}
 		}
 	}
 
-	customElements.define("astro-copy-clipboard", AstroCopyClipboard)
+	customElements.define("markdown-copy-button", MarkdownCopyButton)
 </script>
