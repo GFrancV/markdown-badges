@@ -1,18 +1,18 @@
 <script setup lang="ts">
-	import { computed, onMounted, onUnmounted, ref } from "vue"
+	import { onMounted, onUnmounted, ref } from "vue"
 	import Mousetrap from "mousetrap"
 	import badges from "../consts/badges.json"
 	import debounce from "debounce"
 	import { sanitizeText } from "../utils/sanitize-text"
 	import type { Badge } from "../env"
 	import ToastComponent from './ToastComponent.vue'
+	import BadgeCard from "./BadgeCard.vue"
 
 	const query = ref("")
 	const categoryQuery = ref("All")
 	const categories = ref(["All", ...new Set(badges.map(badge => badge.category))])
 	const searchInput = ref<HTMLInputElement | null>(null)
 	const toastRef = ref<InstanceType<typeof ToastComponent> | null>(null)
-	const clipBoardButtons = ref<HTMLButtonElement[] | null>(null)
 	const results = ref<Badge[]>([])
 	const resultsAmount = ref(20)
 
@@ -57,23 +57,20 @@
 		filterResults()
 	}
 
-	const copy = (markdown: string, badgeIndex: number, event: Event) => {
-		if (event == null || clipBoardButtons.value == null) {
+	const copy = async (markdown: string, event: Event) => {
+		const element = event.currentTarget as HTMLButtonElement
+		if (event == null || element == null) {
 			return
 		}
 
-		navigator.clipboard.writeText(markdown)
+		await navigator.clipboard.writeText(markdown)
+		const clipBoardButton = element.querySelector("button");
+		if (!clipBoardButton) return;
 
-		clipBoardButtons.value[badgeIndex].innerHTML =
-			'<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="inherit"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M9 14l2 2l4 -4" /></svg>'
+		clipBoardButton.innerHTML = '<svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="inherit" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M9 14l2 2l4 -4" /></svg>';
 		setTimeout(() => {
-			if (clipBoardButtons.value == null) {
-				return
-			}
-
-			clipBoardButtons.value[badgeIndex].innerHTML =
-				'<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="inherit"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /></svg>'
-		}, 1500)
+			clipBoardButton.innerHTML = '<svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="inherit" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /></svg>';
+		}, 700)
 
 		toastRef.value?.addToast("Copied to clipboard")
 	}
@@ -183,43 +180,13 @@
 	</div>
 	<template v-if="results && results.length > 0">
 		<div class="grid md:grid-cols-4 grid-cols-2 gap-4">
-			<div
-				v-for="(badge, badgeIndex) in results"
+			<BadgeCard
+				v-for="badge in results"
 				:key="badge.name"
-				class="relative group bg-[#1e1e1e] cursor-pointer text-white rounded border border-transparent transition p-6 text-center flex flex-col hover:bg-fuchsia-300/30 hover:border-fuchsia-200"
-				@click="copy(badge.markdown, badgeIndex, $event)"
-			>
-				<h2 class="text-xl font-semibold text-[#f1f1ef] mb-3">{{ badge.name }}</h2>
-				<img :src="badge.url" :alt="badge.name" class="mt-auto h-7 w-auto mx-auto mb-4" loading="lazy" />
-				<div class="mt-2">
-					<div
-						class="rounded-full border border-neutral-300 px-2 py-1 text-sm text-neutral-300 group-hover:border-fuchsia-300 group-hover:text-fuchsia-300 transition duration-300 w-auto"
-					>
-						{{ badge.category }}
-					</div>
-				</div>
-				<button
-					ref="clipBoardButtons"
-					class="absolute top-0 right-0 m-2 stroke-gray-600 transition duration-300 group-hover:stroke-fuchsia-300"
-					aria-label="Copy to clipboard"
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="inherit"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-						<path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
-						<path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-					</svg>
-				</button>
-			</div>
+				:name="badge.name"
+				:url="badge.url"
+				:category="badge.category"
+				@click="copy(badge.markdown, $event)"/>
 		</div>
 
 		<div v-if="results.length >= resultsAmount" class="flex justify-center items-center gap-4 mt-8">
