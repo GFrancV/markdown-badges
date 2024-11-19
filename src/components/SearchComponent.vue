@@ -173,7 +173,7 @@
 			class="py-2 px-6 bg-[#1e1e1e] rounded border-0 text-[#f1f1ef] focus:ring focus:ring-fuchsia-200 shadow-lg"
 			aria-label="Category"
 		>
-			<option v-for="category of categories" :value="category">
+			<option v-for="category of categories" :key="category" :value="category">
 				{{ category }}
 			</option>
 		</select>
