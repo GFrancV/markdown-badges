@@ -1,6 +1,5 @@
 <script setup lang="ts">
 	import { onMounted, onUnmounted, ref } from "vue"
-	import Mousetrap from "mousetrap"
 	import badges from "../consts/badges.json"
 	import debounce from "debounce"
 	import { sanitizeText } from "../utils/sanitize-text"
@@ -88,24 +87,20 @@
 		filterResults()
 	}
 
+	function handleKeyDown(event: KeyboardEvent) {
+		if (event.ctrlKey && event.key === 'k') {
+			event.preventDefault()
+			searchInput.value?.focus()
+		}
+	}
+
 	onMounted(() => {
 		initializeSearch()
-		Mousetrap.bind("ctrl+k", (e: Event) => {
-			if (e.preventDefault) {
-				e.preventDefault()
-			}
-			if (searchInput.value) {
-				searchInput.value.focus()
-			}
-		})
-
-		if (searchInput.value) {
-			searchInput.value.focus()
-		}
+		document.addEventListener("keydown", handleKeyDown);
 	})
 
 	onUnmounted(() => {
-		Mousetrap.unbind("ctrl+k")
+		document.removeEventListener("keydown", handleKeyDown)
 	})
 </script>
 
