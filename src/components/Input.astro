@@ -1,0 +1,19 @@
+---
+interface Props {
+  id?: string;
+  placeholder?: string;
+  value?: string;
+  autoComplete?: boolean;
+}
+
+const { id, placeholder, value, autoComplete = false } = Astro.props;
+---
+
+<input
+  id={id}
+  type="text"
+  class="block px-4 bg-[#1e1e1e] rounded w-full border-0 text-[#f1f1ef] focus:ring focus:ring-fuchsia-200 placeholder:text-neutral-600 shadow-lg"
+  value={value}
+  placeholder={placeholder}
+  autocomplete={autoComplete ? "on" : "off"}
+/>
