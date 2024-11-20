@@ -143,8 +143,8 @@
 				:placeholder="`Search in ${badges.length} badges`"
 			/>
 
-			<div class="absolute inset-y-1/2 translate-y-[-50%] right-0 flex items-center pr-3 h-fit">
-				<span v-if="!query && query.length <= 0" class="flex items-center pointer-events-none text-gray-600">
+			<div class="absolute inset-y-1/2 translate-y-[-50%] right-0 flex items-center text-gray-600 pr-3 h-fit">
+				<div v-if="!query && query.length <= 0" class="flex items-center pointer-events-none text-base gap-x-1">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -155,13 +155,13 @@
 						stroke-width="2"
 						stroke-linecap="round"
 						stroke-linejoin="round"
-						class="stroke-gray-600"
+						class="stroke-gray-600 size-5"
 					>
 						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
 						<path d="M7 9a2 2 0 1 1 2 -2v10a2 2 0 1 1 -2 -2h10a2 2 0 1 1 -2 2v-10a2 2 0 1 1 2 2h-10" />
 					</svg>
-					<span class="text-[17px]"> K </span>
-				</span>
+					<span>K</span>
+				</div>
 				<button v-show="query.length > 0" @click="clearSearch" class="text-white">x</button>
 			</div>
 		</div>
