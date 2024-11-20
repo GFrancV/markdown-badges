@@ -6,6 +6,7 @@
 	import type { Badge } from "../env"
 	import ToastComponent from './ToastComponent.vue'
 	import BadgeCard from "./BadgeCard.vue"
+import CrossIcon from "../icons/CrossIcon.vue"
 
 	const query = ref("")
 	const categoryQuery = ref("All")
@@ -157,7 +158,9 @@
 					</svg>
 					<span>K</span>
 				</div>
-				<button v-show="query.length > 0" @click="clearSearch" class="text-white">x</button>
+				<button v-show="query.length > 0" @click="clearSearch" class="text-white">
+					<CrossIcon class="size-5" />
+				</button>
 			</div>
 		</div>
 
