@@ -20,7 +20,7 @@ const simpleIcons = await getSimpleIcons();
     <Typography as="h1" variant="big" color="white" class="mb-8">
       Badges generator
     </Typography>
-    <div class="grid md:grid-cols-2 gap-8">
+    <div class="grid md:grid-cols-2 gap-12">
       <div>
         <div class="mb-4">
           <Typography as="h3" variant="h3" color="white" class="mb-2">
@@ -28,24 +28,24 @@ const simpleIcons = await getSimpleIcons();
           </Typography>
           <Input id="badgeName" value="GitHub" placeholder="Enter badge name" />
         </div>
-        <div class="grid md:grid-cols-3 mb-4">
+        <div class="grid md:grid-cols-3 gap-4 mb-4">
           <div>
             <Typography as="h3" variant="h3" color="white" class="mb-2">
               Logo color
             </Typography>
-            <input id="logoColor" type="color" value="#ffffff" />
+            <Input id="logoColor" type="color" value="#ffffff" />
           </div>
           <div>
             <Typography as="h3" variant="h3" color="white" class="mb-2">
               Left color
             </Typography>
-            <input id="leftColor" type="color" value="#000000" />
+            <Input id="leftColor" type="color" value="#000000" />
           </div>
           <div>
             <Typography as="h3" variant="h3" color="white" class="mb-2">
               Right color
             </Typography>
-            <input id="rightColor" type="color" value="#000000" />
+            <Input id="rightColor" type="color" value="#000000" />
           </div>
         </div>
         <div class="mb-4">
@@ -150,29 +150,22 @@ const simpleIcons = await getSimpleIcons();
         constructor() {
           super();
           this.id = "badge";
+          this.classList.add(
+            "space-y-4",
+            "flex-col",
+            "items-center",
+            "justify-center"
+          );
 
           this.img = document.createElement("img");
           this.img.src = this.getSrc();
 
-          const codeElementClassList = [
-            "block",
-            "bg-[#1e1e1e]",
-            "rounded",
-            "p-4",
-            "text-[#f1f1ef]",
-            "shadow-lg",
-            "mb-4",
-            "overflow-x-auto",
-            "w-full",
-          ];
-
-          this.markdownCode = document.createElement("code");
-          this.markdownCode.classList.add(...codeElementClassList);
-          this.markdownCode.textContent = `![${this.name}](${this.getSrc()})`;
-
-          this.imgCode = document.createElement("code");
-          this.imgCode.classList.add(...codeElementClassList);
-          this.imgCode.textContent = `<img src="${this.getSrc()}" alt="${this.name}" />`;
+          this.markdownCode = this.createCode(
+            `![${this.name}](${this.getSrc()})`
+          );
+          this.imgCode = this.createCode(
+            `<img src="${this.getSrc()}" alt="${this.name}" />`
+          );
 
           this.appendChild(this.img);
           this.appendChild(this.markdownCode);
@@ -204,7 +197,51 @@ const simpleIcons = await getSimpleIcons();
         }
 
         public getSrc(): string {
-          return `https://img.shields.io/badge/${this.name}-100000?style=for-the-badge&logo=${this.icon}&logoColor=${this.logocolor}&labelColor=${this.leftcolor}&color=${this.rightcolor}`;
+          return `https://img.shields.io/badge/${this.name}-1000?style=for-the-badge&logo=${this.icon}&logoColor=${this.logocolor}&labelColor=${this.leftcolor}&color=${this.rightcolor}`;
+        }
+
+        private createCode(code: string): HTMLElement {
+          const codeHtml = document.createElement("code");
+          codeHtml.classList.add(
+            "group",
+            "relative",
+            "block",
+            "bg-[#1e1e1e]",
+            "rounded",
+            "p-4",
+            "text-[#f1f1ef]",
+            "shadow-lg",
+            "mb-4",
+            "overflow-x-auto",
+            "w-full"
+          );
+          codeHtml.textContent = code;
+          const copyImgButton = this.createCopyButton(
+            `<img src="${this.getSrc()}" alt="${this.name}" />`
+          );
+          codeHtml.appendChild(copyImgButton);
+
+          return codeHtml;
+        }
+
+        private createCopyButton(code: string): HTMLButtonElement {
+          const copyButton = document.createElement("button");
+          copyButton.classList.add(
+            "absolute",
+            "right-2",
+            "top-2",
+            "transition",
+            "stroke-neutral-300",
+            "opacity-0",
+            "group-hover:opacity-100"
+          );
+          copyButton.innerHTML =
+            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="inherit" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"></path> <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path> <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path></svg>';
+          copyButton.addEventListener("click", () => {
+            navigator.clipboard.writeText(code);
+          });
+
+          return copyButton;
         }
       }
 
@@ -212,33 +249,23 @@ const simpleIcons = await getSimpleIcons();
 
       const badge = $("badge-image") as BadgeImage;
 
-      const badgeName = $("#badgeName");
-      const logoColor = $("#logoColor");
-      const leftColor = $("#leftColor");
-      const rightColor = $("#rightColor");
+      const elements = [
+        { id: "#badgeName", attribute: "name" },
+        { id: "#logoColor", attribute: "logocolor" },
+        { id: "#leftColor", attribute: "leftcolor" },
+        { id: "#rightColor", attribute: "rightcolor" },
+      ];
 
-      badgeName?.addEventListener("input", (e) => {
-        const value = (e.target as HTMLInputElement).value;
+      const updateBadgeAttribute = (elementId: string, attribute: string) => {
+        const element = $(elementId) as HTMLInputElement;
+        element?.addEventListener("input", (e) => {
+          const value = (e.target as HTMLInputElement).value;
+          badge.setAttribute(attribute, value);
+        });
+      };
 
-        badge.setAttribute("name", value);
-      });
-
-      logoColor?.addEventListener("input", (e) => {
-        const value = (e.target as HTMLInputElement).value;
-
-        badge.setAttribute("logocolor", value);
-      });
-
-      leftColor?.addEventListener("input", (e) => {
-        const value = (e.target as HTMLInputElement).value;
-
-        badge.setAttribute("leftcolor", value);
-      });
-
-      rightColor?.addEventListener("input", (e) => {
-        const value = (e.target as HTMLInputElement).value;
-
-        badge.setAttribute("rightcolor", value);
+      elements.forEach(({ id, attribute }) => {
+        updateBadgeAttribute(id, attribute);
       });
     </script>
   </section>
