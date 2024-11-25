@@ -9,7 +9,10 @@ import { getIcons } from "../api/simpleIcons";
 const simpleIcons = (await getIcons()).map((icon) => icon.title);
 ---
 
-<Layout title="Generator - Markdown Badges">
+<Layout
+  title="Generator - Markdown Badges"
+  description="Create stunning Markdown Badges for your README.md files effortlessly with our online generator. Perfect for developers, and open-source contributors, our tool helps you showcase your skills, tools, and project highlights with stylish badges."
+>
   <section>
     <Typography as="h1" variant="big" color="white" class="mb-8">
       Badges generator
