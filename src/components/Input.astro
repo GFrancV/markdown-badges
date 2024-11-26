@@ -1,0 +1,34 @@
+---
+interface Props {
+  id?: string;
+  type?: "text" | "password" | "color" | "number" | "tel" | "url";
+  placeholder?: string;
+  value?: string;
+  autoComplete?: boolean;
+  class?: string;
+}
+
+const {
+  id,
+  type = "text",
+  placeholder,
+  value,
+  autoComplete = false,
+  class: classList,
+} = Astro.props;
+
+const classes = [
+  "block bg-[#1e1e1e] rounded border-0 text-[#f1f1ef] focus:ring focus:ring-fuchsia-200 placeholder:text-neutral-600 shadow-lg",
+  classList,
+  type === "color" ? "px-1" : "px-4 w-full",
+];
+---
+
+<input
+  id={id}
+  type={type}
+  class:list={classes}
+  value={value}
+  placeholder={placeholder}
+  autocomplete={autoComplete ? "on" : "off"}
+/>
