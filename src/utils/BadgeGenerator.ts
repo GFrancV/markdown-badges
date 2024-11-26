@@ -13,7 +13,10 @@ export class BadgeGenerator extends HTMLElement {
   private icon: string = "Github";
 
   private img: HTMLImageElement;
+
+  private markdownPre: HTMLPreElement;
   private markdownCode: HTMLElement;
+  private imgPre: HTMLPreElement;
   private imgCode: HTMLElement;
 
   static get observedAttributes() {
@@ -27,17 +30,19 @@ export class BadgeGenerator extends HTMLElement {
     this.img.alt = `${this.name} badge`;
     this.img.src = this.getSrc();
 
-    this.markdownCode = $("#code-markdown", this) as HTMLElement;
+    this.markdownPre = $("#code-markdown", this) as HTMLPreElement;
+    this.markdownCode = $("code", this.markdownPre) as HTMLElement;
     this.markdownCode.textContent = `![${this.name}](${this.getSrc()})`;
-    this.markdownCode.appendChild(
+    this.markdownPre.appendChild(
       this.createCopyButton(`![${this.name}](${this.getSrc()})`)
     );
 
-    this.imgCode = $("#code-html", this) as HTMLElement;
+    this.imgPre = $("#code-html", this) as HTMLPreElement;
+    this.imgCode = $("code", this.imgPre) as HTMLElement;
     this.imgCode.textContent = `<img src="${this.getSrc()}" alt="${
       this.name
     }" />`;
-    this.imgCode.appendChild(
+    this.imgPre.appendChild(
       this.createCopyButton(`<img src="${this.getSrc()}" alt="${this.name}" />`)
     );
   }

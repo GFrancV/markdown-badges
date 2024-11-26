@@ -4,7 +4,7 @@ import { Image } from "astro:assets";
 const defaultBadge =
   "https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white";
 const classListCode =
-  "group relative block bg-[#1e1e1e] rounded p-3 text-sm text-[#f1f1ef] shadow-lg mb-4 overflow-x-auto w-full";
+  "block bg-[#1e1e1e] rounded p-3 pt-9 text-sm text-[#f1f1ef] shadow-lg mb-4 overflow-x-auto w-full";
 ---
 
 <badge-image id="badge" class="space-y-4 flex-col items-center justify-center">
@@ -16,8 +16,16 @@ const classListCode =
     class="w-auto"
     loading="lazy"
   />
-  <code id="code-markdown" class:list={classListCode}></code>
-  <code id="code-html" class:list={classListCode}></code>
+  <pre
+    id="code-markdown"
+    class="relative group flex">
+		<code class:list={classListCode} />
+	</pre>
+  <pre
+    id="code-html"
+    class="relative group flex">
+		<code class:list={classListCode} />
+	</pre>
 </badge-image>
 
 <script>
