@@ -33,6 +33,7 @@ export class BadgeGenerator extends HTMLElement {
     this.markdownPre = $("#code-markdown", this) as HTMLPreElement;
     this.markdownCode = $("code", this.markdownPre) as HTMLElement;
     this.markdownCode.textContent = `![${this.name}](${this.getSrc()})`;
+    this.createCopyRange(this.markdownCode);
     this.markdownPre.appendChild(
       this.createCopyButton(`![${this.name}](${this.getSrc()})`)
     );
@@ -42,6 +43,7 @@ export class BadgeGenerator extends HTMLElement {
     this.imgCode.textContent = `<img src="${this.getSrc()}" alt="${
       this.name
     }" />`;
+    this.createCopyRange(this.imgCode);
     this.imgPre.appendChild(
       this.createCopyButton(`<img src="${this.getSrc()}" alt="${this.name}" />`)
     );
@@ -107,5 +109,15 @@ export class BadgeGenerator extends HTMLElement {
     });
 
     return copyButton;
+  }
+
+  private createCopyRange(codeElement: HTMLElement): void {
+    codeElement.addEventListener("click", () => {
+      const range = document.createRange();
+      range.selectNodeContents(codeElement);
+      const selection = window.getSelection();
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+    });
   }
 }
