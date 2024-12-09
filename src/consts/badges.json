@@ -1248,6 +1248,12 @@
     "category": "Frameworks"
   },
   {
+    "name": "htmx",
+    "url": "https://img.shields.io/badge/htmx-3366CC.svg?style=for-the-badge&logo=htmx&logoColor=white",
+    "markdown": "![HTMX](https://img.shields.io/badge/htmx-3366CC.svg?style=for-the-badge&logo=htmx&logoColor=white)",
+    "category": "Frameworks"
+  },
+  {
     "name": "Hugo",
     "url": "https://img.shields.io/badge/Hugo-black.svg?style=for-the-badge&logo=Hugo",
     "markdown": "![Hugo](https://img.shields.io/badge/Hugo-black.svg?style=for-the-badge&logo=Hugo)",
@@ -3231,6 +3237,12 @@
     "name": "Vagrant",
     "url": "https://img.shields.io/badge/vagrant-%231563FF.svg?style=for-the-badge&logo=vagrant&logoColor=white",
     "markdown": "![Vagrant](https://img.shields.io/badge/vagrant-%231563FF.svg?style=for-the-badge&logo=vagrant&logoColor=white)",
+    "category": "Other"
+  },
+  {
+    "name": "VirtualBox",
+    "url": "https://img.shields.io/badge/virtualbox-183A61.svg?style=for-the-badge&logo=virtualbox&logoColor=white",
+    "markdown": "![VirtualBox](https://img.shields.io/badge/virtualbox-183A61.svg?style=for-the-badge&logo=virtualbox&logoColor=white)",
     "category": "Other"
   },
   {
