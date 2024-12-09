@@ -3216,6 +3216,12 @@
     "category": "Other"
   },
   {
+    "name": "WCAG",
+    "url": "https://img.shields.io/badge/WCAG-%23015A69.svg?style=for-the-badge&logo=WCAG&logoColor=white",
+    "markdown": "![WCAG](https://img.shields.io/badge/WCAG-%23015A69.svg?style=for-the-badge&logo=WCAG&logoColor=white)",
+    "category": "Other"
+  },
+  {
     "name": "Wireguard",
     "url": "https://img.shields.io/badge/wireguard-%2388171A.svg?style=for-the-badge&logo=wireguard&logoColor=white",
     "markdown": "![Wireguard](https://img.shields.io/badge/wireguard-%2388171A.svg?style=for-the-badge&logo=wireguard&logoColor=white)",
