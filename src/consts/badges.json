@@ -2892,6 +2892,12 @@
     "category": "ORM"
   },
   {
+    "name": "TypeORM",
+    "url": "https://img.shields.io/badge/TypeORM-FE0803.svg?style=for-the-badge&logo=typeorm&logoColor=white",
+    "markdown": "![TypeORM](https://img.shields.io/badge/TypeORM-FE0803.svg?style=for-the-badge&logo=typeorm&logoColor=white)",
+    "category": "ORM"
+  },
+  {
     "name": "Quill",
     "url": "https://img.shields.io/badge/Quill-52B0E7?style=for-the-badge&logo=apache&logoColor=white",
     "markdown": "![Quill](https://img.shields.io/badge/Quill-52B0E7?style=for-the-badge&logo=apache&logoColor=white)",
