@@ -2028,6 +2028,12 @@
     "category": "IDEs"
   },
   {
+    "name": "Doxygen",
+    "url": "https://img.shields.io/badge/doxygen-2C4AA8?style=for-the-badge&logo=doxygen&logoColor=white",
+    "markdown": "![Doxygen](https://img.shields.io/badge/doxygen-2C4AA8?style=for-the-badge&logo=doxygen&logoColor=white)",
+    "category": "IDEs"
+  },
+  {
     "name": "Eclipse",
     "url": "https://img.shields.io/badge/Eclipse-FE7A16.svg?style=for-the-badge&logo=Eclipse&logoColor=white",
     "markdown": "![Eclipse](https://img.shields.io/badge/Eclipse-FE7A16.svg?style=for-the-badge&logo=Eclipse&logoColor=white)",
