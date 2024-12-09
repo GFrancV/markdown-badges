@@ -3048,6 +3048,12 @@
     "category": "Other"
   },
   {
+    "name": "Narrator",
+    "url": "https://img.shields.io/badge/Narrator-%230771D0.svg?style=for-the-badge&logo=Narrator&logoColor=white",
+    "markdown": "![Narrator](https://img.shields.io/badge/Narrator-%230771D0.svg?style=for-the-badge&logo=Narrator&logoColor=white)",
+    "category": "Other"
+  },
+  {
     "name": "Notion",
     "url": "https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white",
     "markdown": "![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)",
