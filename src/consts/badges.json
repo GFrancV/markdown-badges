@@ -30,6 +30,12 @@
     "category": "Artificial Intelligence"
   },
   {
+    "name": "Google Gemini",
+    "url": "https://img.shields.io/badge/google%20gemini-8E75B2?style=for-the-badge&logo=google%20gemini&logoColor=white",
+    "markdown": "![Google Gemini](https://img.shields.io/badge/google%20gemini-8E75B2?style=for-the-badge&logo=google%20gemini&logoColor=white)",
+    "category": "Artificial Intelligence"
+  },
+  {
     "name": "Hyperledger",
     "url": "https://img.shields.io/badge/hyperledger-2F3134?style=for-the-badge&logo=hyperledger&logoColor=white",
     "markdown": "![Hyperledger](https://img.shields.io/badge/hyperledger-2F3134?style=for-the-badge&logo=hyperledger&logoColor=white)",
