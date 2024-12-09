@@ -3012,6 +3012,12 @@
     "category": "Other"
   },
   {
+    "name": "JAWS",
+    "url": "https://img.shields.io/badge/JAWS-%231962AA.svg?style=for-the-badge&logo=JAWS&logoColor=white",
+    "markdown": "![JAWS](https://img.shields.io/badge/JAWS-%231962AA.svg?style=for-the-badge&logo=JAWS&logoColor=white)",
+    "category": "Other"
+  },
+  {
     "name": "Jellyfin",
     "url": "https://img.shields.io/badge/jellyfin-%23000B25.svg?style=for-the-badge&logo=Jellyfin&logoColor=00A4DC",
     "markdown": "![Jellyfin](https://img.shields.io/badge/jellyfin-%23000B25.svg?style=for-the-badge&logo=Jellyfin&logoColor=00A4DC)",
