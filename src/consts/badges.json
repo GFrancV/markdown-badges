@@ -2052,6 +2052,12 @@
     "category": "IDEs"
   },
   {
+    "name": "Google Colab",
+    "url": "https://img.shields.io/badge/Google%20Colab-%23F9A825.svg?style=for-the-badge&logo=googlecolab&logoColor=white",
+    "markdown": "![Google Colab](https://img.shields.io/badge/Google%20Colab-%23F9A825.svg?style=for-the-badge&logo=googlecolab&logoColor=white)",
+    "category": "IDEs"
+  },
+  {
     "name": "IntelliJ IDEA",
     "url": "https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white",
     "markdown": "![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)",
@@ -2259,6 +2265,12 @@
     "name": "Fortran",
     "url": "https://img.shields.io/badge/Fortran-%23734F96.svg?style=for-the-badge&logo=fortran&logoColor=white",
     "markdown": "![Fortran](https://img.shields.io/badge/Fortran-%23734F96.svg?style=for-the-badge&logo=fortran&logoColor=white)",
+    "category": "Languages"
+  },
+  {
+    "name": "GDScript",
+    "url": "https://img.shields.io/badge/GDScript-%2374267B.svg?style=for-the-badge&logo=godotengine&logoColor=white",
+    "markdown": "![GDScript](https://img.shields.io/badge/GDScript-%2374267B.svg?style=for-the-badge&logo=godotengine&logoColor=white)",
     "category": "Languages"
   },
   {
