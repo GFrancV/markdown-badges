@@ -3048,6 +3048,12 @@
     "category": "Other"
   },
   {
+    "name": "NVDA",
+    "url": "https://img.shields.io/badge/NVDA-%23630093.svg?style=for-the-badge&logo=NVDA&logoColor=white",
+    "markdown": "![NVDA](https://img.shields.io/badge/NVDA-%23630093.svg?style=for-the-badge&logo=NVDA&logoColor=white)",
+    "category": "Other"
+  },
+  {
     "name": "OpenAPI Specification",
     "url": "https://img.shields.io/badge/openapiinitiative-%23000000.svg?style=for-the-badge&logo=openapiinitiative&logoColor=white",
     "markdown": "![OpenAPI Specification](https://img.shields.io/badge/openapiinitiative-%23000000.svg?style=for-the-badge&logo=openapiinitiative&logoColor=white)",
