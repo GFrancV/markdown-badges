@@ -2988,6 +2988,12 @@
     "category": "Other"
   },
   {
+    "name": "Google TalkBack",
+    "url": "https://img.shields.io/badge/Google%20TalkBack-%236636B4.svg?style=for-the-badge&logo=GoogleTalkBack&logoColor=whitee",
+    "markdown": "![Google TalkBack](https://img.shields.io/badge/Google%20TalkBack-%236636B4.svg?style=for-the-badge&logo=GoogleTalkBack&logoColor=white)",
+    "category": "Other"
+  },
+  {
     "name": "Gradle",
     "url": "https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white",
     "markdown": "![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)",
