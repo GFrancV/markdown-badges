@@ -1212,6 +1212,12 @@
     "category": "Frameworks"
   },
   {
+    "name": "Filament",
+    "url": "https://img.shields.io/badge/Filament-FFAA00?style=for-the-badge&logoColor=%23000000",
+    "markdown": "![Filament](https://img.shields.io/badge/Filament-FFAA00?style=for-the-badge&logoColor=%23000000)",
+    "category": "Frameworks"
+  },
+  {
     "name": "Flask",
     "url": "https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white",
     "markdown": "![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)",
