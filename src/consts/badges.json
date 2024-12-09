@@ -2886,6 +2886,12 @@
     "category": "ORM"
   },
   {
+    "name": "Accessibility",
+    "url": "https://img.shields.io/badge/Accessibility-%230170EA.svg?style=for-the-badge&logo=Accessibility&logoColor=white",
+    "markdown": "![Accessibility](https://img.shields.io/badge/Accessibility-%230170EA.svg?style=for-the-badge&logo=Accessibility&logoColor=white)",
+    "category": "Other"
+  },
+  {
     "name": "Airbnb",
     "url": "https://img.shields.io/badge/Airbnb-%23ff5a5f.svg?style=for-the-badge&logo=Airbnb&logoColor=white",
     "markdown": "![Airbnb](https://img.shields.io/badge/Airbnb-%23ff5a5f.svg?style=for-the-badge&logo=Airbnb&logoColor=white)",
