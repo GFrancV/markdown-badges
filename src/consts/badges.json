@@ -3198,6 +3198,12 @@
     "category": "Other"
   },
   {
+    "name": "VoiceOver",
+    "url": "https://img.shields.io/badge/VoiceOver-%23484848.svg?style=for-the-badge&logo=VoiceOver&logoColor=white",
+    "markdown": "![VoiceOver](https://img.shields.io/badge/VoiceOver-%23484848.svg?style=for-the-badge&logo=VoiceOver&logoColor=white)",
+    "category": "Other"
+  },
+  {
     "name": "Wireguard",
     "url": "https://img.shields.io/badge/wireguard-%2388171A.svg?style=for-the-badge&logo=wireguard&logoColor=white",
     "markdown": "![Wireguard](https://img.shields.io/badge/wireguard-%2388171A.svg?style=for-the-badge&logo=wireguard&logoColor=white)",
