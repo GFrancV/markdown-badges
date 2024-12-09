@@ -265,8 +265,8 @@
   },
   {
     "name": "Bitcoin",
-    "url": "https://img.shields.io/badge/Bitcoin-000?style=for-the-badge&logo=bitcoin&logoColor=white",
-    "markdown": "![Bitcoin](https://img.shields.io/badge/Bitcoin-000?style=for-the-badge&logo=bitcoin&logoColor=white)",
+    "url": "https://img.shields.io/badge/bitcoin-F7931A?style=for-the-badge&logo=bitcoin&logoColor=white",
+    "markdown": "![Bitcoin](https://img.shields.io/badge/bitcoin-F7931A?style=for-the-badge&logo=bitcoin&logoColor=white)",
     "category": "Cryptocurrency"
   },
   {
