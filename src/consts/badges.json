@@ -3840,6 +3840,12 @@
     "category": "Jobs"
   },
   {
+    "name": "Glassdoor",
+    "url": "https://img.shields.io/badge/Glassdoor-00A162?style=for-the-badge&logo=Glassdoor&logoColor=white",
+    "markdown": "![Glassdoor](https://img.shields.io/badge/Glassdoor-00A162?style=for-the-badge&logo=Glassdoor&logoColor=white)",
+    "category": "Jobs"
+  },
+  {
     "name": "Hacker Earth",
     "url": "https://img.shields.io/badge/HackerEarth-%232C3454.svg?style=for-the-badge&logo=HackerEarth&logoColor=Blue",
     "markdown": "![HackerEarth](https://img.shields.io/badge/HackerEarth-%232C3454.svg?style=for-the-badge&logo=HackerEarth&logoColor=Blue)",
