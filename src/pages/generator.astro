@@ -20,33 +20,63 @@ const simpleIcons = (await getIcons()).map((icon) => icon.title);
     <div class="grid md:grid-cols-2 gap-12">
       <div>
         <div class="mb-6">
-          <Typography as="h3" variant="h3" color="white" class="mb-2">
+          <Typography
+            as="label"
+            variant="h3"
+            color="white"
+            class="mb-2 inline-block w-full"
+            for="badgeName"
+          >
             Badge name
           </Typography>
           <Input id="badgeName" value="GitHub" placeholder="Enter badge name" />
         </div>
         <div class="grid grid-cols-3 gap-4 mb-6">
           <div>
-            <Typography as="h3" variant="h3" color="white" class="mb-2">
+            <Typography
+              as="label"
+              variant="h3"
+              color="white"
+              class="mb-2 inline-block w-full"
+              for="logoColor"
+            >
               Logo color
             </Typography>
             <Input id="logoColor" type="color" value="#ffffff" />
           </div>
           <div>
-            <Typography as="h3" variant="h3" color="white" class="mb-2">
+            <Typography
+              as="label"
+              variant="h3"
+              color="white"
+              class="mb-2 inline-block w-full"
+              for="leftColor"
+            >
               Left color
             </Typography>
             <Input id="leftColor" type="color" value="#000000" />
           </div>
           <div>
-            <Typography as="h3" variant="h3" color="white" class="mb-2">
+            <Typography
+              as="label"
+              variant="h3"
+              color="white"
+              class="mb-2 inline-block w-full"
+              for="rightColor"
+            >
               Right color
             </Typography>
             <Input id="rightColor" type="color" value="#000000" />
           </div>
         </div>
         <div class="mb-6">
-          <Typography as="h3" variant="h3" color="white" class="mb-2">
+          <Typography
+            as="label"
+            variant="h3"
+            color="white"
+            class="mb-2 inline-block w-full"
+            for="badgeLogoValue"
+          >
             Badge logo
           </Typography>
           <div id="badgeLogo" class="relative">
