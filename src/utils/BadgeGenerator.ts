@@ -97,6 +97,7 @@ export class BadgeGenerator extends HTMLElement {
       "group-hover:opacity-100",
       "hover:stroke-fuchsia-300"
     );
+    copyButton.setAttribute("aria-label", "Copy to clipboard");
     copyButton.innerHTML = clipboardIcon;
 
     copyButton.addEventListener("click", () => {
