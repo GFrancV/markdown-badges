@@ -1,10 +1,11 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro"
-import badges from "../consts/badges.json"
 import Typography from "../components/Typography.astro"
 import BadgeCard from '../components/BadgeCard.vue';
 
-const sortedBadges = badges.sort((a, b) => a.name.localeCompare(b.name))
+const badges = await getCollection("badges")
+const sortedBadges = badges.sort((a, b) => a.data.name.localeCompare(b.data.name))
 ---
 
 <Layout title="Badges - Markdown Badges">
@@ -13,11 +14,11 @@ const sortedBadges = badges.sort((a, b) => a.name.localeCompare(b.name))
 		<div class="grid md:grid-cols-4 grid-cols-2 gap-4">
 			{
 				sortedBadges.map(badges => (
-					<markdown-copy-button data-markdown={badges.markdown}>
+					<markdown-copy-button data-markdown={badges.data.markdown}>
 						<BadgeCard
-              name={badges.name}
-              url={badges.url}
-              category={badges.category}
+              name={badges.data.name}
+              url={badges.data.url}
+              category={badges.data.category}
             />
 					</markdown-copy-button>
 				))

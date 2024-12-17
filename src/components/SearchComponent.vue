@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { onMounted, onUnmounted, ref } from "vue"
-	import badges from "../consts/badges.json"
+	import badges from "../data/badges.json"
 	import debounce from "debounce"
 	import { sanitizeText } from "../utils/sanitize-text"
 	import type { Badge } from "../env"
