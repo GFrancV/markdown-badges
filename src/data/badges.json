@@ -777,6 +777,13 @@
     "category": "Design"
   },
   {
+    "id": "penpot",
+    "name": "penpot",
+    "url": "https://img.shields.io/badge/penpot-%23FFFFFF.svg?style=for-the-badge&logo=penpot&logoColor=black",
+    "markdown": "![Penpot](https://img.shields.io/badge/penpot-%23FFFFFF.svg?style=for-the-badge&logo=penpot&logoColor=black)",
+    "category": "Design"
+  },
+  {
     "id": "proto.io",
     "name": "Proto.io",
     "url": "https://img.shields.io/badge/Proto.io-161637?style=for-the-badge&logo=proto.io&logoColor=00e5ff",
