@@ -2345,6 +2345,13 @@
     "category": "SaaS"
   },
   {
+    "id": "tableau",
+    "name": "Tableau",
+    "url": "https://img.shields.io/badge/Tableau-%23FFFFFF.svg?style=for-the-badge&logo=Tableau&logoColor=1C4481",
+    "markdown": "![Tableau](https://img.shields.io/badge/Tableau-%23FFFFFF.svg?style=for-the-badge&logo=Tableau&logoColor=1C4481)",
+    "category": "SaaS"
+  },
+  {
     "id": "vercel",
     "name": "Vercel",
     "url": "https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white",
