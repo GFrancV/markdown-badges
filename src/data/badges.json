@@ -42,6 +42,13 @@
     "category": "Artificial Intelligence"
   },
   {
+    "id": "perplexity",
+    "name": "Perplexity",
+    "url": "https://img.shields.io/badge/perplexity-000000?style=for-the-badge&logo=perplexity&logoColor=088F8F",
+    "markdown": "![Perplexity](https://img.shields.io/badge/perplexity-000000?style=for-the-badge&logo=perplexity&logoColor=088F8F)",
+    "category": "Artificial Intelligence"
+  },
+  {
     "id": "hyperledger",
     "name": "Hyperledger",
     "url": "https://img.shields.io/badge/hyperledger-2F3134?style=for-the-badge&logo=hyperledger&logoColor=white",
