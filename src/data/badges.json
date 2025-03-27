@@ -1456,6 +1456,13 @@
     "category": "Frameworks"
   },
   {
+    "id": "grav",
+    "name": "Grav",
+    "url": "https://img.shields.io/badge/grav-%23FFFFFF.svg?style=for-the-badge&logo=grav&logoColor=221E1F",
+    "markdown": "![Grav](https://img.shields.io/badge/grav-%23FFFFFF.svg?style=for-the-badge&logo=grav&logoColor=221E1F)",
+    "category": "Frameworks"
+  },
+  {
     "id": "green-sock",
     "name": "Green Sock",
     "url": "https://img.shields.io/badge/green%20sock-88CE02?style=for-the-badge&logo=greensock&logoColor=white",
@@ -1554,6 +1561,13 @@
     "category": "Frameworks"
   },
   {
+    "id": "maven",
+    "name": "Maven",
+    "url": "https://img.shields.io/badge/apachemaven-C71A36.svg?style=for-the-badge&logo=apachemaven&logoColor=white",
+    "markdown": "![Maven](https://img.shields.io/badge/apachemaven-C71A36.svg?style=for-the-badge&logo=apachemaven&logoColor=white)",
+    "category": "Frameworks"
+  },
+  {
     "id": "mui",
     "name": "MUI",
     "url": "https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white",
@@ -1579,6 +1593,13 @@
     "name": "MaxCompute",
     "url": "https://img.shields.io/badge/MaxCompute-%23FF6701?style=for-the-badge&logo=alibabacloud&logoColor=white",
     "markdown": "![MaxCompute](https://img.shields.io/badge/MaxCompute-%23FF6701?style=for-the-badge&logo=alibabacloud&logoColor=white)",
+    "category": "Frameworks"
+  },
+  {
+    "id": "mediapipe",
+    "name": "Mediapipe",
+    "url": "https://img.shields.io/badge/mediapipe-0097A7.svg?style=for-the-badge&logo=mediapipe&logoColor=white",
+    "markdown": "![MaxCompute](https://img.shields.io/badge/mediapipe-0097A7.svg?style=for-the-badge&logo=mediapipe&logoColor=white)",
     "category": "Frameworks"
   },
   {
@@ -1656,6 +1677,20 @@
     "name": "P5js",
     "url": "https://img.shields.io/badge/p5.js-ED225D?style=for-the-badge&logo=p5.js&logoColor=FFFFFF",
     "markdown": "![P5js](https://img.shields.io/badge/p5.js-ED225D?style=for-the-badge&logo=p5.js&logoColor=FFFFFF)",
+    "category": "Frameworks"
+  },
+  {
+    "id": "phoenix-framework",
+    "name": "Phoenix Framework",
+    "url": "https://img.shields.io/badge/phoenixframework-%23FD4F00.svg?style=for-the-badge&logo=phoenixframework&logoColor=black",
+    "markdown": "![Phoenix Framework](https://img.shields.io/badge/phoenixframework-%23FD4F00.svg?style=for-the-badge&logo=phoenixframework&logoColor=black)",
+    "category": "Frameworks"
+  },
+  {
+    "id": "plotly-dash",
+    "name": "Plotly Dash",
+    "url": "https://img.shields.io/badge/plotly-3F4F75.svg?style=for-the-badge&logo=plotly&logoColor=white",
+    "markdown": "![Plotly Dash](https://img.shields.io/badge/plotly-3F4F75.svg?style=for-the-badge&logo=plotly&logoColor=white)",
     "category": "Frameworks"
   },
   {
@@ -2212,6 +2247,13 @@
     "category": "Game Consoles"
   },
   {
+    "id": "asana",
+    "name": "Asana",
+    "url": "https://img.shields.io/badge/asana-F06A6A.svg?style=for-the-badge&logo=asana&logoColor=white",
+    "markdown": "![Asana](https://img.shields.io/badge/asana-F06A6A.svg?style=for-the-badge&logo=asana&logoColor=white)",
+    "category": "SaaS"
+  },
+  {
     "id": "alibaba-cloud",
     "name": "Alibaba Cloud",
     "url": "https://img.shields.io/badge/AlibabaCloud-%23FF6701.svg?style=for-the-badge&logo=alibabacloud&logoColor=white",
@@ -2230,6 +2272,13 @@
     "name": "Azure",
     "url": "https://img.shields.io/badge/azure-%230072C6.svg?style=for-the-badge&logo=microsoftazure&logoColor=white",
     "markdown": "![Azure](https://img.shields.io/badge/azure-%230072C6.svg?style=for-the-badge&logo=microsoftazure&logoColor=white)",
+    "category": "SaaS"
+  },
+  {
+    "id": "clickup",
+    "name": "Clickup",
+    "url": "https://img.shields.io/badge/clickup-7B68EE.svg?style=for-the-badge&logo=clickup&logoColor=white",
+    "markdown": "![Clickup](https://img.shields.io/badge/clickup-7B68EE.svg?style=for-the-badge&logo=clickup&logoColor=white)",
     "category": "SaaS"
   },
   {
@@ -2293,6 +2342,13 @@
     "name": "Heroku",
     "url": "https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white",
     "markdown": "![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white)",
+    "category": "SaaS"
+  },
+  {
+    "id": "linear",
+    "name": "Linear",
+    "url": "https://img.shields.io/badge/linear-5E6AD2.svg?style=for-the-badge&logo=linear&logoColor=white",
+    "markdown": "![Linear](https://img.shields.io/badge/linear-5E6AD2.svg?style=for-the-badge&logo=linear&logoColor=white)",
     "category": "SaaS"
   },
   {
@@ -2902,6 +2958,13 @@
     "name": "TypeScript",
     "url": "https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white",
     "markdown": "![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)",
+    "category": "Languages"
+  },
+  {
+    "id": "typst",
+    "name": "Typst",
+    "url": "https://img.shields.io/badge/typst-239DAD.svg?style=for-the-badge&logo=typst&logoColor=white",
+    "markdown": "![Typst](https://img.shields.io/badge/typst-239DAD.svg?style=for-the-badge&logo=typst&logoColor=white)",
     "category": "Languages"
   },
   {
@@ -3983,6 +4046,13 @@
     "category": "Social"
   },
   {
+    "id": "element",
+    "name": "Element",
+    "url": "https://img.shields.io/badge/element-0DBD8B.svg?style=for-the-badge&logo=element&logoColor=white",
+    "markdown": "![Element](https://img.shields.io/badge/element-0DBD8B.svg?style=for-the-badge&logo=element&logoColor=white)",
+    "category": "Social"
+  },
+  {
     "id": "facebook",
     "name": "Facebook",
     "url": "https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=Facebook&logoColor=white",
@@ -4361,6 +4431,13 @@
     "category": "Store"
   },
   {
+    "id": "shopify",
+    "name": "Shopify",
+    "url": "https://img.shields.io/badge/shopify-7AB55C.svg?style=for-the-badge&logo=shopify&logoColor=white",
+    "markdown": "![Shopify](https://img.shields.io/badge/shopify-7AB55C.svg?style=for-the-badge&logo=shopify&logoColor=white)",
+    "category": "Store"
+  },
+  {
     "id": "appgallery",
     "name": "AppGallery",
     "url": "https://img.shields.io/badge/AppGallery-C80A2D?style=for-the-badge&logo=huawei&logoColor=white",
@@ -4372,6 +4449,13 @@
     "name": "Amazon Prime",
     "url": "https://img.shields.io/badge/Amazon%20Prime-0F79AF?style=for-the-badge&logo=amazonprime&logoColor=white",
     "markdown": "![Amazon Prime](https://img.shields.io/badge/Amazon%20Prime-0F79AF?style=for-the-badge&logo=amazonprime&logoColor=white)",
+    "category": "Streaming"
+  },
+  {
+    "id": "bilibili",
+    "name": "Bilibili",
+    "url": "https://img.shields.io/badge/bilibili-00A1D6.svg?style=for-the-badge&logo=bilibili&logoColor=white",
+    "markdown": "![Bilibili](https://img.shields.io/badge/bilibili-00A1D6.svg?style=for-the-badge&logo=bilibili&logoColor=white)",
     "category": "Streaming"
   },
   {
