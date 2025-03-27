@@ -1981,6 +1981,20 @@
     "category": "Frameworks"
   },
   {
+    "id": "vulkan-api",
+    "name": "Vulkan API",
+    "url": "https://img.shields.io/badge/Vulkan-AC162C.svg?style=for-the-badge&logo=vulkan&logoColor=white&logoSize=auto",
+    "markdown": "![Vulkan API](https://img.shields.io/badge/Vulkan-AC162C.svg?style=for-the-badge&logo=vulkan&logoColor=white&logoSize=auto)",
+    "category": "Frameworks"
+  },
+  {
+    "id": "webflow",
+    "name": "Webflow",
+    "url": "https://img.shields.io/badge/webflow-%23146EF5.svg?style=for-the-badge&logo=webflow&logoColor=white",
+    "markdown": "![Webflow](https://img.shields.io/badge/webflow-%23146EF5.svg?style=for-the-badge&logo=webflow&logoColor=white)",
+    "category": "Frameworks"
+  },
+  {
     "id": "webgl",
     "name": "WebGL",
     "url": "https://img.shields.io/badge/WebGL-990000?logo=webgl&logoColor=white&style=for-the-badge",
