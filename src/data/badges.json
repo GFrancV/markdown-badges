@@ -1197,6 +1197,13 @@
     "category": "Frameworks"
   },
   {
+    "id": "amd-hip",
+    "name": "AMD HIP",
+    "url": "https://img.shields.io/badge/HIP-%23000000.svg?style=for-the-badge&logo=amd&logoColor=white&logoSize=auto",
+    "markdown": "![AMD HIP](https://img.shields.io/badge/HIP-%23000000.svg?style=for-the-badge&logo=amd&logoColor=white&logoSize=auto)",
+    "category": "Frameworks"
+  },
+  {
     "id": "anaconda",
     "name": "Anaconda",
     "url": "https://img.shields.io/badge/Anaconda-%2344A833.svg?style=for-the-badge&logo=anaconda&logoColor=white",
