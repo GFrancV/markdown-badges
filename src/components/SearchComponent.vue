@@ -141,7 +141,7 @@ onUnmounted(() => {
         name="query"
         v-model="query"
         ref="searchInput"
-        class="block ps-12 py-2 pr-3 bg-[#1e1e1e] rounded-sm w-full border-0 text-[#f1f1ef] focus:ring focus:ring-fuchsia-200 leading-6 placeholder:text-neutral-600 shadow-lg"
+        class="block ps-12 py-2 pr-3 bg-[#1e1e1e] rounded-sm w-full border-0 text-[#f1f1ef] outline-1 -outline-offset-1 outline-transparent transition duration-200 focus:outline-2 focus:-outline-offset-2 focus:outline-fuchsia-200 leading-6 placeholder:text-neutral-600 shadow-lg"
         @input="searchBadget"
         :placeholder="`Search in ${badges.length} badges`"
       />
@@ -186,7 +186,7 @@ onUnmounted(() => {
       v-model="categoryQuery"
       @input="searchBadget"
       name="category"
-      class="py-2 px-6 bg-[#1e1e1e] rounded-sm border-0 text-[#f1f1ef] focus:ring focus:ring-fuchsia-200 shadow-lg"
+      class="py-2 px-6 bg-[#1e1e1e] rounded-sm border-0 text-[#f1f1ef] focus:ring-3 focus:ring-fuchsia-200 shadow-lg"
       aria-label="Category"
     >
       <option v-for="category of categories" :key="category" :value="category">
