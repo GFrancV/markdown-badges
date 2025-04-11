@@ -212,7 +212,7 @@ onUnmounted(() => {
     >
       <button
         @click="loadMoreResults"
-        class="flex gap-1 border border-transparent back rounded-sm-full px-4 py-2 transition text-white bg-[#1e1e1e] hover:bg-fuchsia-300/30 hover:border-fuchsia-200"
+        class="flex gap-1 border border-transparent back rounded-full px-4 py-2 transition text-white bg-[#1e1e1e] hover:bg-fuchsia-300/30 hover:border-fuchsia-200"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
