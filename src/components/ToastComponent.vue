@@ -29,11 +29,11 @@ defineExpose({
       <div
         v-for="toast in toasts"
         :key="toast.id"
-        class="transition flex items-center w-full max-w-xs p-4 rounded shadow text-[#f1f1ef] bg-[#121212] border border-white/15 mb-4"
+        class="transition flex items-center w-full max-w-xs p-4 rounded-xs shadow-sm text-[#f1f1ef] bg-[#121212] border border-white/15 mb-4"
         role="alert"
       >
         <div
-          class="inline-flex items-center justify-center flex-shrink-0 w-7 h-7 text-fuchsia-300 rounded-full border border-fuchsia-300 p-1.5"
+          class="inline-flex items-center justify-center shrink-0 w-7 h-7 text-fuchsia-300 rounded-full border border-fuchsia-300 p-1.5"
         >
           <svg
             fill="none"

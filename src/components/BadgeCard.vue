@@ -10,7 +10,7 @@ const { name, url, category } = defineProps<Props>();
 
 <template>
   <div
-    class="relative group bg-[#1e1e1e] cursor-pointer text-white rounded border border-transparent transition p-6 text-center flex flex-col hover:bg-fuchsia-300/30 hover:border-fuchsia-200 badget-element h-full"
+    class="relative group bg-[#1e1e1e] cursor-pointer text-white rounded-sm border border-transparent transition p-6 text-center flex flex-col hover:bg-fuchsia-300/30 hover:border-fuchsia-200 badget-element h-full"
   >
     <h2 class="text-[#f1f1ef] text-lg font-semibold mt-1 mb-3">
       {{ name }}
