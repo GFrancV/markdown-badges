@@ -32,7 +32,7 @@ const filterResults = () => {
   results.value = result.slice(0, resultsAmount.value);
 };
 
-const searchBadget = debounce(() => {
+const searchBadge = debounce(() => {
   const url = new URL(window.location.href);
 
   if (query.value.length > 0) {
@@ -54,7 +54,7 @@ const searchBadget = debounce(() => {
 
 const clearSearch = () => {
   query.value = "";
-  searchBadget();
+  searchBadge();
 };
 
 const loadMoreResults = () => {
@@ -142,7 +142,7 @@ onUnmounted(() => {
         v-model="query"
         ref="searchInput"
         class="block ps-12 py-2 pr-3 bg-[#1e1e1e] rounded-sm w-full border-0 text-[#f1f1ef] outline-1 -outline-offset-1 outline-transparent transition duration-200 focus:outline-2 focus:-outline-offset-2 focus:outline-fuchsia-200 leading-6 placeholder:text-neutral-600 shadow-lg"
-        @input="searchBadget"
+        @input="searchBadge"
         :placeholder="`Search in ${badges.length} badges`"
       />
 
@@ -184,7 +184,7 @@ onUnmounted(() => {
 
     <select
       v-model="categoryQuery"
-      @input="searchBadget"
+      @input="searchBadge"
       name="category"
       class="py-2 px-6 bg-[#1e1e1e] rounded-sm border-0 text-[#f1f1ef] focus:ring-3 focus:ring-fuchsia-200 shadow-lg"
       aria-label="Category"
