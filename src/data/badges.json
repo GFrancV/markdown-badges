@@ -2723,6 +2723,13 @@
     "category": "Languages"
   },
   {
+    "id": "css",
+    "name": "CSS",
+    "url": "https://img.shields.io/badge/css-%23663399.svg?style=for-the-badge&logo=css&logoColor=white",
+    "markdown": "![CSS3](https://img.shields.io/badge/css-%23663399.svg?style=for-the-badge&logo=css&logoColor=white)",
+    "category": "Languages"
+  },
+  {
     "id": "css3",
     "name": "CSS3",
     "url": "https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white",
