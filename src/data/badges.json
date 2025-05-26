@@ -1337,6 +1337,13 @@
     "category": "Frameworks"
   },
   {
+    "id": "clerk",
+    "name": "Clerk",
+    "url": "https://img.shields.io/badge/Clerk-6C47FF?style=for-the-badge&logo=clerk&logoColor=white",
+    "markdown": "![Clerk](https://img.shields.io/badge/Clerk-6C47FF?style=for-the-badge&logo=clerk&logoColor=white)",
+    "category": "Frameworks"
+  },
+  {
     "id": "code-igniter",
     "name": "Code Igniter",
     "url": "https://img.shields.io/badge/CodeIgniter-%23EF4223.svg?style=for-the-badge&logo=codeIgniter&logoColor=white",
