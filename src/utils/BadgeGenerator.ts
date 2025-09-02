@@ -97,7 +97,7 @@ export class BadgeGenerator extends HTMLElement {
     copyButton.innerHTML = clipboardIcon;
 
     copyButton.addEventListener("click", () => {
-      navigator.clipboard.writeText(codeElement.textContent);
+      navigator.clipboard.writeText(codeElement.textContent ?? "");
 
       copyButton.innerHTML = copyClipboardIcon;
       setTimeout(() => {
