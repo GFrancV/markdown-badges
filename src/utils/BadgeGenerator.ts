@@ -34,9 +34,7 @@ export class BadgeGenerator extends HTMLElement {
     this.markdownCode = $("code", this.markdownPre) as HTMLElement;
     this.markdownCode.textContent = `![${this.name}](${this.getSrc()})`;
     this.createCopyRange(this.markdownCode);
-    this.markdownPre.appendChild(
-      this.createCopyButton(`![${this.name}](${this.getSrc()})`)
-    );
+    this.markdownPre.appendChild(this.createCopyButton(this.markdownCode));
 
     this.imgPre = $("#code-html", this) as HTMLPreElement;
     this.imgCode = $("code", this.imgPre) as HTMLElement;
@@ -44,9 +42,7 @@ export class BadgeGenerator extends HTMLElement {
       this.name
     }" />`;
     this.createCopyRange(this.imgCode);
-    this.imgPre.appendChild(
-      this.createCopyButton(`<img src="${this.getSrc()}" alt="${this.name}" />`)
-    );
+    this.imgPre.appendChild(this.createCopyButton(this.imgCode));
   }
 
   public attributeChangedCallback(
@@ -85,7 +81,7 @@ export class BadgeGenerator extends HTMLElement {
     }" />`;
   }
 
-  private createCopyButton(code: string): HTMLButtonElement {
+  private createCopyButton(codeElement: HTMLElement): HTMLButtonElement {
     const copyButton = document.createElement("button");
     copyButton.classList.add(
       "absolute",
@@ -101,7 +97,7 @@ export class BadgeGenerator extends HTMLElement {
     copyButton.innerHTML = clipboardIcon;
 
     copyButton.addEventListener("click", () => {
-      navigator.clipboard.writeText(code);
+      navigator.clipboard.writeText(codeElement.textContent);
 
       copyButton.innerHTML = copyClipboardIcon;
       setTimeout(() => {
