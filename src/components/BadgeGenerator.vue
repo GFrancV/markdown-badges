@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { getIcons } from "../api/simpleIcons";
+import ToastComponent from "./ToastComponent.vue";
+
+const simpleIcons = [
+  ...new Set((await getIcons()).map((icon) => icon.title)),
+].flat();
+
+const toastRef = ref<InstanceType<typeof ToastComponent> | null>(null);
 
 const name = ref<string>("GitHub");
 const logo = ref<string>("github");
@@ -9,7 +16,26 @@ const labelColor = ref<string>("#000000");
 const rightcolor = ref<string>("#000000");
 const showResults = ref<boolean>(false);
 
-const simpleIcons = (await getIcons()).map((icon) => icon.title);
+const searchResults = computed(() =>
+  simpleIcons.filter((icon) =>
+    icon.toLowerCase().includes(logo.value.toLowerCase())
+  )
+);
+
+const copyToClipboard = async (value: string, event: Event) => {
+  navigator.clipboard.writeText(value);
+  toggleIcon(event.currentTarget as HTMLButtonElement);
+  toastRef.value?.addToast("Copied to clipboard");
+};
+
+const toggleIcon = (buttonElement: HTMLButtonElement, delay: number = 1000) => {
+  buttonElement.innerHTML =
+    '<svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="inherit" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M9 14l2 2l4 -4" /></svg>';
+  setTimeout(() => {
+    buttonElement.innerHTML =
+      '<svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="inherit" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /></svg>';
+  }, delay);
+};
 
 const badgeUrl = computed(
   () =>
@@ -25,7 +51,6 @@ const imgCode = computed(() => {
 </script>
 
 <template>
-  <h1 class="text-6xl font-bold text-[#f1f1ef] mb-8">Badges generator</h1>
   <section class="grid md:grid-cols-2 gap-12">
     <div>
       <div class="mb-6">
@@ -99,33 +124,50 @@ const imgCode = computed(() => {
         <div id="badgeLogo" class="relative">
           <div class="relative">
             <input
-              @focus="showResults = true"
-              @blur="showResults = false"
+              @focusin="showResults = true"
+              @focusout="showResults = false"
               v-model="logo"
               id="badgeLogoValue"
               class="block bg-[#1e1e1e] rounded-sm border-0 text-[#f1f1ef] focus:ring focus:ring-fuchsia-200 placeholder:text-neutral-600 shadow-lg py-2 px-3 w-full"
               type="text"
+              @keydown.esc="showResults = false"
               placeholder="Enter badge logo"
               autocomplete="off"
             />
-            <!-- <ChevronIcon
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
               class="absolute right-2 top-2 cursor-pointer stroke-neutral-300"
-            /> -->
+              role="img"
+              aria-label="Chevron icon"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M6 9l6 6l6 -6"></path>
+            </svg>
           </div>
+
           <ul
             v-show="showResults"
             id="logoResults"
-            style="display: none"
-            class="absulte text-sm max-h-64 overflow-y-auto mt-2 py-2 bg-[#1e1e1e] rounded-sm border-0 text-[#f1f1ef] shadow-lg"
+            class="absolute w-full text-sm max-h-64 overflow-y-auto mt-2 py-2 bg-[#1e1e1e] rounded-sm border-0 text-[#f1f1ef] shadow-lg"
           >
-            <li v-for="icon in simpleIcons">
-              <button
-                @click="logo = icon.toLowerCase()"
-                class="inline-flex w-full cursor-pointer px-4 py-2 hover:bg-fuchsia-300 hover:text-black"
-              >
-                {{ icon }}
-              </button>
-            </li>
+            <template v-if="searchResults.length > 0">
+              <li v-for="icon in searchResults" :key="icon">
+                <button
+                  @mousedown="logo = icon.toLowerCase()"
+                  class="inline-flex w-full cursor-pointer px-4 py-2 hover:bg-fuchsia-300 hover:text-black"
+                >
+                  {{ icon }}
+                </button>
+              </li>
+            </template>
+            <li v-else class="px-4 py-2 text-neutral-500">No results found</li>
           </ul>
         </div>
       </div>
@@ -138,25 +180,19 @@ const imgCode = computed(() => {
           :alt="`${name} badge`"
           class="w-auto"
           loading="lazy"
-          width="100"
-          height="28"
+          width="128"
+          height="32"
         />
 
         <pre
-          class="relative group block bg-[#1e1e1e] rounded-sm p-3 pt-9 text-sm text-[#f1f1ef] shadow-lg mb-4 overflow-x-auto w-full"
-        >
-		      <code>
-            {{ markdownCode }}
-          </code>
-	      </pre>
+          class="relative group block bg-[#1e1e1e] rounded-sm text-sm text-[#f1f1ef] shadow-lg mb-4 w-full pr-8"
+        ><code class="overflow-x-auto block w-auto py-6 px-4 ">{{ markdownCode }}</code><button @click="copyToClipboard(markdownCode, $event)" class="absolute right-2 top-2 transition stroke-neutral-300 opacity-0 cursor-pointer group-hover:opacity-100 hover:stroke-fuchsia-300" aria-label="Copy to clipboard"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="inherit" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path></svg></button></pre>
+
         <pre
-          class="relative group block bg-[#1e1e1e] rounded-sm p-3 pt-9 text-sm text-[#f1f1ef] shadow-lg mb-4 overflow-x-auto w-full"
-        >
-          <code >
-            {{ imgCode }}
-          </code>
-	      </pre>
+          class="relative group block bg-[#1e1e1e] rounded-sm text-sm text-[#f1f1ef] shadow-lg mb-4 w-full pr-8"
+        ><code class="overflow-x-auto block w-auto py-6 px-4 ">{{ imgCode }}</code><button @click="copyToClipboard(imgCode, $event)" class="absolute right-2 top-2 transition stroke-neutral-300 opacity-0 cursor-pointer group-hover:opacity-100 hover:stroke-fuchsia-300" aria-label="Copy to clipboard"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="inherit" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path></svg></button></pre>
       </div>
     </div>
+    <ToastComponent ref="toastRef" />
   </section>
 </template>
