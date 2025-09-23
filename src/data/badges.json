@@ -1043,6 +1043,13 @@
     "category": "Education"
   },
   {
+    "id": "moodle",
+    "name": "Moodle",
+    "url": "https://img.shields.io/badge/Moodle-1000?style=for-the-badge&logo=Moodle&logoColor=ffffff&labelColor=f98012&color=f98012",
+    "markdown": "![Moodle](https://img.shields.io/badge/Moodle-1000?style=for-the-badge&logo=Moodle&logoColor=ffffff&labelColor=f98012&color=f98012)",
+    "category": "Education"
+  },
+  {
     "id": "pluralsight",
     "name": "Pluralsight",
     "url": "https://img.shields.io/badge/Pluralsight-EE3057?style=for-the-badge&logo=pluralsight&logoColor=white",
