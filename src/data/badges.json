@@ -126,13 +126,6 @@
     "category": "Browsers"
   },
   {
-    "id": "duckduckgo",
-    "name": "DuckDuckGo",
-    "url": "https://img.shields.io/badge/duckduckgo-de5833?style=for-the-badge&logo=duckduckgo&logoColor=white",
-    "markdown": "![DuckDuckGo](https://img.shields.io/badge/duckduckgo-de5833?style=for-the-badge&logo=duckduckgo&logoColor=white)",
-    "category": "Browsers"
-  },
-  {
     "id": "edge",
     "name": "Edge",
     "url": "https://img.shields.io/badge/Edge-0078D7?style=for-the-badge&logo=Microsoft-edge&logoColor=white",
@@ -819,24 +812,10 @@
     "category": "Forums"
   },
   {
-    "id": "codepen",
-    "name": "CodePen",
-    "url": "https://img.shields.io/badge/Codepen-000000?style=for-the-badge&logo=codepen&logoColor=white",
-    "markdown": "![CodePen](https://img.shields.io/badge/Codepen-000000?style=for-the-badge&logo=codepen&logoColor=white)",
-    "category": "Forums"
-  },
-  {
     "id": "hackerearth",
     "name": "Hackerearth",
     "url": "https://img.shields.io/badge/HackerEarth-%232C3454.svg?&style=for-the-badge&logo=HackerEarth&logoColor=Blue",
     "markdown": "![Hackerearth](https://img.shields.io/badge/HackerEarth-%232C3454.svg?&style=for-the-badge&logo=HackerEarth&logoColor=Blue)",
-    "category": "Forums"
-  },
-  {
-    "id": "hackerrank",
-    "name": "Hackerrank",
-    "url": "https://img.shields.io/badge/-Hackerrank-2EC866?style=for-the-badge&logo=HackerRank&logoColor=white",
-    "markdown": "![Hackerrank](https://img.shields.io/badge/-Hackerrank-2EC866?style=for-the-badge&logo=HackerRank&logoColor=white)",
     "category": "Forums"
   },
   {
@@ -865,13 +844,6 @@
     "name": "Quora",
     "url": "https://img.shields.io/badge/Quora-%23B92B27.svg?style=for-the-badge&logo=Quora&logoColor=white",
     "markdown": "![Quora](https://img.shields.io/badge/Quora-%23B92B27.svg?style=for-the-badge&logo=Quora&logoColor=white)",
-    "category": "Forums"
-  },
-  {
-    "id": "reddit",
-    "name": "Reddit",
-    "url": "https://img.shields.io/badge/Reddit-%23FF4500.svg?style=for-the-badge&logo=Reddit&logoColor=white",
-    "markdown": "![Reddit](https://img.shields.io/badge/Reddit-%23FF4500.svg?style=for-the-badge&logo=Reddit&logoColor=white)",
     "category": "Forums"
   },
   {
@@ -1523,13 +1495,6 @@
     "name": "Ionic",
     "url": "https://img.shields.io/badge/Ionic-%233880FF.svg?style=for-the-badge&logo=Ionic&logoColor=white",
     "markdown": "![Ionic](https://img.shields.io/badge/Ionic-%233880FF.svg?style=for-the-badge&logo=Ionic&logoColor=white)",
-    "category": "Frameworks"
-  },
-  {
-    "id": "jasmine",
-    "name": "Jasmine",
-    "url": "https://img.shields.io/badge/jasmine-%238A4182.svg?style=for-the-badge&logo=jasmine&logoColor=white",
-    "markdown": "![Jasmine](https://img.shields.io/badge/jasmine-%238A4182.svg?style=for-the-badge&logo=jasmine&logoColor=white)",
     "category": "Frameworks"
   },
   {
@@ -2191,13 +2156,6 @@
     "category": "Gaming"
   },
   {
-    "id": "xbox",
-    "name": "Xbox",
-    "url": "https://img.shields.io/badge/xbox-%23107C10.svg?style=for-the-badge&logo=xbox&logoColor=white",
-    "markdown": "![Xbox](https://img.shields.io/badge/xbox-%23107C10.svg?style=for-the-badge&logo=xbox&logoColor=white)",
-    "category": "Gaming"
-  },
-  {
     "id": "3ds",
     "name": "3DS",
     "url": "https://img.shields.io/badge/3DS-D12228?style=for-the-badge&logo=nintendo-3ds&logoColor=white",
@@ -2275,13 +2233,6 @@
     "category": "Game Consoles"
   },
   {
-    "id": "xbox",
-    "name": "Xbox",
-    "url": "https://img.shields.io/badge/xbox-%23107C10.svg?style=for-the-badge&logo=xbox&logoColor=white",
-    "markdown": "![Xbox](https://img.shields.io/badge/xbox-%23107C10.svg?style=for-the-badge&logo=xbox&logoColor=white)",
-    "category": "Game Consoles"
-  },
-  {
     "id": "asana",
     "name": "Asana",
     "url": "https://img.shields.io/badge/asana-F06A6A.svg?style=for-the-badge&logo=asana&logoColor=white",
@@ -2342,13 +2293,6 @@
     "name": "DigitalOcean",
     "url": "https://img.shields.io/badge/DigitalOcean-%230167ff.svg?style=for-the-badge&logo=digitalOcean&logoColor=white",
     "markdown": "![DigitalOcean](https://img.shields.io/badge/DigitalOcean-%230167ff.svg?style=for-the-badge&logo=digitalOcean&logoColor=white)",
-    "category": "SaaS"
-  },
-  {
-    "id": "firebase",
-    "name": "Firebase",
-    "url": "https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase",
-    "markdown": "![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)",
     "category": "SaaS"
   },
   {
@@ -3864,13 +3808,6 @@
     "category": "Other"
   },
   {
-    "id": "tor",
-    "name": "TOR",
-    "url": "https://img.shields.io/badge/tor-%237E4798.svg?style=for-the-badge&logo=tor-project&logoColor=white",
-    "markdown": "![TOR](https://img.shields.io/badge/tor-%237E4798.svg?style=for-the-badge&logo=tor-project&logoColor=white)",
-    "category": "Other"
-  },
-  {
     "id": "terraform",
     "name": "Terraform",
     "url": "https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white",
@@ -4295,13 +4232,6 @@
     "name": "Tutanota",
     "url": "https://img.shields.io/badge/Tutanota-840010?style=for-the-badge&logo=Tutanota&logoColor=white",
     "markdown": "![Tutanota](https://img.shields.io/badge/Tutanota-840010?style=for-the-badge&logo=Tutanota&logoColor=white)",
-    "category": "Social"
-  },
-  {
-    "id": "twitch",
-    "name": "Twitch",
-    "url": "https://img.shields.io/badge/Twitch-%239146FF.svg?style=for-the-badge&logo=Twitch&logoColor=white",
-    "markdown": "![Twitch](https://img.shields.io/badge/Twitch-%239146FF.svg?style=for-the-badge&logo=Twitch&logoColor=white)",
     "category": "Social"
   },
   {
