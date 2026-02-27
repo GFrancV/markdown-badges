@@ -721,6 +721,13 @@
     "category": "Design"
   },
   {
+    "id": "drawio",
+    "name": "Drawio",
+    "url": "https://img.shields.io/badge/-drawio-%23F08705?style=for-the-badge&logo=diagrams.net&logoColor=white",
+    "markdown": "![Drawio](https://img.shields.io/badge/-drawio-%23F08705?style=for-the-badge&logo=diagrams.net&logoColor=white)",
+    "category": "Design"
+  },
+  {
     "id": "dribbble",
     "name": "Dribbble",
     "url": "https://img.shields.io/badge/Dribbble-EA4C89?style=for-the-badge&logo=dribbble&logoColor=white",
@@ -1589,6 +1596,13 @@
     "category": "Frameworks"
   },
   {
+    "id": "nativescript",
+    "name": "NativeScript",
+    "url": "https://img.shields.io/badge/NativeScript-%2365ADF1?style=for-the-badge&logo=nativescript&logoColor=white",
+    "markdown": "![NativeScript](https://img.shields.io/badge/NativeScript-%2365ADF1?style=for-the-badge&logo=nativescript&logoColor=white)",
+    "category": "Frameworks"
+  },
+  {
     "id": "npm",
     "name": "NPM",
     "url": "https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white",
@@ -1656,6 +1670,13 @@
     "name": "OpenGL",
     "url": "https://img.shields.io/badge/OpenGL-%23FFFFFF.svg?style=for-the-badge&logo=opengl",
     "markdown": "![OpenGL](https://img.shields.io/badge/OpenGL-%23FFFFFF.svg?style=for-the-badge&logo=opengl)",
+    "category": "Frameworks"
+  },
+  {
+    "id": "oxc",
+    "name": "Oxc",
+    "url": "https://img.shields.io/badge/oxc-%233451b2.svg?style=for-the-badge&logo=oxc&logoColor=white&logoSize=auto",
+    "markdown": "![Oxc](https://img.shields.io/badge/oxc-%233451b2.svg?style=for-the-badge&logo=oxc&logoColor=white&logoSize=auto)",
     "category": "Frameworks"
   },
   {
@@ -1820,6 +1841,13 @@
     "category": "Frameworks"
   },
   {
+    "id": "sap-commerce-cloud",
+    "name": "SAP Commerce Cloud",
+    "url": "https://img.shields.io/badge/SAP%20Commerce%20Cloud-%230057D2.svg?style=for-the-badge&logo=sap&logoColor=white",
+    "markdown": "![SAP](https://img.shields.io/badge/SAP%20Commerce%20Cloud-%230057D2.svg?style=for-the-badge&logo=sap&logoColor=white)",
+    "category": "Frameworks"
+  },
+  {
     "id": "sass",
     "name": "SASS",
     "url": "https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white",
@@ -1943,6 +1971,13 @@
     "name": "UnoCSS",
     "url": "https://img.shields.io/badge/unocss-333333.svg?style=for-the-badge&logo=unocss&logoColor=white",
     "markdown": "![UnoCSS](https://img.shields.io/badge/unocss-333333.svg?style=for-the-badge&logo=unocss&logoColor=white)",
+    "category": "Frameworks"
+  },
+  {
+    "id": "unjs",
+    "name": "UnJS",
+    "url": "https://img.shields.io/badge/-UnJs-%23ECDC5A?style=for-the-badge&logo=UnJs&logoColor=black",
+    "markdown": "![UnJs](https://img.shields.io/badge/-UnJs-%23ECDC5A?style=for-the-badge&logo=UnJs&logoColor=black)",
     "category": "Frameworks"
   },
   {
@@ -2083,6 +2118,13 @@
     "name": "Godot Engine",
     "url": "https://img.shields.io/badge/GODOT-%23FFFFFF.svg?style=for-the-badge&logo=godot-engine",
     "markdown": "![Godot Engine](https://img.shields.io/badge/GODOT-%23FFFFFF.svg?style=for-the-badge&logo=godot-engine)",
+    "category": "Gaming"
+  },
+  {
+    "id": "roblox",
+    "name": "Roblox",
+    "url": "https://img.shields.io/badge/Roblox-0a0b0b?style=for-the-badge&logo=Roblox&logoColor=white",
+    "markdown": "![Roblox](https://img.shields.io/badge/Roblox-0a0b0b?style=for-the-badge&logo=Roblox&logoColor=white)",
     "category": "Gaming"
   },
   {
@@ -2443,6 +2485,13 @@
     "category": "IDEs"
   },
   {
+    "id": "cursor",
+    "name": "Cursor",
+    "url": "https://img.shields.io/badge/Cursor-%23000000?style=for-the-badge&logo=Cursor&logoColor=white",
+    "markdown": "![Cursor](https://img.shields.io/badge/Cursor-%23000000?style=for-the-badge&logo=Cursor&logoColor=white)",
+    "category": "IDEs"
+  },
+  {
     "id": "doxygen",
     "name": "Doxygen",
     "url": "https://img.shields.io/badge/doxygen-2C4AA8?style=for-the-badge&logo=doxygen&logoColor=white",
@@ -2695,10 +2744,24 @@
     "category": "Languages"
   },
   {
+    "id": "coffeescript",
+    "name": "CoffeeScript",
+    "url": "https://img.shields.io/badge/CoffeeScript-%232F2625.svg?style=for-the-badge&logo=CoffeeScript&logoColor=white",
+    "markdown": "![CoffeeScript](https://img.shields.io/badge/CoffeeScript-%232F2625.svg?style=for-the-badge&logo=CoffeeScript&logoColor=white)",
+    "category": "Languages"
+  },
+  {
     "id": "dart",
     "name": "Dart",
     "url": "https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white",
     "markdown": "![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)",
+    "category": "Languages"
+  },
+  {
+    "id": "delphi",
+    "name": "Delphi",
+    "url": "https://img.shields.io/badge/delphi%20-%20%23B21F24?style=for-the-badge&logo=delphi&logoColor=white",
+    "markdown": "![Delphi](https://img.shields.io/badge/delphi%20-%20%23B21F24?style=for-the-badge&logo=delphi&logoColor=white)",
     "category": "Languages"
   },
   {
@@ -2807,10 +2870,24 @@
     "category": "Languages"
   },
   {
+    "id": "labview",
+    "name": "LabVIEW",
+    "url": "https://img.shields.io/badge/labview-%23FFDB00.svg?style=for-the-badge&logo=labview&logoColor=white",
+    "markdown": "![LabVIEW](https://img.shields.io/badge/labview-%23FFDB00.svg?style=for-the-badge&logo=labview&logoColor=white)",
+    "category": "Languages"
+  },
+  {
     "id": "markdown",
     "name": "Markdown",
     "url": "https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white",
     "markdown": "![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white)",
+    "category": "Languages"
+  },
+  {
+    "id": "micropython",
+    "name": "MicroPython",
+    "url": "https://img.shields.io/badge/micropython-%232B2728.svg?style=for-the-badge&logo=micropython&logoColor=white",
+    "markdown": "![MicroPython](https://img.shields.io/badge/micropython-%232B2728.svg?style=for-the-badge&logo=micropython&logoColor=white)",
     "category": "Languages"
   },
   {
@@ -2853,6 +2930,13 @@
     "name": "Org Mode",
     "url": "https://img.shields.io/badge/orgmode-%2377AA99.svg?style=for-the-badge&logo=org&logoColor=white",
     "markdown": "![Org Mode](https://img.shields.io/badge/orgmode-%2377AA99.svg?style=for-the-badge&logo=org&logoColor=white)",
+    "category": "Languages"
+  },
+  {
+    "id": "pascal",
+    "name": "Pascal",
+    "url": "https://img.shields.io/badge/pascal%20-%20%230288d1?style=for-the-badge&logo=lazarus&logoColor=white",
+    "markdown": "![Pascal](https://img.shields.io/badge/pascal%20-%20%230288d1?style=for-the-badge&logo=lazarus&logoColor=white)",
     "category": "Languages"
   },
   {
@@ -2916,6 +3000,13 @@
     "name": "Scala",
     "url": "https://img.shields.io/badge/scala-%23DC322F.svg?style=for-the-badge&logo=scala&logoColor=white",
     "markdown": "![Scala](https://img.shields.io/badge/scala-%23DC322F.svg?style=for-the-badge&logo=scala&logoColor=white)",
+    "category": "Languages"
+  },
+  {
+    "id": "scratch",
+    "name": "Scratch",
+    "url": "https://img.shields.io/badge/Scratch-%23F7A028.svg?style=for-the-badge&logo=scratch&logoColor=%23FEFEFF",
+    "markdown": "![Scratch](https://img.shields.io/badge/Scratch-%23F7A028.svg?style=for-the-badge&logo=scratch&logoColor=%23FEFEFF)",
     "category": "Languages"
   },
   {
@@ -3042,6 +3133,13 @@
     "name": "TensorFlow",
     "url": "https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white",
     "markdown": "![TensorFlow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)",
+    "category": "ML/DL"
+  },
+  {
+    "id": "onnx",
+    "name": "ONNX",
+    "url": "https://img.shields.io/badge/onnx-%23ffffff.svg?style=for-the-badge&logo=onnx&logoColor=black",
+    "markdown": "![ONNX](https://img.shields.io/badge/onnx-%23ffffff.svg?style=for-the-badge&logo=onnx&logoColor=black)",
     "category": "ML/DL"
   },
   {
@@ -3899,6 +3997,13 @@
     "category": "Other"
   },
   {
+    "id": "xo",
+    "name": "XO",
+    "url": "https://img.shields.io/badge/XO-%235ED9C7.svg?style=for-the-badge&logo=xo&logoColor=black",
+    "markdown": "![XO](https://img.shields.io/badge/XO-%235ED9C7.svg?style=for-the-badge&logo=xo&logoColor=black)",
+    "category": "Other"
+  },
+  {
     "id": "qiskit",
     "name": "Qiskit",
     "url": "https://img.shields.io/badge/Qiskit-%236929C4.svg?style=for-the-badge&logo=Qiskit&logoColor=white",
@@ -3994,6 +4099,13 @@
     "name": "Jenkins",
     "url": "https://img.shields.io/badge/jenkins-%232C5263.svg?style=for-the-badge&logo=jenkins&logoColor=white",
     "markdown": "![Jenkins](https://img.shields.io/badge/jenkins-%232C5263.svg?style=for-the-badge&logo=jenkins&logoColor=white)",
+    "category": "Servers"
+  },
+  {
+    "id": "kemp-vlm",
+    "name": "Kemp VLM",
+    "url": "https://img.shields.io/badge/Kemp%20VLM-%23fedd00.svg?style=for-the-badge&logo=progress&logoColor=%235ce500",
+    "markdown": "![Kemp VLM](https://img.shields.io/badge/Kemp%20VLM-%23fedd00.svg?style=for-the-badge&logo=progress&logoColor=%235ce500)",
     "category": "Servers"
   },
   {
@@ -4701,6 +4813,27 @@
     "name": "Upwork",
     "url": "https://img.shields.io/badge/UpWork-6FDA44?style=for-the-badge&logo=Upwork&logoColor=white",
     "markdown": "![Upwork](https://img.shields.io/badge/UpWork-6FDA44?style=for-the-badge&logo=Upwork&logoColor=white)",
+    "category": "Jobs"
+  },
+  {
+    "id": "google-earth-engine",
+    "name": "Google Earth Engine",
+    "url": "https://img.shields.io/badge/google%20earth%20engine-%234285F4.svg?style=for-the-badge&logo=googleearthengine&logoColor=white",
+    "markdown": "![Google Earth Engine](https://img.shields.io/badge/google%20earth%20engine-%234285F4.svg?style=for-the-badge&logo=googleearthengine&logoColor=white)",
+    "category": "Jobs"
+  },
+  {
+    "id": "qgis",
+    "name": "QGIS",
+    "url": "https://img.shields.io/badge/qgis-%2393b023?&style=for-the-badge&logo=qgis&logoColor=white",
+    "markdown": "![QGIS](https://img.shields.io/badge/qgis-%2393b023?&style=for-the-badge&logo=qgis&logoColor=white)",
+    "category": "Jobs"
+  },
+  {
+    "id": "gsap",
+    "name": "GSAP",
+    "url": "https://img.shields.io/badge/GSAP-%2388CE02.svg?style=for-the-badge&logo=greensock&logoColor=black",
+    "markdown": "![GSAP](https://img.shields.io/badge/GSAP-%2388CE02.svg?style=for-the-badge&logo=greensock&logoColor=black)",
     "category": "Jobs"
   }
 ]
