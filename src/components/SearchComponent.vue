@@ -1,38 +1,37 @@
 <script setup lang="ts">
 import debounce from "debounce";
-import { onMounted, onUnmounted, ref } from "vue";
-import badges from "../data/badges.json";
-import type { Badge } from "../env";
+import { onMounted, onUnmounted, ref, watch } from "vue";
+
+import { filterBadges, getBadgeCategories, getBadges } from "@/services/badges";
 import CrossIcon from "../icons/CrossIcon.vue";
-import { sanitizeText } from "../utils/sanitize-text";
 import BadgeCard from "./BadgeCard.vue";
-import ToastComponent from "./ToastComponent.vue";
 
 const query = ref("");
-const categoryQuery = ref("All");
-const categories = ref([
-  "All",
-  ...new Set(badges.map((badge) => badge.category)),
-]);
+const categoryQuery = ref("");
+const categories = ref(getBadgeCategories());
 const searchInput = ref<HTMLInputElement | null>(null);
-const toastRef = ref<InstanceType<typeof ToastComponent> | null>(null);
 const results = ref<Badge[]>([]);
 const resultsAmount = ref(20);
+const isInitialized = ref(false);
 
-const filterResults = () => {
-  let result = badges;
-  if (query.value.length > 0) {
-    result = result.filter((badge) =>
-      sanitizeText(badge.name).includes(sanitizeText(query.value))
-    );
-  }
-  if (categoryQuery.value !== "All") {
-    result = result.filter((badge) => badge.category === categoryQuery.value);
-  }
+const badges = getBadges();
+
+const updateReults = () => {
+  const result = filterBadges({
+    query: query.value,
+    category: categoryQuery.value,
+  });
+
   results.value = result.slice(0, resultsAmount.value);
 };
 
-const searchBadge = debounce(() => {
+const debouncedUpdate = debounce(() => {
+  syncUrl();
+  updateReults();
+  resultsAmount.value = 20;
+}, 600);
+
+const syncUrl = () => {
   const url = new URL(window.location.href);
 
   if (query.value.length > 0) {
@@ -41,58 +40,34 @@ const searchBadge = debounce(() => {
     url.searchParams.delete("query");
   }
 
-  if (categoryQuery.value !== "All") {
+  if (categoryQuery.value) {
     url.searchParams.set("category", categoryQuery.value);
   } else {
     url.searchParams.delete("category");
   }
 
   window.history.replaceState({}, "", url);
-  resultsAmount.value = 20;
-  filterResults();
-}, 600);
+};
 
 const clearSearch = () => {
   query.value = "";
-  searchBadge();
 };
 
 const loadMoreResults = () => {
   resultsAmount.value += 20;
-  filterResults();
-};
-
-const copy = async (markdown: string, event: Event) => {
-  const element = event.currentTarget as HTMLButtonElement;
-  if (event == null || element == null) {
-    return;
-  }
-
-  await navigator.clipboard.writeText(markdown);
-  const clipBoardButton = element.querySelector("button");
-  if (!clipBoardButton) return;
-
-  clipBoardButton.innerHTML =
-    '<svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="inherit" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M9 14l2 2l4 -4" /></svg>';
-  setTimeout(() => {
-    clipBoardButton.innerHTML =
-      '<svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="inherit" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /></svg>';
-  }, 700);
-
-  toastRef.value?.addToast("Copied to clipboard");
 };
 
 const initializeSearch = () => {
   const url = new URL(window.location.href);
   const queryParam = url.searchParams.get("query");
   const categoryQueryParam = url.searchParams.get("category");
+
   if (queryParam) {
     query.value = queryParam;
   }
   if (categoryQueryParam) {
     categoryQuery.value = categoryQueryParam;
   }
-  filterResults();
 };
 
 function handleKeyDown(event: KeyboardEvent) {
@@ -102,13 +77,26 @@ function handleKeyDown(event: KeyboardEvent) {
   }
 }
 
+watch([query, categoryQuery], () => {
+  if (!isInitialized.value) return;
+  debouncedUpdate();
+});
+
+watch(resultsAmount, () => {
+  updateReults();
+});
+
 onMounted(() => {
   initializeSearch();
+  updateReults();
+  isInitialized.value = true;
+
   document.addEventListener("keydown", handleKeyDown);
 });
 
 onUnmounted(() => {
   document.removeEventListener("keydown", handleKeyDown);
+  debouncedUpdate.clear?.();
 });
 </script>
 
@@ -142,7 +130,6 @@ onUnmounted(() => {
         v-model="query"
         ref="searchInput"
         class="block ps-12 py-2 pr-3 bg-[#1e1e1e] rounded-sm w-full border-0 text-[#f1f1ef] outline-1 -outline-offset-1 outline-transparent transition duration-200 focus:outline-2 focus:-outline-offset-2 focus:outline-fuchsia-200 leading-6 placeholder:text-neutral-600 shadow-lg"
-        @input="searchBadge"
         :placeholder="`Search in ${badges.length} badges`"
       />
 
@@ -150,7 +137,7 @@ onUnmounted(() => {
         class="absolute inset-y-1/2 translate-y-[-50%] right-0 flex items-center text-gray-600 pr-3 h-fit"
       >
         <div
-          v-if="!query && query.length <= 0"
+          v-if="query.length === 0"
           class="flex items-center pointer-events-none text-base gap-x-1"
         >
           <svg
@@ -184,17 +171,17 @@ onUnmounted(() => {
 
     <select
       v-model="categoryQuery"
-      @input="searchBadge"
       name="category"
       class="py-2 px-6 bg-[#1e1e1e] rounded-sm border-0 text-[#f1f1ef] focus:ring-3 focus:ring-fuchsia-200 shadow-lg"
       aria-label="Category"
     >
+      <option value="" selected>All</option>
       <option v-for="category of categories" :key="category" :value="category">
         {{ category }}
       </option>
     </select>
   </div>
-  <template v-if="results && results.length > 0">
+  <template v-if="results.length > 0">
     <div class="grid md:grid-cols-4 grid-cols-2 gap-4">
       <BadgeCard
         v-for="badge in results"
@@ -202,7 +189,6 @@ onUnmounted(() => {
         :name="badge.name"
         :url="badge.url"
         :category="badge.category"
-        @click="copy(badge.markdown, $event)"
       />
     </div>
 
@@ -230,7 +216,7 @@ onUnmounted(() => {
           <path d="M7 7l5 5l5 -5" />
           <path d="M7 13l5 5l5 -5" />
         </svg>
-        All Badges
+        Load more
       </button>
     </div>
   </template>
@@ -272,6 +258,4 @@ onUnmounted(() => {
       </button>
     </div>
   </div>
-
-  <ToastComponent ref="toastRef" />
 </template>
