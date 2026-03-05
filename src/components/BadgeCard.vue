@@ -94,6 +94,6 @@ const copy = async () => {
         <path d="M9 14l2 2l4 -4" />
       </svg>
     </button>
-    <ToastComponent ref="toastRef" />
   </div>
+  <ToastComponent ref="toastRef" />
 </template>
