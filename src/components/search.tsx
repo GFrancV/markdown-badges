@@ -10,6 +10,14 @@ import { useDebounce } from "use-debounce";
 
 import { BadgeCard } from "@/components/badges/badge-card";
 import { filterBadges, getBadgeCategories, getBadges } from "@/services/badges";
+import { Button } from "./ui/button";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "./ui/input-group";
+import { Kbd } from "./ui/kbd";
 
 export function Search({ initialQuery = "", initialCategory = "" }) {
   const badges = useMemo(() => getBadges(), []);
@@ -80,37 +88,35 @@ export function Search({ initialQuery = "", initialCategory = "" }) {
   return (
     <>
       <div className="flex md:flex-row flex-col gap-2 mb-10">
-        <div className="relative grow">
-          <div className="pointer-events-none absolute translate-y-[-50%] left-0 flex items-center pl-3 h-fit inset-y-1/2 text-gray-600">
-            <SearchIcon />
-          </div>
-
-          <input
+        <InputGroup>
+          <InputGroupInput
             ref={searchInput}
             type="text"
             name="query"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={`Search in ${badges.length} badges`}
-            className="block ps-12 py-2 pr-3 bg-[#1e1e1e] rounded-sm w-full border-0 text-[#f1f1ef] outline-1 -outline-offset-1 outline-transparent transition duration-200 focus:outline-2 focus:-outline-offset-2 focus:outline-fuchsia-200 leading-6 placeholder:text-neutral-600 shadow-lg"
           />
-
-          <div className="absolute inset-y-1/2 translate-y-[-50%] right-0 flex items-center text-gray-600 pr-3 h-fit">
+          <InputGroupAddon>
+            <SearchIcon className="text-muted-foreground" />
+          </InputGroupAddon>
+          <InputGroupAddon align="inline-end">
             {query.length === 0 ? (
-              <div className="flex items-center pointer-events-none text-base gap-x-1 text-gray-500">
-                <CommandIcon className="size-5" />
-                <span>K</span>
-              </div>
+              <Kbd>
+                <CommandIcon /> K
+              </Kbd>
             ) : (
-              <button
+              <InputGroupButton
+                variant="ghost"
+                aria-label="clear"
+                size="icon-xs"
                 onClick={handleClearQuery}
-                className="text-white cursor-pointer"
               >
-                <XIcon className="size-5" />
-              </button>
+                <XIcon />
+              </InputGroupButton>
             )}
-          </div>
-        </div>
+          </InputGroupAddon>
+        </InputGroup>
 
         <select
           value={categoryQuery}
@@ -136,13 +142,10 @@ export function Search({ initialQuery = "", initialCategory = "" }) {
 
           {results.length < filteredBadges.length && (
             <div className="flex justify-center items-center gap-4 mt-8">
-              <button
-                onClick={handleLoadMoreResults}
-                className="flex gap-1 border border-transparent back rounded-full px-4 py-2 transition text-white bg-[#1e1e1e] hover:bg-fuchsia-300/30 hover:border-fuchsia-200 cursor-pointer"
-              >
+              <Button onClick={handleLoadMoreResults}>
                 <ChevronsDownIcon className="motion-safe:animate-bounce" />
                 Load more
-              </button>
+              </Button>
             </div>
           )}
         </div>
@@ -157,19 +160,17 @@ export function Search({ initialQuery = "", initialCategory = "" }) {
           <p className="text-gray-500 text">"{query}"</p>
 
           <div className="flex justify-center items-center gap-4 mt-4 text-neutral-300">
-            <a
-              href="https://github.com/gfrancv/markdown-badges/issues/new?labels=request&title=%5BRequest%5D%3A"
-              target="_blank"
-              className="border border-transparent back rounded-full px-3 py-2 transition bg-[#1e1e1e] hover:bg-fuchsia-300/30 hover:border-fuchsia-200"
-            >
-              Request Badge
-            </a>
-            <button
-              onClick={handleClearQuery}
-              className="border border-transparent back rounded-full px-3 py-2 transition bg-[#1e1e1e] hover:bg-fuchsia-300/30 hover:border-fuchsia-200 cursor-pointer"
-            >
+            <Button>
+              <a
+                href="https://github.com/gfrancv/markdown-badges/issues/new?labels=request&title=%5BRequest%5D%3A"
+                target="_blank"
+              >
+                Request Badge
+              </a>
+            </Button>
+            <Button variant="secondary" onClick={handleClearQuery}>
               Clear search
-            </button>
+            </Button>
           </div>
         </div>
       )}
