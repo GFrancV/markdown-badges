@@ -1,15 +1,15 @@
 <script setup lang="ts">
+import { ClipboardCheckIcon, ClipboardIcon } from "lucide-vue-next";
 import { ref } from "vue";
 
 import ToastComponent from "./ToastComponent.vue";
 
 interface Props {
-  name: string;
-  url: string;
-  category: string;
+  badge: Badge;
 }
 
-const { name, url, category } = defineProps<Props>();
+const { badge } = defineProps<Props>();
+const { name, url, category } = badge;
 
 const isCopied = ref(false);
 const toastRef = ref<InstanceType<typeof ToastComponent> | null>(null);
@@ -50,49 +50,10 @@ const copy = async () => {
       </div>
     </div>
     <button
-      class="absolute top-0 right-0 m-2 stroke-gray-600 transition duration-300 group-hover:stroke-fuchsia-300"
+      class="absolute top-0 right-0 m-2 text-gray-600 transition duration-300 group-hover:text-fuchsia-300 text-xl"
     >
-      <svg
-        v-if="!isCopied"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="inherit"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        role="img"
-        aria-label="Clipboard badge"
-      >
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path
-          d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"
-        />
-        <path
-          d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"
-        />
-      </svg>
-      <svg
-        v-else
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="inherit"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path
-          d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"
-        />
-        <path
-          d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"
-        />
-        <path d="M9 14l2 2l4 -4" />
-      </svg>
+      <ClipboardIcon v-if="!isCopied" :size="22" />
+      <ClipboardCheckIcon v-else :size="22" />
     </button>
   </div>
   <ToastComponent ref="toastRef" />
