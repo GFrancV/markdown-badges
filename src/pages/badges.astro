@@ -1,60 +1,19 @@
 ---
-import { getCollection } from "astro:content";
-import Layout from "../layouts/Layout.astro"
-import Typography from "../components/Typography.astro"
-import BadgeCard from '../components/BadgeCard.vue';
+import { BadgeCard } from "@/components/badges/badge-card";
+import Typography from "@/components/Typography.astro";
+import Layout from "@/layouts/Layout.astro";
+import { getBadges } from "@/services/badges";
 
-const badges = await getCollection("badges")
-const sortedBadges = badges.sort((a, b) => a.data.name.localeCompare(b.data.name))
+const badges = getBadges();
 ---
 
 <Layout title="Badges - Markdown Badges">
-	<section id="badgetContainer">
-		<Typography as="h1" variant="big" color="white" class="mb-8"> Badges </Typography>
-		<div class="grid md:grid-cols-4 grid-cols-2 gap-4">
-			{
-				sortedBadges.map(badges => (
-					<markdown-copy-button data-markdown={badges.data.markdown}>
-						<BadgeCard
-              name={badges.data.name}
-              url={badges.data.url}
-              category={badges.data.category}
-            />
-					</markdown-copy-button>
-				))
-			}
-		</div>
-	</section>
+  <section id="badgetContainer">
+    <Typography as="h1" variant="big" color="white" class="mb-8">
+      Badges
+    </Typography>
+    <div class="grid md:grid-cols-4 grid-cols-2 gap-4">
+      {badges.map((badge) => <BadgeCard badge={badge} client:load />)}
+    </div>
+  </section>
 </Layout>
-
-<script>
-	import { $ } from "../utils/dom-selector"
-	const clipboardIcon =
-		'<svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="inherit" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /></svg>'
-	const clipboardCheckIcon =
-		'<svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="inherit" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M9 14l2 2l4 -4" /></svg>'
-
-	class MarkdownCopyButton extends HTMLElement {
-		constructor() {
-			super()
-			const markdown = this.dataset.markdown
-			this.addEventListener("click", this.handleClick.bind(this, markdown))
-		}
-
-		async handleClick(markdown: string | undefined) {
-			if (!markdown) return
-
-			const icon = $('button', this)
-			await navigator.clipboard.writeText(markdown)
-
-			if (icon) {
-				icon.innerHTML = clipboardCheckIcon
-				setTimeout(() => {
-					icon.innerHTML = clipboardIcon
-				}, 700)
-			}
-		}
-	}
-
-	customElements.define("markdown-copy-button", MarkdownCopyButton)
-</script>
