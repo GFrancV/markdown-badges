@@ -1,4 +1,5 @@
 ---
+import { Toaster } from "@/components/ui/sonner";
 import NavMenu from "../components/NavMenu.astro";
 import SEO from "../components/SEO.astro";
 import Typography from "../components/Typography.astro";
@@ -115,5 +116,6 @@ const year = new Date().getFullYear();
         }
       }
     </style>
+    <Toaster client:load />
   </body>
 </html>
