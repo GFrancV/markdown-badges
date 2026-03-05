@@ -1,6 +1,6 @@
 ---
 import { Search } from "@/components/search";
-import Typography from "@/components/Typography.astro";
+import { Typography } from "@/components/ui/typography";
 import MarkdownIcon from "@/icons/markdown.astro";
 import Layout from "@/layouts/Layout.astro";
 
@@ -13,14 +13,13 @@ const category = Astro.url.searchParams.get("category") || "";
     <header class="mb-8">
       <Typography
         as="h1"
-        variant="h2"
-        color="white"
-        class="flex items-center justify-center gap-2"
+        size="h1"
+        className="flex items-center justify-center gap-2"
       >
         <MarkdownIcon class="w-16 h-16 stroke-white" />
         Markdown Badges
       </Typography>
-      <Typography as="p" variant="body" color="neutral" class="text-center">
+      <Typography variant="muted" className="text-center">
         Awesome site to copy markdown badges for your readmes and other markdown
         files.
       </Typography>

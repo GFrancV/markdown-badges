@@ -9,15 +9,16 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 
 import { BadgeCard } from "@/components/badges/badge-card";
-import { filterBadges, getBadgeCategories, getBadges } from "@/services/badges";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "./ui/input-group";
-import { Kbd } from "./ui/kbd";
+} from "@/components/ui/input-group";
+import { Kbd } from "@/components/ui/kbd";
+import { Typography } from "@/components/ui/typography";
+import { filterBadges, getBadgeCategories, getBadges } from "@/services/badges";
 
 export function Search({ initialQuery = "", initialCategory = "" }) {
   const badges = useMemo(() => getBadges(), []);
@@ -154,10 +155,10 @@ export function Search({ initialQuery = "", initialCategory = "" }) {
       {filteredBadges.length === 0 && query.length > 0 && (
         <div className="font-semibold text-center mt-12">
           <ShieldOffIcon className="text-gray-500 mx-auto mb-4" size={48} />
-          <p className="text-gray-500 text-lg">
-            Don't exist any badge with this name
-          </p>
-          <p className="text-gray-500 text">"{query}"</p>
+          <Typography size="h4">No badges found</Typography>
+          <Typography size="h4" variant="muted">
+            {query}
+          </Typography>
 
           <div className="flex justify-center items-center gap-4 mt-4 text-neutral-300">
             <Button>

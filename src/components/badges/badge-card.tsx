@@ -1,7 +1,9 @@
 import { ClipboardCheckIcon, ClipboardIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Button } from "../ui/button";
+
+import { Button } from "@/components/ui/button";
+import { Typography } from "@/components/ui/typography";
 
 export function BadgeCard({ badge }: { badge: Badge }) {
   const { name, url, category } = badge;
@@ -24,7 +26,9 @@ export function BadgeCard({ badge }: { badge: Badge }) {
       onClick={handleCopy}
       className="relative group bg-[#1e1e1e] cursor-pointer text-white rounded-sm border border-transparent transition p-6 text-center flex flex-col hover:bg-primary/20 hover:border-primary badget-element h-full"
     >
-      <h2 className="text-[#f1f1ef] text-lg font-semibold mt-1 mb-3">{name}</h2>
+      <Typography as="h3" size="h4" className="mt-1 mb-3">
+        {name}
+      </Typography>
       <img
         src={url}
         alt={`${name} badge`}
