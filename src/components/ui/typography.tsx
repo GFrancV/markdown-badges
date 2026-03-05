@@ -42,9 +42,6 @@ function Typography({
 }: Props) {
   return (
     <Component
-      data-slot="typography"
-      data-variant={variant}
-      data-size={size}
       className={cn(typographyVariants({ variant, size, className }))}
       {...props}
     />
