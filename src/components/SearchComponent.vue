@@ -183,13 +183,7 @@ onUnmounted(() => {
   </div>
   <template v-if="results.length > 0">
     <div class="grid md:grid-cols-4 grid-cols-2 gap-4">
-      <BadgeCard
-        v-for="badge in results"
-        :key="badge.name"
-        :name="badge.name"
-        :url="badge.url"
-        :category="badge.category"
-      />
+      <BadgeCard v-for="badge in results" :key="badge.name" :badge="badge" />
     </div>
 
     <div
