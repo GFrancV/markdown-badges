@@ -24,7 +24,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="absolute bottom-4 right-4 flex z-50">
+  <div class="fixed bottom-4 right-4 flex z-50">
     <transition-group name="fade" tag="div">
       <div
         v-for="toast in toasts"
