@@ -5,10 +5,11 @@ import {
   ShieldOffIcon,
   XIcon,
 } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 
 import { BadgeCard } from "@/components/badges/badge-card";
+import { BadgeSidebar } from "@/components/badges/badge-sidebar";
 import { Button } from "@/components/ui/button";
 import {
   InputGroup,
@@ -30,6 +31,15 @@ export function Search({ initialQuery = "", initialCategory = "" }) {
   const [categoryQuery, setCategoryQuery] = useState(initialCategory);
   const [resultsAmount, setResultsAmount] = useState(20);
   const [isReady, setIsReady] = useState(false);
+  const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
+
+  const handleSelectBadge = useCallback((badge: Badge) => {
+    setSelectedBadge(badge);
+  }, []);
+
+  const handleCloseSidebar = useCallback(() => {
+    setSelectedBadge(null);
+  }, []);
 
   const [debouncedQuery] = useDebounce(query, 450);
 
@@ -88,6 +98,7 @@ export function Search({ initialQuery = "", initialCategory = "" }) {
 
   return (
     <>
+      <BadgeSidebar badge={selectedBadge} onClose={handleCloseSidebar} />
       <div className="flex md:flex-row flex-col gap-2 mb-10">
         <InputGroup>
           <InputGroupInput
@@ -137,7 +148,7 @@ export function Search({ initialQuery = "", initialCategory = "" }) {
         <div>
           <div className="grid md:grid-cols-4 grid-cols-2 gap-4">
             {results.map((badge) => (
-              <BadgeCard key={badge.name} badge={badge} />
+              <BadgeCard key={badge.name} badge={badge} onSelect={handleSelectBadge} />
             ))}
           </div>
 
