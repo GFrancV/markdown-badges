@@ -1,0 +1,59 @@
+---
+import type { GetStaticPaths } from "astro";
+
+import { BadgeVariants } from "@/components/badges/badge-variants";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Typography } from "@/components/ui/typography";
+import Layout from "@/layouts/Layout.astro";
+import { getBadges } from "@/services/badges";
+import { BookmarkIcon, ClipboardIcon } from "lucide-react";
+
+export const getStaticPaths = (() => {
+  const badges = getBadges();
+  return badges.map((badge) => ({
+    params: { id: badge.id },
+    props: { badge },
+  }));
+}) satisfies GetStaticPaths;
+
+const { badge } = Astro.props;
+const { name, category } = badge;
+---
+
+<Layout title={`${name} Badge | Markdown Badges`}>
+  <div class="grid grid-cols-4 gap-4 mb-4">
+    <div class="col-span-4 md:col-span-1">
+      <img
+        src={badge.url}
+        alt={`${name} badge`}
+        class="w-full h-auto rounded-md border"
+      />
+      <BadgeVariants badge={badge} className="mt-6" />
+    </div>
+    <div class="col-span-4 md:col-span-3">
+      <header class="mb-2 flex gap-4 items-center">
+        <Typography as="h1" size="h1">
+          {name}
+        </Typography>
+        <Badge variant="outline" className="h-fit">
+          <a href={`/?category=${category}`} class="hover:underline">
+            {category}
+          </a>
+        </Badge>
+      </header>
+      <pre
+        class="w-full bg-[#1e1e1e] rounded-md p-4 text-sm text-emerald-400 break-all whitespace-pre-wrap font-mono leading-relaxed pr-8 cursor-pointer select-none group">{badge.markdown}</pre>
+      <div class="flex gap-4 mt-6">
+        <Button>
+          <ClipboardIcon />
+          Copy Markdown
+        </Button>
+        <Button variant="secondary">
+          <BookmarkIcon />
+          Save to collection
+        </Button>
+      </div>
+    </div>
+  </div>
+</Layout>
