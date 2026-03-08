@@ -35,10 +35,12 @@ export function Search({ initialQuery = "", initialCategory = "" }) {
 
   const handleSelectBadge = useCallback((badge: Badge) => {
     setSelectedBadge(badge);
+    window.history.pushState({}, "", `/badges/${badge.id}`);
   }, []);
 
   const handleCloseSidebar = useCallback(() => {
     setSelectedBadge(null);
+    window.history.pushState({}, "", `/`);
   }, []);
 
   const [debouncedQuery] = useDebounce(query, 450);
@@ -148,7 +150,11 @@ export function Search({ initialQuery = "", initialCategory = "" }) {
         <div>
           <div className="grid md:grid-cols-4 grid-cols-2 gap-4">
             {results.map((badge) => (
-              <BadgeCard key={badge.name} badge={badge} onSelect={handleSelectBadge} />
+              <BadgeCard
+                key={badge.name}
+                badge={badge}
+                onSelect={handleSelectBadge}
+              />
             ))}
           </div>
 
