@@ -1,4 +1,9 @@
-import { ClipboardIcon, ExternalLinkIcon, XIcon } from "lucide-react";
+import {
+  ClipboardCheckIcon,
+  ClipboardIcon,
+  ExternalLinkIcon,
+  XIcon,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -38,7 +43,9 @@ interface BadgeSidebarProps {
 }
 
 export function BadgeSidebar({ badge, onClose }: BadgeSidebarProps) {
-  const [selectedStyle, setSelectedStyle] = useState<BadgeStyleId>("for-the-badge");
+  const [selectedStyle, setSelectedStyle] =
+    useState<BadgeStyleId>("for-the-badge");
+  const [isCopying, setIsCopying] = useState(false);
 
   useEffect(() => {
     if (badge) {
@@ -68,10 +75,10 @@ export function BadgeSidebar({ badge, onClose }: BadgeSidebarProps) {
 
   const isOpen = badge !== null;
 
-  const currentUrl = badge ? getBadgeUrlWithStyle(badge.url, selectedStyle) : "";
-  const currentMarkdown = badge
-    ? `![${badge.name}](${currentUrl})`
+  const currentUrl = badge
+    ? getBadgeUrlWithStyle(badge.url, selectedStyle)
     : "";
+  const currentMarkdown = badge ? `![${badge.name}](${currentUrl})` : "";
 
   const source = badge ? getSourceFromUrl(badge.url) : "";
 
@@ -79,8 +86,15 @@ export function BadgeSidebar({ badge, onClose }: BadgeSidebarProps) {
     if (!badge) return;
     await navigator.clipboard.writeText(currentMarkdown);
     toast.success("Copied to clipboard", {
-      description: currentMarkdown.slice(0, 60) + (currentMarkdown.length > 60 ? "..." : ""),
+      description:
+        currentMarkdown.slice(0, 60) +
+        (currentMarkdown.length > 60 ? "..." : ""),
     });
+    setIsCopying(true);
+
+    setTimeout(() => {
+      setIsCopying(false);
+    }, 2000);
   };
 
   return (
@@ -89,7 +103,9 @@ export function BadgeSidebar({ badge, onClose }: BadgeSidebarProps) {
       <div
         className={cn(
           "fixed inset-0 z-40 bg-black/50 transition-opacity duration-300",
-          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
+          isOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none",
         )}
         onClick={onClose}
         aria-hidden="true"
@@ -110,7 +126,10 @@ export function BadgeSidebar({ badge, onClose }: BadgeSidebarProps) {
             {/* Header */}
             <div className="flex items-start justify-between p-6 border-b border-white/10">
               <div>
-                <h2 className="text-xl font-semibold text-white">{badge.name}</h2>
+                <h2 className="text-xl font-semibold text-white">
+                  badge
+                  {badge.name}
+                </h2>
                 <p className="text-sm text-gray-400 mt-0.5">
                   {badge.category}
                   <span className="mx-1.5 opacity-50">·</span>
@@ -165,7 +184,9 @@ export function BadgeSidebar({ badge, onClose }: BadgeSidebarProps) {
                           height="20"
                           className="h-5 w-auto"
                         />
-                        <span className="text-xs text-gray-400">{style.label}</span>
+                        <span className="text-xs text-gray-400">
+                          {style.label}
+                        </span>
                       </button>
                     );
                   })}
@@ -177,9 +198,23 @@ export function BadgeSidebar({ badge, onClose }: BadgeSidebarProps) {
                 <p className="text-xs font-semibold tracking-widest text-gray-500 uppercase mb-3">
                   Markdown
                 </p>
-                <pre className="bg-[#1e1e1e] rounded-md p-4 text-sm text-emerald-400 break-all whitespace-pre-wrap font-mono leading-relaxed">
-                  {currentMarkdown}
-                </pre>
+                <div className="relative">
+                  <pre
+                    className="w-full bg-[#1e1e1e] rounded-md p-4 text-sm text-emerald-400 break-all whitespace-pre-wrap font-mono leading-relaxed pr-8 cursor-pointer select-none group"
+                    onClick={handleCopyMarkdown}
+                  >
+                    {currentMarkdown}
+                  </pre>
+                  <Button
+                    asChild
+                    variant="ghost"
+                    className="absolute top-0.5 right-0.5 group-hover:"
+                  >
+                    <span>
+                      {isCopying ? <ClipboardCheckIcon /> : <ClipboardIcon />}
+                    </span>
+                  </Button>
+                </div>
               </section>
             </div>
 
@@ -194,7 +229,11 @@ export function BadgeSidebar({ badge, onClose }: BadgeSidebarProps) {
                 className="w-full dark:border-white/10 dark:hover:bg-white/10"
                 asChild
               >
-                <a href={currentUrl} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={`/badges/${badge.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <ExternalLinkIcon />
                   View badge page
                 </a>
