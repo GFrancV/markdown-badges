@@ -9,36 +9,47 @@ const BADGE_STYLES = [
   { id: "plastic", label: "plastic" },
 ] as const;
 
-type BadgeStyleId = (typeof BADGE_STYLES)[number]["id"];
+export type BadgeStyleId = (typeof BADGE_STYLES)[number]["id"];
 
 function getBadgeUrlWithStyle(url: string, style: BadgeStyleId): string {
   return url.replace(/style=[^&]+/, `style=${style}`);
 }
 
+type BadgeVariantsProps = {
+  badge: Badge;
+  style?: BadgeStyleId;
+  className?: string;
+  onStyleChange?: (badgeUrl: string) => void;
+};
+
 export function BadgeVariants({
   badge,
+  style = "flat",
   className,
-}: {
-  badge: Badge;
-  className?: string;
-}) {
-  const [selectedStyle, setSelectedStyle] =
-    useState<BadgeStyleId>("for-the-badge");
+  onStyleChange,
+}: BadgeVariantsProps) {
+  const [selectedStyle, setSelectedStyle] = useState<BadgeStyleId>(style);
+
+  const handleClick = (style: BadgeStyleId, badgeUrl: string) => {
+    setSelectedStyle(style);
+    onStyleChange?.(badgeUrl);
+  };
 
   return (
-    <div className={cn("grid grid-cols-2 gap-2", className)}>
+    <div className={cn("grid grid-cols-2 gap-4", className)}>
       {BADGE_STYLES.map((style) => {
         const styleUrl = getBadgeUrlWithStyle(badge.url, style.id);
         const isSelected = selectedStyle === style.id;
+
         return (
           <button
             key={style.id}
-            onClick={() => setSelectedStyle(style.id)}
+            onClick={() => handleClick(style.id, styleUrl)}
             className={cn(
               "flex flex-col items-center justify-center gap-2 bg-[#1e1e1e] rounded-md p-3 border transition-colors",
               isSelected
-                ? "border-primary bg-primary/10"
-                : "border-transparent hover:border-white/20",
+                ? "border-primary bg-primary/15"
+                : "border-transparent hover:bg-primary/15",
             )}
           >
             <img

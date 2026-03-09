@@ -1,13 +1,17 @@
 ---
 import type { GetStaticPaths } from "astro";
+import { BookmarkIcon } from "lucide-react";
 
+import { BadgeCopyButton } from "@/components/badges/badge-copy-button";
 import { BadgeVariants } from "@/components/badges/badge-variants";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { CodeBlock } from "@/components/ui/code-block";
 import { Typography } from "@/components/ui/typography";
 import Layout from "@/layouts/Layout.astro";
-import { getBadges } from "@/services/badges";
-import { BookmarkIcon, ClipboardIcon } from "lucide-react";
+import { getBadges, getRelatedBadges } from "@/services/badges";
+
+export const prerender = true;
 
 export const getStaticPaths = (() => {
   const badges = getBadges();
@@ -19,41 +23,72 @@ export const getStaticPaths = (() => {
 
 const { badge } = Astro.props;
 const { name, category } = badge;
+
+const relatedBadges = getRelatedBadges(badge.id);
 ---
 
 <Layout title={`${name} Badge | Markdown Badges`}>
-  <div class="grid grid-cols-4 gap-4 mb-4">
-    <div class="col-span-4 md:col-span-1">
+  <section class="grid grid-cols-6 gap-6">
+    <div class="col-span-6 md:col-span-2">
       <img
         src={badge.url}
         alt={`${name} badge`}
         class="w-full h-auto rounded-md border"
       />
-      <BadgeVariants badge={badge} className="mt-6" />
+      <BadgeVariants client:load badge={badge} className="mt-4" />
     </div>
-    <div class="col-span-4 md:col-span-3">
-      <header class="mb-2 flex gap-4 items-center">
+    <div class="col-span-6 md:col-span-4">
+      <header
+        class="mb-6 flex flex-col md:flex-row gap-4 md:gap-6 items-center"
+      >
         <Typography as="h1" size="h1">
           {name}
         </Typography>
-        <Badge variant="outline" className="h-fit">
-          <a href={`/?category=${category}`} class="hover:underline">
-            {category}
-          </a>
-        </Badge>
+        <div class="flex items-center gap-2 flex-wrap">
+          {
+            category.map((categoryElement) => (
+              <Badge variant="outline" className="h-fit">
+                <a
+                  href={`/?category=${categoryElement}`}
+                  class="hover:underline"
+                >
+                  {categoryElement}
+                </a>
+              </Badge>
+            ))
+          }
+        </div>
       </header>
-      <pre
-        class="w-full bg-[#1e1e1e] rounded-md p-4 text-sm text-emerald-400 break-all whitespace-pre-wrap font-mono leading-relaxed pr-8 cursor-pointer select-none group">{badge.markdown}</pre>
+      <CodeBlock client:load code={badge.markdown} language="markdown" />
       <div class="flex gap-4 mt-6">
-        <Button>
-          <ClipboardIcon />
-          Copy Markdown
-        </Button>
+        <BadgeCopyButton client:load badge={badge.markdown} />
         <Button variant="secondary">
           <BookmarkIcon />
           Save to collection
         </Button>
       </div>
     </div>
-  </div>
+  </section>
+  <section class="border-t border-muted mt-12 pt-6">
+    <Typography as="h2" size="h2" className="mb-6"> Related Badges </Typography>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {
+        relatedBadges.map(({ id, name, url }) => (
+          <a
+            href={`/badges/${id}`}
+            class="bg-[#1e1e1e] rounded-sm border border-transparent transition p-4 text-center hover:bg-primary/15 hover:border-primary"
+          >
+            <img
+              src={url}
+              alt={`${name} badge`}
+              class="h-7 w-auto mx-auto mb-4"
+              width="100"
+              height="28"
+            />
+            <Typography className="text-lg font-semibold">{name}</Typography>
+          </a>
+        ))
+      }
+    </div>
+  </section>
 </Layout>
