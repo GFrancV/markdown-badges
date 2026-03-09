@@ -1,8 +1,11 @@
-import { ClipboardCheckIcon, ClipboardIcon, PanelRightOpenIcon } from "lucide-react";
+import {
+  ClipboardCheckIcon,
+  ClipboardIcon,
+  PanelRightOpenIcon,
+} from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
 
 interface BadgeCardProps {
@@ -41,14 +44,6 @@ export function BadgeCard({ badge, onSelect }: BadgeCardProps) {
         className="mt-auto h-7 w-auto mx-auto mb-4"
         loading="lazy"
       />
-      <div className="mt-2">
-        <Button
-          variant="outline"
-          className="rounded-full group-hover:border-primary group-hover:text-primary"
-        >
-          {category}
-        </Button>
-      </div>
       <span className="absolute top-0 right-0 m-2 text-gray-600 transition duration-300 group-hover:text-primary">
         {onSelect ? (
           <PanelRightOpenIcon size={18} />
