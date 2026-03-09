@@ -16,7 +16,7 @@ const matchesQuery = (query?: string) => (badge: Badge) => {
 };
 
 const matchesCategory = (category?: string) => (badge: Badge) =>
-  !category || badge.category === category;
+  !category || badge.category.includes(category);
 
 export function filterBadges(filters: BadgeFilters): Badge[] {
   const allBadges = getBadges();
@@ -32,6 +32,28 @@ export function getBadges(): Badge[] {
   return badges;
 }
 
+export function getBadgeById(id: string): Badge | undefined {
+  return getBadges().find((badge) => badge.id === id);
+}
+
 export function getBadgeCategories(): string[] {
-  return [...new Set(getBadges().map((badge) => badge.category))];
+  return [...new Set(getBadges().flatMap((badge) => badge.category))];
+}
+
+export function getRelatedBadges(id: string, limit = 4): Badge[] {
+  const badge = getBadgeById(id);
+  if (!badge) return [];
+
+  const categorySet = new Set(badge.category);
+
+  return getBadges()
+    .filter((b) => b.id !== id)
+    .map((b) => ({
+      badge: b,
+      score: b.category.filter((c) => categorySet.has(c)).length,
+    }))
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(({ badge }) => badge);
 }
