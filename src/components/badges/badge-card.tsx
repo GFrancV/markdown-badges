@@ -1,20 +1,12 @@
-import { ClipboardCheckIcon, ClipboardIcon } from "lucide-react";
-
+import { CopyClipboardButton } from "@/components/copy-clipboard-button";
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
-import { useCopyClipboard } from "@/hooks/use-copy-clipboard";
-import { cn } from "@/lib/utils";
 
 export function BadgeCard({ badge }: { badge: Badge }) {
   const { name, url, category } = badge;
 
-  const { isCopied, copy } = useCopyClipboard();
-
   return (
-    <div
-      onClick={() => copy(`![${name}](${url})`)}
-      className="relative group bg-[#1e1e1e] cursor-pointer text-white rounded-sm border border-transparent transition p-6 text-center flex flex-col hover:bg-primary/20 hover:border-primary badget-element h-full"
-    >
+    <div className="relative group bg-[#1e1e1e] cursor-pointer text-white rounded-sm border border-transparent transition p-6 text-center flex flex-col hover:bg-primary/20 hover:border-primary badget-element h-full">
       <Typography as="h3" size="h4" className="mt-1 mb-3">
         {name}
       </Typography>
@@ -34,18 +26,10 @@ export function BadgeCard({ badge }: { badge: Badge }) {
           {category}
         </Button>
       </div>
-      <button
-        className={cn(
-          "absolute top-0 right-0 m-2 transition duration-300 group-hover:text-primary text-xl",
-          isCopied ? "text-primary" : "text-gray-600",
-        )}
-      >
-        {!isCopied ? (
-          <ClipboardIcon size={22} />
-        ) : (
-          <ClipboardCheckIcon size={22} />
-        )}
-      </button>
+      <CopyClipboardButton
+        content={`![${name}](${url})`}
+        className="absolute top-1 right-1 transition duration-300 group-hover:text-primary"
+      />
     </div>
   );
 }
