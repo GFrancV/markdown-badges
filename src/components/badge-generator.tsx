@@ -1,7 +1,6 @@
 import { ChevronDownIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
-import { getIcons } from "@/api/simpleIcons";
 import { Button } from "@/components/ui/button";
 import {
   Combobox,
@@ -16,6 +15,7 @@ import {
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useCopyClipboard } from "@/hooks/use-copy-clipboard";
+import { getIcons } from "@/services/simple-icons";
 import { CodeBlock } from "./ui/code-block";
 
 export function BadgeGenerator() {
