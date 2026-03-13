@@ -14,13 +14,10 @@ import {
 } from "@/components/ui/combobox";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { useCopyClipboard } from "@/hooks/use-copy-clipboard";
 import { getIcons } from "@/services/simple-icons";
 import { CodeBlock } from "./ui/code-block";
 
 export function BadgeGenerator() {
-  const { copy } = useCopyClipboard();
-
   const [badgeName, setBadgeName] = useState("GitHub");
   const [logoColor, setLogoColor] = useState("#ffffff");
   const [leftColor, setLeftColor] = useState("#000000");
