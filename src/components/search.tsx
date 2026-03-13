@@ -1,4 +1,5 @@
 import {
+  ChevronDownIcon,
   ChevronsDownIcon,
   CommandIcon,
   SearchIcon,
@@ -19,15 +20,35 @@ import {
 import { Kbd } from "@/components/ui/kbd";
 import { Typography } from "@/components/ui/typography";
 import { filterBadges, getBadgeCategories, getBadges } from "@/services/badges";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+  ComboboxTrigger,
+  ComboboxValue,
+} from "./ui/combobox";
 
-export function Search({ initialQuery = "", initialCategory = "" }) {
+type SearchProps = {
+  initialQuery?: string | null;
+  initialCategory?: string | null;
+};
+
+export function Search({
+  initialQuery = null,
+  initialCategory = null,
+}: SearchProps) {
   const badges = useMemo(() => getBadges(), []);
   const categories = useMemo(() => getBadgeCategories(), []);
 
   const searchInput = useRef<HTMLInputElement>(null);
 
-  const [query, setQuery] = useState(initialQuery);
-  const [categoryQuery, setCategoryQuery] = useState(initialCategory);
+  const [query, setQuery] = useState<string | null>(initialQuery);
+  const [categoryQuery, setCategoryQuery] = useState<string | null>(
+    initialCategory,
+  );
   const [resultsAmount, setResultsAmount] = useState(20);
   const [isReady, setIsReady] = useState(false);
 
@@ -49,7 +70,7 @@ export function Search({ initialQuery = "", initialCategory = "" }) {
 
     const url = new URL(window.location.href);
 
-    if (query.length > 0) url.searchParams.set("query", query);
+    if (query && query.length > 0) url.searchParams.set("query", query);
     else url.searchParams.delete("query");
 
     if (categoryQuery) url.searchParams.set("category", categoryQuery);
@@ -94,7 +115,7 @@ export function Search({ initialQuery = "", initialCategory = "" }) {
             ref={searchInput}
             type="text"
             name="query"
-            value={query}
+            value={query ?? undefined}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={`Search in ${badges.length} badges`}
           />
@@ -102,7 +123,7 @@ export function Search({ initialQuery = "", initialCategory = "" }) {
             <SearchIcon className="text-muted-foreground" />
           </InputGroupAddon>
           <InputGroupAddon align="inline-end">
-            {query.length === 0 ? (
+            {query && query.length === 0 ? (
               <Kbd>
                 <CommandIcon /> K
               </Kbd>
@@ -119,18 +140,36 @@ export function Search({ initialQuery = "", initialCategory = "" }) {
           </InputGroupAddon>
         </InputGroup>
 
-        <select
+        <Combobox
+          items={categories.slice(0, 15)}
           value={categoryQuery}
-          onChange={(e) => setCategoryQuery(e.target.value)}
-          className="py-2 px-6 bg-[#1e1e1e] rounded-sm border-0 text-[#f1f1ef] focus:ring-3 focus:ring-fuchsia-200 shadow-lg"
+          onValueChange={setCategoryQuery}
+          defaultValue={null}
         >
-          <option value="">All</option>
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+          <ComboboxTrigger
+            render={
+              <Button variant="outline" className="w-54 justify-between">
+                <ComboboxValue placeholder="All Categories" />
+                <ChevronDownIcon className="size-4 opacity-50" />
+              </Button>
+            }
+          />
+          <ComboboxContent>
+            <ComboboxInput
+              showTrigger={false}
+              showClear
+              placeholder="Seach category..."
+            />
+            <ComboboxEmpty>No category found.</ComboboxEmpty>
+            <ComboboxList>
+              {(item) => (
+                <ComboboxItem key={item} value={item}>
+                  {item}
+                </ComboboxItem>
+              )}
+            </ComboboxList>
+          </ComboboxContent>
+        </Combobox>
       </div>
 
       {results.length > 0 && (
@@ -152,7 +191,7 @@ export function Search({ initialQuery = "", initialCategory = "" }) {
         </div>
       )}
 
-      {filteredBadges.length === 0 && query.length > 0 && (
+      {filteredBadges.length === 0 && query && query.length > 0 && (
         <div className="font-semibold text-center mt-12">
           <ShieldOffIcon className="text-gray-500 mx-auto mb-4" size={48} />
           <Typography size="h4">No badges found</Typography>

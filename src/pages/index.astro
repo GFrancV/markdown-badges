@@ -5,7 +5,7 @@ import MarkdownIcon from "@/icons/markdown.astro";
 import Layout from "@/layouts/Layout.astro";
 
 const query = Astro.url.searchParams.get("query") || "";
-const category = Astro.url.searchParams.get("category") || "";
+const category = Astro.url.searchParams.get("category") || null;
 ---
 
 <Layout title="Markdown Badges">
