@@ -1,5 +1,4 @@
 import sitemap from "@astrojs/sitemap";
-import vue from "@astrojs/vue";
 import { defineConfig } from "astro/config";
 
 import vercel from "@astrojs/vercel";
@@ -11,7 +10,7 @@ import react from "@astrojs/react";
 // https://astro.build/config
 export default defineConfig({
   site: "https://markdown-badges.vercel.app",
-  integrations: [vue(), sitemap(), react()],
+  integrations: [sitemap(), react()],
   output: "server",
 
   adapter: vercel({
