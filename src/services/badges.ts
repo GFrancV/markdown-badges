@@ -35,3 +35,9 @@ export function getBadges(): Badge[] {
 export function getBadgeCategories(): string[] {
   return [...new Set(getBadges().map((badge) => badge.category))];
 }
+
+export function getRelatedBadges(badge: Badge, maxBadges: number = 4): Badge[] {
+  return getBadges()
+    .filter((b) => b.category === badge.category && b.id !== badge.id)
+    .slice(0, maxBadges);
+}
