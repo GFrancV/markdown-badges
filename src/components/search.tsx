@@ -123,7 +123,7 @@ export function Search({
             <SearchIcon className="text-muted-foreground" />
           </InputGroupAddon>
           <InputGroupAddon align="inline-end">
-            {query && query.length === 0 ? (
+            {!query || query.length === 0 ? (
               <Kbd>
                 <CommandIcon /> K
               </Kbd>
