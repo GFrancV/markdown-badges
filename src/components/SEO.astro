@@ -1,14 +1,19 @@
 ---
-import SpeedInsights from "@vercel/speed-insights/astro"
-
 interface Props {
-	title: string
-	description: string
-	image: string
-	tags?: string[]
+  title: string;
+  description: string;
+  image: string;
+  keywords?: string;
+  type?: "website" | "article";
+  jsonLd?: Record<string, any>;
 }
 
-const { title, description, image } = Astro.props
+const { title, description, image, keywords, type, jsonLd } = Astro.props;
+
+const canonicalUrl = Astro.url;
+const ogImage = image.startsWith("http")
+  ? image
+  : new URL(image, Astro.site ?? Astro.url).toString();
 ---
 
 <meta charset="UTF-8" />
@@ -19,39 +24,66 @@ const { title, description, image } = Astro.props
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="theme-color" content="#121212" />
 
-<meta name="keywords" content="markdown, gfrancv, badges" />
+<meta name="keywords" content={keywords} />
+<meta name="robots" content="index, follow" />
+
+<meta name="generator" content={Astro.generator} />
+
+<meta
+  name="google-site-verification"
+  content="bGA4Cm6PsD4Ug12ZPdf_xqLExFJaZDexlqZHsbL65SQ"
+/>
 
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:url" content={Astro.url} />
-<meta property="og:image" content={image} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={title} />
 <meta property="og:site_name" content="Markdown Badges" />
-<meta property="og:type" content="website" />
-<meta property="og:locale" content="en_EN" />
+<meta property="og:type" content={type} />
+<meta property="og:locale" content="en_US" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@GFrancV" />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:image" content={image} />
-
-<meta name="robots" content="index, follow" />
+<meta property="twitter:url" content={canonicalUrl} />
+<meta property="twitter:image" content={ogImage} />
 
 <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
-
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/favicon/apple-touch-icon.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/favicon/favicon-32x32.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/favicon/favicon-16x16.png"
+/>
 <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#273944" />
 <meta name="msapplication-TileColor" content="#ffffff" />
 <meta name="msapplication-config" content="/browserconfig.xml" />
 <link rel="manifest" href="/site.webmanifest" />
 
-<meta name="generator" content={Astro.generator} />
+<link rel="canonical" href={canonicalUrl} />
 <link rel="sitemap" href="/sitemap-index.xml" />
-<link rel="canonical" href={Astro.url} />
 
-<meta name="google-site-verification" content="bGA4Cm6PsD4Ug12ZPdf_xqLExFJaZDexlqZHsbL65SQ" />
-
-<SpeedInsights />
+{
+  jsonLd && (
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(jsonLd)}
+    />
+  )
+}
