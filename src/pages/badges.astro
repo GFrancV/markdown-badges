@@ -1,5 +1,5 @@
 ---
-import { BadgeCard } from "@/components/badges/badge-card";
+import { BadgesList } from "@/components/badges/badges-list";
 import { Typography } from "@/components/ui/typography";
 import Layout from "@/layouts/Layout.astro";
 import { getBadges } from "@/services/badges";
@@ -10,8 +10,6 @@ const badges = getBadges();
 <Layout title="Badges - Markdown Badges">
   <section id="badgetContainer">
     <Typography as="h1" size="h1" className="mb-8"> Badges </Typography>
-    <div class="grid md:grid-cols-4 grid-cols-2 gap-4">
-      {badges.map((badge) => <BadgeCard badge={badge} client:load />)}
-    </div>
+    <BadgesList client:load />
   </section>
 </Layout>
