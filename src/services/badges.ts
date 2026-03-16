@@ -3,11 +3,11 @@ import { filter as fuzzy } from "fuzzyjs";
 import badges from "@/data/badges.json";
 
 type BadgeFilters = {
-  query?: string;
-  category?: string;
+  query?: string | null;
+  category?: string | null;
 };
 
-const matchesQuery = (query?: string) => (badge: Badge) => {
+const matchesQuery = (query?: string | null) => (badge: Badge) => {
   if (!query) return true;
 
   return fuzzy(query, {
@@ -15,7 +15,7 @@ const matchesQuery = (query?: string) => (badge: Badge) => {
   })(badge);
 };
 
-const matchesCategory = (category?: string) => (badge: Badge) =>
+const matchesCategory = (category?: string | null) => (badge: Badge) =>
   !category || badge.category === category;
 
 export function filterBadges(filters: BadgeFilters): Badge[] {

@@ -1,7 +1,7 @@
 ---
-import BadgeGenerator from "../components/BadgeGenerator.vue";
-import Typography from "../components/Typography.astro";
-import Layout from "../layouts/Layout.astro";
+import { BadgeGenerator } from "@/components/badge-generator";
+import { Typography } from "@/components/ui/typography";
+import Layout from "@/layouts/Layout.astro";
 ---
 
 <Layout
@@ -9,7 +9,7 @@ import Layout from "../layouts/Layout.astro";
   description="Create stunning Markdown Badges for your README.md files effortlessly with our online generator. Perfect for developers, and open-source contributors, our tool helps you showcase your skills, tools, and project highlights with stylish badges."
 >
   <section>
-    <Typography as="h1" variant="big" color="white" class="mb-8">
+    <Typography as="h1" size="h1" className="mb-8">
       Badges generator
     </Typography>
     <BadgeGenerator client:load />

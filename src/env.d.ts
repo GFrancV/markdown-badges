@@ -7,3 +7,20 @@ interface Badge {
   markdown: string;
   category: string;
 }
+
+interface SimpleIcon {
+  title: string;
+  hex: string;
+  source: string;
+  aliases?: Aliases;
+  license?: License;
+  guidelines?: string;
+}
+
+interface Aliases {
+  aka: string[];
+}
+
+interface License {
+  type: string;
+}
