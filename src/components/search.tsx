@@ -10,16 +10,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 
 import { BadgeCard } from "@/components/badges/badge-card";
+import { BadgeSidebarProvider } from "@/components/badges/badge-sidebar";
 import { Button } from "@/components/ui/button";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-} from "@/components/ui/input-group";
-import { Kbd } from "@/components/ui/kbd";
-import { Typography } from "@/components/ui/typography";
-import { filterBadges, getBadgeCategories, getBadges } from "@/services/badges";
 import {
   Combobox,
   ComboboxContent,
@@ -29,7 +21,16 @@ import {
   ComboboxList,
   ComboboxTrigger,
   ComboboxValue,
-} from "./ui/combobox";
+} from "@/components/ui/combobox";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { Kbd } from "@/components/ui/kbd";
+import { Typography } from "@/components/ui/typography";
+import { filterBadges, getBadgeCategories, getBadges } from "@/services/badges";
 
 type SearchProps = {
   initialQuery?: string | null;
@@ -108,7 +109,7 @@ export function Search({
   };
 
   return (
-    <>
+    <BadgeSidebarProvider>
       <div className="flex md:flex-row flex-col gap-2 mb-10">
         <InputGroup>
           <InputGroupInput
@@ -214,6 +215,6 @@ export function Search({
           </div>
         </div>
       )}
-    </>
+    </BadgeSidebarProvider>
   );
 }
