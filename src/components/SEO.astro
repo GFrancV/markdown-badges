@@ -10,7 +10,7 @@ interface Props {
 
 const { title, description, image, keywords, type, jsonLd } = Astro.props;
 
-const canonicalUrl = Astro.url;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImage = image.startsWith("http")
   ? image
   : new URL(image, Astro.site ?? Astro.url).toString();
