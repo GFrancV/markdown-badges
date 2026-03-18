@@ -9,8 +9,7 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 
-import { BadgeCard } from "@/components/badges/badge-card";
-import { BadgeSidebarProvider } from "@/components/badges/badge-sidebar";
+import { BadgesList } from "@/components/badges/badges-list";
 import { Button } from "@/components/ui/button";
 import {
   Combobox,
@@ -109,7 +108,7 @@ export function Search({
   };
 
   return (
-    <BadgeSidebarProvider>
+    <>
       <div className="flex md:flex-row flex-col gap-2 mb-10">
         <InputGroup>
           <InputGroupInput
@@ -175,11 +174,7 @@ export function Search({
 
       {results.length > 0 && (
         <div>
-          <div className="grid md:grid-cols-4 grid-cols-2 gap-4">
-            {results.map((badge) => (
-              <BadgeCard key={badge.name} badge={badge} />
-            ))}
-          </div>
+          <BadgesList badges={results} />
 
           {results.length < filteredBadges.length && (
             <div className="flex justify-center items-center gap-4 mt-8">
@@ -215,6 +210,6 @@ export function Search({
           </div>
         </div>
       )}
-    </BadgeSidebarProvider>
+    </>
   );
 }
