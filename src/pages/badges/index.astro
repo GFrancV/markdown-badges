@@ -10,6 +10,6 @@ const badges = getBadges();
 <Layout title="Badges - Markdown Badges">
   <section id="badgetContainer">
     <Typography as="h1" size="h1" className="mb-8"> Badges </Typography>
-    <BadgesList client:load />
+    <BadgesList badges={badges} client:load />
   </section>
 </Layout>
