@@ -1,12 +1,17 @@
 ---
-import MenuItem from "./MenuItem.astro"
+import MenuItem from "./MenuItem.astro";
 
-const pathname = new URL(Astro.request.url).pathname
-const currentPath = pathname.slice(1)
+const pathname = new URL(Astro.request.url).pathname;
+const currentPath = pathname.slice(1);
 ---
 
 <ul class="flex">
-	<MenuItem route="/badges" active={currentPath == 'badges'}> Badges </MenuItem>
-	<MenuItem route="/generator" active={currentPath == 'generator'}> Generator </MenuItem>
-	<MenuItem route="/about" active={currentPath == 'about'}> About </MenuItem>
+  <MenuItem route="/badges" active={currentPath == "badges"}> Badges </MenuItem>
+  <MenuItem route="/favorites" active={currentPath == "favorites"}>
+    Favorites
+  </MenuItem>
+  <MenuItem route="/generator" active={currentPath == "generator"}>
+    Generator
+  </MenuItem>
+  <MenuItem route="/about" active={currentPath == "about"}> About </MenuItem>
 </ul>
