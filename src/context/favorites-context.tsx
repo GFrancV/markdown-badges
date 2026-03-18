@@ -10,7 +10,7 @@ import {
 type FavoritesContextType = {
   favorites: Badge[];
   isFavorite: (id: string) => boolean;
-  toggle: (badge: Badge) => void;
+  toggle: (badge: Badge | null) => void;
   copyAll: () => void;
 };
 
