@@ -16,6 +16,7 @@ interface Props {
   image?: string;
   keywords?: string;
   type?: "website" | "article";
+  noIndex?: boolean;
   jsonLd?: Record<string, any>;
 }
 
@@ -25,6 +26,7 @@ const {
   image = "/images/banners/og.png",
   keywords = "markdown badge, shield badges, readme badges, github profile badges, github badges, gfrancv",
   type = "website",
+  noIndex = false,
   jsonLd,
 } = Astro.props;
 
@@ -40,6 +42,7 @@ const year = new Date().getFullYear();
       image={image}
       keywords={keywords}
       type={type}
+      noIndex={noIndex}
       jsonLd={jsonLd}
     />
     <SpeedInsights />

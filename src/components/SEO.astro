@@ -5,10 +5,12 @@ interface Props {
   image: string;
   keywords?: string;
   type?: "website" | "article";
+  noIndex?: boolean;
   jsonLd?: Record<string, any>;
 }
 
-const { title, description, image, keywords, type, jsonLd } = Astro.props;
+const { title, description, image, keywords, type, noIndex, jsonLd } =
+  Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImage = image.startsWith("http")
@@ -25,7 +27,7 @@ const ogImage = image.startsWith("http")
 <meta name="theme-color" content="#121212" />
 
 <meta name="keywords" content={keywords} />
-<meta name="robots" content="index, follow" />
+<meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow"} />
 
 <meta name="generator" content={Astro.generator} />
 
