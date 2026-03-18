@@ -1,4 +1,10 @@
 import {
+  ClipboardIcon,
+  ExternalLinkIcon,
+  HeartIcon,
+  HeartOffIcon,
+} from "lucide-react";
+import {
   createContext,
   useContext,
   useEffect,
@@ -19,9 +25,9 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Typography } from "@/components/ui/typography";
+import { useFavorites } from "@/context/favorites-context";
 import { useCopyClipboard } from "@/hooks/use-copy-clipboard";
 import { getRelatedBadges } from "@/services/badges";
-import { ClipboardIcon, ExternalLinkIcon } from "lucide-react";
 
 type BadgeSidebarContextType = {
   open: (badge: Badge) => void;
@@ -32,6 +38,7 @@ const BadgeSidebarContext = createContext<BadgeSidebarContextType | null>(null);
 
 export function BadgeSidebarProvider({ children }: { children: ReactNode }) {
   const { copy } = useCopyClipboard();
+  const { toggle, isFavorite } = useFavorites();
 
   const previousUrl = useRef("");
 
@@ -142,6 +149,19 @@ export function BadgeSidebarProvider({ children }: { children: ReactNode }) {
             <Button onClick={() => copy(badge?.markdown ?? "")}>
               <ClipboardIcon className="mr-2" width={12} />
               Copy Markdown
+            </Button>
+            <Button variant="secondary" onClick={() => toggle(badge)}>
+              {isFavorite(badge?.id ?? "") ? (
+                <>
+                  <HeartOffIcon className="mr-2" width={12} />
+                  Remove from favorites
+                </>
+              ) : (
+                <>
+                  <HeartIcon className="mr-2" width={12} />
+                  Add to favorites
+                </>
+              )}
             </Button>
             <Button asChild variant="secondary">
               <a href={`/badges/${badge?.id}`}>
