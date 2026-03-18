@@ -1,11 +1,15 @@
+import { BadgeFavoriteButton } from "@/components/badges/badge-favorite-button";
+import { useBadgeSidebar } from "@/components/badges/badge-sidebar";
 import { CopyClipboardButton } from "@/components/copy-clipboard-button";
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
-import { useBadgeSidebar } from "./badge-sidebar";
+import { useFavorites } from "@/context/favorites-context";
+import { cn } from "@/lib/utils";
 
 export function BadgeCard({ badge }: { badge: Badge }) {
   const { name, url, category } = badge;
 
+  const { isFavorite } = useFavorites();
   const { open } = useBadgeSidebar();
 
   return (
@@ -32,10 +36,18 @@ export function BadgeCard({ badge }: { badge: Badge }) {
           {category}
         </Button>
       </div>
-      <CopyClipboardButton
-        content={`![${name}](${url})`}
-        className="absolute top-1 right-1 transition duration-300 group-hover:text-primary"
-      />
+      <div className="absolute top-1 right-1 transition duration-300 flex flex-col items-center gap-1">
+        <CopyClipboardButton content={`![${name}](${url})`} />
+        <BadgeFavoriteButton
+          badge={badge}
+          className={cn(
+            isFavorite(badge.id)
+              ? "opacity-100"
+              : "opacity-0 group-hover:opacity-100",
+            "transition duration-300",
+          )}
+        />
+      </div>
     </div>
   );
 }
