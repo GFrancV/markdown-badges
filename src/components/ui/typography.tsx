@@ -14,7 +14,7 @@ const typographyVariants = cva("", {
       destructive: "text-destructive",
     },
     size: {
-      default: "text-base leading-7",
+      default: "text-base leading-6",
       h1: "text-h1 text-4xl font-bold tracking-tight text-balance",
       h2: "text-3xl font-semibold tracking-tight",
       h3: "text-2xl font-semibold tracking-tight",
