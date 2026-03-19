@@ -1,11 +1,14 @@
-import { useCopyClipboard } from "@/hooks/use-copy-clipboard";
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
   type ReactNode,
 } from "react";
+
+import { useCopyClipboard } from "@/hooks/use-copy-clipboard";
 
 type FavoritesContextType = {
   favorites: Badge[];
@@ -18,45 +21,52 @@ const FavoritesContext = createContext<FavoritesContextType | null>(null);
 
 const STORAGE_KEY = "mb:favorites";
 
+function readFromStorage(): Badge[] {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    localStorage.removeItem(STORAGE_KEY);
+    return [];
+  }
+}
+
 export function FavoritesProvider({ children }: { children: ReactNode }) {
   const { copy } = useCopyClipboard();
 
-  const [favorites, setFavorites] = useState<Badge[]>([]);
-
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) setFavorites(JSON.parse(stored));
-    } catch {
-      localStorage.removeItem(STORAGE_KEY);
-    }
-  }, []);
+  const [favorites, setFavorites] = useState<Badge[]>(readFromStorage);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
   }, [favorites]);
 
-  const isFavorite = (id: string) => favorites.some((b) => b.id === id);
+  const isFavorite = useCallback(
+    (id: string) => favorites.some((b) => b.id === id),
+    [favorites],
+  );
 
-  const toggle = (badge: Badge | null) => {
+  const toggle = useCallback((badge: Badge | null) => {
     if (!badge) return;
 
     setFavorites((prev) =>
-      isFavorite(badge.id)
+      prev.some((b) => b.id === badge.id)
         ? prev.filter((b) => b.id !== badge.id)
         : [...prev, badge],
     );
-  };
+  }, []);
 
-  const copyAll = () => {
+  const copyAll = useCallback(() => {
     const markdown = favorites.map((b) => b.markdown).join("\n");
     copy(markdown);
-  };
+  }, [favorites, copy]);
+
+  const value = useMemo(
+    () => ({ favorites, isFavorite, toggle, copyAll }),
+    [favorites, isFavorite, toggle, copyAll],
+  );
 
   return (
-    <FavoritesContext.Provider
-      value={{ favorites, isFavorite, toggle, copyAll }}
-    >
+    <FavoritesContext.Provider value={value}>
       {children}
     </FavoritesContext.Provider>
   );
