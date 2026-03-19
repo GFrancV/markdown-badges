@@ -24,13 +24,26 @@ export function BadgeGenerator() {
   const [rightColor, setRightColor] = useState("#000000");
   const [logo, setLogo] = useState<string | null>("github");
   const [simpleIcons, setSimpleIcons] = useState<string[]>([]);
+  const [iconsLoading, setIconsLoading] = useState(true);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     async function loadIcons() {
-      const icons = await getIcons();
-      setSimpleIcons([...new Set(icons.map((icon) => icon.title))]);
+      try {
+        const icons = await getIcons(controller.signal);
+        if (!controller.signal.aborted) {
+          setSimpleIcons([...new Set(icons.map((icon) => icon.title))]);
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setIconsLoading(false);
+        }
+      }
     }
+
     loadIcons();
+    return () => controller.abort();
   }, []);
 
   const badgeUrl = useMemo(() => {
@@ -92,11 +105,7 @@ export function BadgeGenerator() {
         </div>
         <Field>
           <FieldLabel>Logo</FieldLabel>
-          <Combobox
-            items={simpleIcons.slice(0, 10)}
-            value={logo}
-            onValueChange={setLogo}
-          >
+          <Combobox items={simpleIcons} value={logo} onValueChange={setLogo}>
             <ComboboxTrigger
               render={
                 <Button variant="outline" className="w-full justify-between">
@@ -106,7 +115,11 @@ export function BadgeGenerator() {
               }
             />
             <ComboboxContent>
-              <ComboboxInput showTrigger={false} placeholder="Search" />
+              <ComboboxInput
+                showTrigger={false}
+                placeholder={iconsLoading ? "Loading icons…" : "Search"}
+                disabled={iconsLoading}
+              />
               <ComboboxEmpty>No items found.</ComboboxEmpty>
               <ComboboxList>
                 {(item) => (
