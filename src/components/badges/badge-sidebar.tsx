@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -41,6 +42,7 @@ export function BadgeSidebarProvider({ children }: { children: ReactNode }) {
   const { toggle, isFavorite } = useFavorites();
 
   const previousUrl = useRef("");
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [isOpen, setIsOpen] = useState(false);
   const [badge, setBadge] = useState<Badge | null>(null);
@@ -51,22 +53,26 @@ export function BadgeSidebarProvider({ children }: { children: ReactNode }) {
     return getRelatedBadges(badge);
   }, [badge]);
 
-  const open = (badge: Badge) => {
+  const open = useCallback((badge: Badge) => {
     setBadge(badge);
     setIsOpen(true);
-  };
+  }, []);
 
-  const close = () => {
+  const close = useCallback(() => {
     setIsOpen(false);
-    setTimeout(() => setBadge(null), 300);
-  };
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setBadge(null), 300);
+  }, []);
 
   useEffect(() => {
     const handlePopState = () => close();
     window.addEventListener("popstate", handlePopState);
 
-    return () => window.removeEventListener("popstate", handlePopState);
-  }, []);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+    };
+  }, [close]);
 
   useEffect(() => {
     if (!isOpen) return;
