@@ -70,7 +70,8 @@ export function Search({
 
     const url = new URL(window.location.href);
 
-    if (query && query.length > 0) url.searchParams.set("query", query);
+    if (debouncedQuery && debouncedQuery.length > 0)
+      url.searchParams.set("query", debouncedQuery);
     else url.searchParams.delete("query");
 
     if (categoryQuery) url.searchParams.set("category", categoryQuery);
@@ -141,7 +142,7 @@ export function Search({
         </InputGroup>
 
         <Combobox
-          items={categories.slice(0, 15)}
+          items={categories}
           value={categoryQuery}
           onValueChange={setCategoryQuery}
           defaultValue={null}
@@ -200,6 +201,7 @@ export function Search({
               <a
                 href="https://github.com/gfrancv/markdown-badges/issues/new?labels=request&title=%5BRequest%5D%3A"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 Request Badge
               </a>
