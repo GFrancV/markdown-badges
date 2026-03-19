@@ -34,7 +34,11 @@ function readFromStorage(): Badge[] {
 export function FavoritesProvider({ children }: { children: ReactNode }) {
   const { copy } = useCopyClipboard();
 
-  const [favorites, setFavorites] = useState<Badge[]>(readFromStorage);
+  const [favorites, setFavorites] = useState<Badge[]>([]);
+
+  useEffect(() => {
+    setFavorites(readFromStorage());
+  }, []);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
