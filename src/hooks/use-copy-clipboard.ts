@@ -1,18 +1,17 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export function useCopyClipboard() {
   const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (isCopied) {
-      timer = setTimeout(() => setIsCopied(false), 2000);
-    }
+    if (!isCopied) return;
+
+    const timer = setTimeout(() => setIsCopied(false), 2000);
     return () => clearTimeout(timer);
   }, [isCopied]);
 
-  const copy = async (content: string) => {
+  const copy = useCallback(async (content: string) => {
     if (!content) return;
 
     try {
@@ -21,12 +20,10 @@ export function useCopyClipboard() {
         description: content.slice(0, 60) + (content.length > 60 ? "..." : ""),
       });
       setIsCopied(true);
-
-      setTimeout(() => setIsCopied(false), 2000);
     } catch {
       toast.error("Failed to copy to clipboard");
     }
-  };
+  }, []);
 
   return { isCopied, copy };
 }
