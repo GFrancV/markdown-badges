@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { BadgeFavoriteButton } from "@/components/badges/badge-favorite-button";
 import { useBadgeSidebar } from "@/components/badges/badge-sidebar";
 import { CopyClipboardButton } from "@/components/copy-clipboard-button";
@@ -6,7 +8,7 @@ import { Typography } from "@/components/ui/typography";
 import { useFavorites } from "@/context/favorites-context";
 import { cn } from "@/lib/utils";
 
-export function BadgeCard({ badge }: { badge: Badge }) {
+export const BadgeCard = memo(function BadgeCard({ badge }: { badge: Badge }) {
   const { name, url, category } = badge;
 
   const { isFavorite } = useFavorites();
@@ -14,7 +16,15 @@ export function BadgeCard({ badge }: { badge: Badge }) {
 
   return (
     <div
+      role="button"
+      tabIndex={0}
       onClick={() => open(badge)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          open(badge);
+        }
+      }}
       className="relative group bg-[#1e1e1e] cursor-pointer text-white rounded-sm border border-transparent transition p-6 text-center flex flex-col hover:bg-primary/20 hover:border-primary badget-element h-full"
     >
       <Typography as="h3" size="h4" className="mt-1 mb-3">
@@ -50,4 +60,4 @@ export function BadgeCard({ badge }: { badge: Badge }) {
       </div>
     </div>
   );
-}
+});
