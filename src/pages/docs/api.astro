@@ -27,252 +27,257 @@ const exampleResponse = `{
   description="Public read-only API reference for Markdown Badges. Browse endpoints, query parameters, and response schemas."
   keywords="markdown badges api, badges api, shields.io api, readme badges api"
 >
-  <section class="mb-10">
-    <Typography as="h1" size="h1" className="mb-4">API Reference</Typography>
-    <Typography>
-      Markdown Badges provides a public, read-only HTTP API that returns badge
-      data as JSON. No authentication or API key is required. It is designed for
-      lightweight integrations such as IDE plugins, browser extensions, CLI
-      tools, and similar developer utilities.
-    </Typography>
-  </section>
-
-  <section class="mb-10">
-    <Typography as="h2" size="h2" className="mb-4">Base URL</Typography>
-    <CodeBlock code={BASE_URL} language="json" client:load />
-  </section>
-
-  <section class="mb-12">
-    <Typography as="h2" size="h2" className="mb-6">Endpoints</Typography>
+  <div class="mx-auto max-w-4xl">
+    <section class="mb-10">
+      <Typography as="h1" size="h1" className="mb-4">API Reference</Typography>
+      <Typography>
+        Markdown Badges provides a public, read-only HTTP API that returns badge
+        data as JSON. No authentication or API key is required. It is designed
+        for lightweight integrations such as IDE plugins, browser extensions,
+        CLI tools, and similar developer utilities.
+      </Typography>
+    </section>
 
     <section class="mb-10">
-      <div class="flex items-center gap-3 mb-3">
-        <span
-          class="text-xs font-bold px-2 py-1 rounded bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/30 font-mono"
-        >
-          GET
-        </span>
-        <Typography as="h3" size="h3">/api/badges</Typography>
-      </div>
-      <Typography className="mb-6">
-        Returns a list of badges. Results can be narrowed with a fuzzy search
-        query and capped with a limit. When no parameters are provided, the
-        first 20 badges are returned.
-      </Typography>
-
-      <Typography as="h4" size="h4" className="mb-3"
-        >Query Parameters</Typography
-      >
-      <div class="overflow-x-auto rounded-lg border border-white/10 mb-8">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-white/10 bg-white/5 text-left">
-              <th class="px-4 py-3 font-semibold text-white">Parameter</th>
-              <th class="px-4 py-3 font-semibold text-white">Type</th>
-              <th class="px-4 py-3 font-semibold text-white">Required</th>
-              <th class="px-4 py-3 font-semibold text-white">Default</th>
-              <th class="px-4 py-3 font-semibold text-white">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border-b border-white/10">
-              <td class="px-4 py-3 font-mono text-fuchsia-300">search</td>
-              <td class="px-4 py-3 text-muted-foreground">string</td>
-              <td class="px-4 py-3 text-muted-foreground">No</td>
-              <td class="px-4 py-3 font-mono text-muted-foreground">—</td>
-              <td class="px-4 py-3 text-muted-foreground">
-                Fuzzy search against badge names. Must be at least 1 character
-                when provided.
-              </td>
-            </tr>
-            <tr>
-              <td class="px-4 py-3 font-mono text-fuchsia-300">limit</td>
-              <td class="px-4 py-3 text-muted-foreground">integer</td>
-              <td class="px-4 py-3 text-muted-foreground">No</td>
-              <td class="px-4 py-3 font-mono text-muted-foreground">20</td>
-              <td class="px-4 py-3 text-muted-foreground">
-                Maximum number of badges to return. Accepted range: 1–200.
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <Typography as="h4" size="h4" className="mb-3">Response Schema</Typography
-      >
-      <div class="overflow-x-auto rounded-lg border border-white/10 mb-8">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-white/10 bg-white/5 text-left">
-              <th class="px-4 py-3 font-semibold text-white">Field</th>
-              <th class="px-4 py-3 font-semibold text-white">Type</th>
-              <th class="px-4 py-3 font-semibold text-white">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border-b border-white/10">
-              <td class="px-4 py-3 font-mono text-fuchsia-300">total</td>
-              <td class="px-4 py-3 text-muted-foreground">integer</td>
-              <td class="px-4 py-3 text-muted-foreground"
-                >Total badges matching the current filters, before slicing.</td
-              >
-            </tr>
-            <tr class="border-b border-white/10">
-              <td class="px-4 py-3 font-mono text-fuchsia-300">limit</td>
-              <td class="px-4 py-3 text-muted-foreground">integer</td>
-              <td class="px-4 py-3 text-muted-foreground"
-                >The effective limit applied to this response.</td
-              >
-            </tr>
-            <tr class="border-b border-white/10">
-              <td class="px-4 py-3 font-mono text-fuchsia-300">count</td>
-              <td class="px-4 py-3 text-muted-foreground">integer</td>
-              <td class="px-4 py-3 text-muted-foreground"
-                >Number of items in <span class="font-mono text-fuchsia-300"
-                  >data</span
-                > (may be less than <span class="font-mono text-fuchsia-300"
-                  >limit</span
-                > when results are exhausted).</td
-              >
-            </tr>
-            <tr>
-              <td class="px-4 py-3 font-mono text-fuchsia-300">data</td>
-              <td class="px-4 py-3 text-muted-foreground">Badge[]</td>
-              <td class="px-4 py-3 text-muted-foreground"
-                >Array of badge objects.</td
-              >
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <Typography as="h4" size="h4" className="mb-3">Badge Object</Typography>
-      <div class="overflow-x-auto rounded-lg border border-white/10 mb-8">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-white/10 bg-white/5 text-left">
-              <th class="px-4 py-3 font-semibold text-white">Field</th>
-              <th class="px-4 py-3 font-semibold text-white">Type</th>
-              <th class="px-4 py-3 font-semibold text-white">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border-b border-white/10">
-              <td class="px-4 py-3 font-mono text-fuchsia-300">id</td>
-              <td class="px-4 py-3 text-muted-foreground">string</td>
-              <td class="px-4 py-3 text-muted-foreground"
-                >Unique identifier for the badge.</td
-              >
-            </tr>
-            <tr class="border-b border-white/10">
-              <td class="px-4 py-3 font-mono text-fuchsia-300">name</td>
-              <td class="px-4 py-3 text-muted-foreground">string</td>
-              <td class="px-4 py-3 text-muted-foreground"
-                >Human-readable name of the technology or service.</td
-              >
-            </tr>
-            <tr class="border-b border-white/10">
-              <td class="px-4 py-3 font-mono text-fuchsia-300">url</td>
-              <td class="px-4 py-3 text-muted-foreground">string (URL)</td>
-              <td class="px-4 py-3 text-muted-foreground"
-                >Official website of the technology.</td
-              >
-            </tr>
-            <tr class="border-b border-white/10">
-              <td class="px-4 py-3 font-mono text-fuchsia-300">markdown</td>
-              <td class="px-4 py-3 text-muted-foreground">string</td>
-              <td class="px-4 py-3 text-muted-foreground"
-                >Ready-to-use Markdown snippet to embed the badge.</td
-              >
-            </tr>
-            <tr>
-              <td class="px-4 py-3 font-mono text-fuchsia-300">category</td>
-              <td class="px-4 py-3 text-muted-foreground">string</td>
-              <td class="px-4 py-3 text-muted-foreground"
-                >Category the badge belongs to (e.g. <span
-                  class="font-mono text-fuchsia-300">Frameworks</span
-                >, <span class="font-mono text-fuchsia-300">Languages</span
-                >).</td
-              >
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <Typography as="h4" size="h4" className="mb-3">Example Request</Typography
-      >
-      <CodeBlock
-        code="GET https://markdown-badges.vercel.app/api/badges?search=react&limit=5"
-        language="json"
-        client:load
-      />
-
-      <Typography as="h4" size="h4" className="mb-3 mt-6"
-        >Example Response</Typography
-      >
-      <CodeBlock code={exampleResponse} language="json" client:load />
+      <Typography as="h2" size="h2" className="mb-4">Base URL</Typography>
+      <CodeBlock code={BASE_URL} language="json" client:load />
     </section>
-  </section>
 
-  <section class="mb-10">
-    <Typography as="h2" size="h2" className="mb-4">Limitations</Typography>
-    <ul class="flex flex-col gap-3">
-      <li class="flex gap-3">
-        <span class="text-fuchsia-300 mt-0.5 shrink-0">—</span>
-        <Typography>
-          <strong class="text-white">Rate limit:</strong> 60 requests per minute per
-          IP address. Exceeding this returns a <span
-            class="font-mono text-fuchsia-300">429 Too Many Requests</span
-          > response with a <span class="font-mono text-fuchsia-300"
-            >Retry-After</span
-          > header indicating when to retry.
-        </Typography>
-      </li>
-      <li class="flex gap-3">
-        <span class="text-fuchsia-300 mt-0.5 shrink-0">—</span>
-        <Typography>
-          <strong class="text-white">Static dataset:</strong> The badge catalogue
-          is curated and updated manually. The API reflects the current dataset at
-          deploy time, not a live data source.
-        </Typography>
-      </li>
-      <li class="flex gap-3">
-        <span class="text-fuchsia-300 mt-0.5 shrink-0">—</span>
-        <Typography>
-          <strong class="text-white">Maximum response size:</strong> A single request
-          returns at most 200 badges (<span class="font-mono text-fuchsia-300"
-            >limit=200</span
-          >). Pagination is not supported beyond this cap.
-        </Typography>
-      </li>
-      <li class="flex gap-3">
-        <span class="text-fuchsia-300 mt-0.5 shrink-0">—</span>
-        <Typography>
-          <strong class="text-white">Read-only:</strong> The API exposes no write
-          operations. Badge data cannot be created, updated, or deleted via the API.
-        </Typography>
-      </li>
-    </ul>
-  </section>
+    <section class="mb-12">
+      <Typography as="h2" size="h2" className="mb-6">Endpoints</Typography>
 
-  <section class="mb-8">
-    <Typography as="h2" size="h2" className="mb-4">Acceptable Use</Typography>
-    <Typography className="mb-4">
-      This API is intended for use in <strong class="text-white"
-        >developer tools, IDE plugins, browser extensions, CLI utilities, and
-        similar integrations</strong
-      > that help developers find and insert badges into their projects.
-    </Typography>
-    <Typography>
-      Please do not use this API to build a product or service that replicates
-      or directly competes with Markdown Badges as a standalone application. If
-      you are unsure whether your use case qualifies, check the source
-      repository on <a
-        href="https://github.com/GFrancV/markdown-badges"
-        class="underline"
-        target="_blank"
-        rel="noopener">GitHub</a
-      > or open an issue to discuss it.
-    </Typography>
-  </section>
+      <section class="mb-10">
+        <div class="flex items-center gap-3 mb-3">
+          <span
+            class="text-xs font-bold px-2 py-1 rounded bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/30 font-mono"
+          >
+            GET
+          </span>
+          <Typography as="h3" size="h3">/api/badges</Typography>
+        </div>
+        <Typography className="mb-6">
+          Returns a list of badges. Results can be narrowed with a fuzzy search
+          query and capped with a limit. When no parameters are provided, the
+          first 20 badges are returned.
+        </Typography>
+
+        <Typography as="h4" size="h4" className="mb-3"
+          >Query Parameters</Typography
+        >
+        <div class="overflow-x-auto rounded-lg border border-white/10 mb-8">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-white/10 bg-white/5 text-left">
+                <th class="px-4 py-3 font-semibold text-white">Parameter</th>
+                <th class="px-4 py-3 font-semibold text-white">Type</th>
+                <th class="px-4 py-3 font-semibold text-white">Required</th>
+                <th class="px-4 py-3 font-semibold text-white">Default</th>
+                <th class="px-4 py-3 font-semibold text-white">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-white/10">
+                <td class="px-4 py-3 font-mono text-fuchsia-300">search</td>
+                <td class="px-4 py-3 text-muted-foreground">string</td>
+                <td class="px-4 py-3 text-muted-foreground">No</td>
+                <td class="px-4 py-3 font-mono text-muted-foreground">—</td>
+                <td class="px-4 py-3 text-muted-foreground">
+                  Fuzzy search against badge names. Must be at least 1 character
+                  when provided.
+                </td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-mono text-fuchsia-300">limit</td>
+                <td class="px-4 py-3 text-muted-foreground">integer</td>
+                <td class="px-4 py-3 text-muted-foreground">No</td>
+                <td class="px-4 py-3 font-mono text-muted-foreground">20</td>
+                <td class="px-4 py-3 text-muted-foreground">
+                  Maximum number of badges to return. Accepted range: 1–200.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <Typography as="h4" size="h4" className="mb-3"
+          >Response Schema</Typography
+        >
+        <div class="overflow-x-auto rounded-lg border border-white/10 mb-8">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-white/10 bg-white/5 text-left">
+                <th class="px-4 py-3 font-semibold text-white">Field</th>
+                <th class="px-4 py-3 font-semibold text-white">Type</th>
+                <th class="px-4 py-3 font-semibold text-white">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-white/10">
+                <td class="px-4 py-3 font-mono text-fuchsia-300">total</td>
+                <td class="px-4 py-3 text-muted-foreground">integer</td>
+                <td class="px-4 py-3 text-muted-foreground"
+                  >Total badges matching the current filters, before slicing.</td
+                >
+              </tr>
+              <tr class="border-b border-white/10">
+                <td class="px-4 py-3 font-mono text-fuchsia-300">limit</td>
+                <td class="px-4 py-3 text-muted-foreground">integer</td>
+                <td class="px-4 py-3 text-muted-foreground"
+                  >The effective limit applied to this response.</td
+                >
+              </tr>
+              <tr class="border-b border-white/10">
+                <td class="px-4 py-3 font-mono text-fuchsia-300">count</td>
+                <td class="px-4 py-3 text-muted-foreground">integer</td>
+                <td class="px-4 py-3 text-muted-foreground"
+                  >Number of items in <span class="font-mono text-fuchsia-300"
+                    >data</span
+                  > (may be less than <span class="font-mono text-fuchsia-300"
+                    >limit</span
+                  > when results are exhausted).</td
+                >
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-mono text-fuchsia-300">data</td>
+                <td class="px-4 py-3 text-muted-foreground">Badge[]</td>
+                <td class="px-4 py-3 text-muted-foreground"
+                  >Array of badge objects.</td
+                >
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <Typography as="h4" size="h4" className="mb-3">Badge Object</Typography>
+        <div class="overflow-x-auto rounded-lg border border-white/10 mb-8">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-white/10 bg-white/5 text-left">
+                <th class="px-4 py-3 font-semibold text-white">Field</th>
+                <th class="px-4 py-3 font-semibold text-white">Type</th>
+                <th class="px-4 py-3 font-semibold text-white">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-white/10">
+                <td class="px-4 py-3 font-mono text-fuchsia-300">id</td>
+                <td class="px-4 py-3 text-muted-foreground">string</td>
+                <td class="px-4 py-3 text-muted-foreground"
+                  >Unique identifier for the badge.</td
+                >
+              </tr>
+              <tr class="border-b border-white/10">
+                <td class="px-4 py-3 font-mono text-fuchsia-300">name</td>
+                <td class="px-4 py-3 text-muted-foreground">string</td>
+                <td class="px-4 py-3 text-muted-foreground"
+                  >Human-readable name of the technology or service.</td
+                >
+              </tr>
+              <tr class="border-b border-white/10">
+                <td class="px-4 py-3 font-mono text-fuchsia-300">url</td>
+                <td class="px-4 py-3 text-muted-foreground">string (URL)</td>
+                <td class="px-4 py-3 text-muted-foreground"
+                  >Official website of the technology.</td
+                >
+              </tr>
+              <tr class="border-b border-white/10">
+                <td class="px-4 py-3 font-mono text-fuchsia-300">markdown</td>
+                <td class="px-4 py-3 text-muted-foreground">string</td>
+                <td class="px-4 py-3 text-muted-foreground"
+                  >Ready-to-use Markdown snippet to embed the badge.</td
+                >
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-mono text-fuchsia-300">category</td>
+                <td class="px-4 py-3 text-muted-foreground">string</td>
+                <td class="px-4 py-3 text-muted-foreground"
+                  >Category the badge belongs to (e.g. <span
+                    class="font-mono text-fuchsia-300">Frameworks</span
+                  >, <span class="font-mono text-fuchsia-300">Languages</span
+                  >).</td
+                >
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <Typography as="h4" size="h4" className="mb-3"
+          >Example Request</Typography
+        >
+        <CodeBlock
+          code="GET https://markdown-badges.vercel.app/api/badges?search=react&limit=5"
+          language="json"
+          client:load
+        />
+
+        <Typography as="h4" size="h4" className="mb-3 mt-6"
+          >Example Response</Typography
+        >
+        <CodeBlock code={exampleResponse} language="json" client:load />
+      </section>
+    </section>
+
+    <section class="mb-10">
+      <Typography as="h2" size="h2" className="mb-4">Limitations</Typography>
+      <ul class="flex flex-col gap-3">
+        <li class="flex gap-3">
+          <span class="text-fuchsia-300 mt-0.5 shrink-0">—</span>
+          <Typography>
+            <strong class="text-white">Rate limit:</strong> 60 requests per minute
+            per IP address. Exceeding this returns a <span
+              class="font-mono text-fuchsia-300">429 Too Many Requests</span
+            > response with a <span class="font-mono text-fuchsia-300"
+              >Retry-After</span
+            > header indicating when to retry.
+          </Typography>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-fuchsia-300 mt-0.5 shrink-0">—</span>
+          <Typography>
+            <strong class="text-white">Static dataset:</strong> The badge catalogue
+            is curated and updated manually. The API reflects the current dataset
+            at deploy time, not a live data source.
+          </Typography>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-fuchsia-300 mt-0.5 shrink-0">—</span>
+          <Typography>
+            <strong class="text-white">Maximum response size:</strong> A single request
+            returns at most 200 badges (<span class="font-mono text-fuchsia-300"
+              >limit=200</span
+            >). Pagination is not supported beyond this cap.
+          </Typography>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-fuchsia-300 mt-0.5 shrink-0">—</span>
+          <Typography>
+            <strong class="text-white">Read-only:</strong> The API exposes no write
+            operations. Badge data cannot be created, updated, or deleted via the
+            API.
+          </Typography>
+        </li>
+      </ul>
+    </section>
+
+    <section class="mb-8">
+      <Typography as="h2" size="h2" className="mb-4">Acceptable Use</Typography>
+      <Typography className="mb-4">
+        This API is intended for use in <strong class="text-white"
+          >developer tools, IDE plugins, browser extensions, CLI utilities, and
+          similar integrations</strong
+        > that help developers find and insert badges into their projects.
+      </Typography>
+      <Typography>
+        Please do not use this API to build a product or service that replicates
+        or directly competes with Markdown Badges as a standalone application.
+        If you are unsure whether your use case qualifies, check the source
+        repository on <a
+          href="https://github.com/GFrancV/markdown-badges"
+          class="underline"
+          target="_blank"
+          rel="noopener">GitHub</a
+        > or open an issue to discuss it.
+      </Typography>
+    </section>
+  </div>
 </Layout>

@@ -1,4 +1,10 @@
-import { BoxIcon, HeartIcon, HomeIcon, InfoIcon } from "lucide-react";
+import {
+  BoxIcon,
+  CloudIcon,
+  HeartIcon,
+  HomeIcon,
+  InfoIcon,
+} from "lucide-react";
 import { type ComponentProps, useEffect, useRef, useState } from "react";
 
 import {
@@ -37,6 +43,11 @@ const nav = {
       url: "/generator",
       icon: BoxIcon,
     },
+    {
+      name: "API",
+      url: "/docs/api",
+      icon: CloudIcon,
+    },
   ],
   navFooter: [
     {
@@ -57,11 +68,15 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
 
   // Initialized from the server-validated SSR prop — no hydration mismatch.
   // Category is always valid here because Layout.astro filters invalid values before passing them down.
-  const [activeCategory, setActiveCategory] = useState<string | undefined>(ssrCategory);
+  const [activeCategory, setActiveCategory] = useState<string | undefined>(
+    ssrCategory,
+  );
 
   useEffect(() => {
     const syncCategoryFromUrl = () => {
-      const cat = new URLSearchParams(window.location.search).get("category") || undefined;
+      const cat =
+        new URLSearchParams(window.location.search).get("category") ||
+        undefined;
       setActiveCategory(cat);
     };
 
@@ -76,11 +91,15 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
     };
   }, []);
 
-  const isValidCategory = !!activeCategory && categories.includes(activeCategory);
+  const isValidCategory =
+    !!activeCategory && categories.includes(activeCategory);
 
   useEffect(() => {
     if (isValidCategory && activeCategoryRef.current) {
-      activeCategoryRef.current.scrollIntoView({ block: "nearest", behavior: "instant" });
+      activeCategoryRef.current.scrollIntoView({
+        block: "nearest",
+        behavior: "instant",
+      });
     }
   }, [activeCategory, isValidCategory]);
 
@@ -128,12 +147,17 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
                     key={cat}
                     ref={cat === activeCategory ? activeCategoryRef : undefined}
                   >
-                    <SidebarMenuButton asChild isActive={cat === activeCategory}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={cat === activeCategory}
+                    >
                       <a href={`/?category=${cat}`}>
                         <Typography as="span">{cat}</Typography>
                       </a>
                     </SidebarMenuButton>
-                    <SidebarMenuBadge>{badgeCountByCategory[cat]}</SidebarMenuBadge>
+                    <SidebarMenuBadge>
+                      {badgeCountByCategory[cat]}
+                    </SidebarMenuBadge>
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>
