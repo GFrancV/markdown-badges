@@ -1,12 +1,13 @@
 import { file } from "astro/loaders";
-import { defineCollection, z } from "astro:content";
+import { z } from "astro/zod";
+import { defineCollection } from "astro:content";
 
 const badges = defineCollection({
   loader: file("src/data/badges.json"),
   schema: z.object({
     id: z.string(),
     name: z.string(),
-    url: z.string().url(),
+    url: z.url(),
     markdown: z.string(),
     category: z.string(),
   }),

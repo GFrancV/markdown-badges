@@ -12,10 +12,12 @@ interface Props {
 const { title, description, image, keywords, type, noIndex, jsonLd } =
   Astro.props;
 
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const url = import.meta.env.SITE;
+
+const canonicalUrl = new URL(Astro.url.pathname, url).toString();
 const ogImage = image.startsWith("http")
   ? image
-  : new URL(image, Astro.site ?? Astro.url).toString();
+  : new URL(image, url ?? Astro.url).toString();
 ---
 
 <meta charset="UTF-8" />
@@ -28,8 +30,6 @@ const ogImage = image.startsWith("http")
 
 <meta name="keywords" content={keywords} />
 <meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow"} />
-
-<meta name="generator" content={Astro.generator} />
 
 <meta
   name="google-site-verification"
