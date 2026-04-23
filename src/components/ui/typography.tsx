@@ -19,6 +19,7 @@ const typographyVariants = cva("", {
       h2: "text-3xl font-semibold tracking-tight",
       h3: "text-2xl font-semibold tracking-tight",
       h4: "text-xl font-semibold tracking-tight",
+      lg: "text-lg leading-6 font-semibold",
       sm: "text-sm leading-none font-medium",
     },
   },
