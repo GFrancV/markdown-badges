@@ -36,6 +36,16 @@ export function getBadgeCategories(): string[] {
   return [...new Set(getBadges().map((badge) => badge.category))];
 }
 
+export function getBadgeCountByCategory(): Record<string, number> {
+  return getBadges().reduce(
+    (acc, badge) => {
+      acc[badge.category] = (acc[badge.category] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
+}
+
 export function getRelatedBadges(badge: Badge, maxBadges: number = 4): Badge[] {
   return getBadges()
     .filter((b) => b.category === badge.category && b.id !== badge.id)

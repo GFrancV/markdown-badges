@@ -3,12 +3,10 @@ import "@/styles/global.css";
 
 import SpeedInsights from "@vercel/speed-insights/astro";
 
-import NavMenu from "@/components/NavMenu.astro";
+import { AppShell } from "@/components/app-shell";
 import SEO from "@/components/SEO.astro";
 import { Toaster } from "@/components/ui/sonner";
-import { Typography } from "@/components/ui/typography";
-import GithubIcon from "@/icons/github.astro";
-import MarkdownIcon from "@/icons/markdown.astro";
+import { getBadgeCategories } from "@/services/badges";
 
 interface Props {
   title: string;
@@ -30,7 +28,16 @@ const {
   jsonLd,
 } = Astro.props;
 
-const year = new Date().getFullYear();
+const pathname = new URL(Astro.request.url).pathname;
+
+const rawCategory = Astro.url.searchParams.get("category");
+const category =
+  rawCategory && getBadgeCategories().includes(rawCategory)
+    ? rawCategory
+    : undefined;
+
+const defaultSidebarOpen =
+  Astro.cookies.get("sidebar_state")?.value !== "false";
 ---
 
 <!doctype html>
@@ -47,95 +54,15 @@ const year = new Date().getFullYear();
     />
     <SpeedInsights />
   </head>
-  <body
-    class="bg-[#121212] bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size-[14px_24px] flex flex-col min-h-screen"
-  >
-    <header>
-      <nav class="fixed w-full z-20 top-0 left-0 backdrop-blur-lg">
-        <div
-          class="max-w-5xl flex flex-wrap items-center md:justify-between justify-center md:gap-0 gap-4 mx-auto p-4"
-        >
-          <a href="/" class="flex items-center space-x-3">
-            <MarkdownIcon class="stroke-[#f1f1ef]" />
-            <Typography
-              as="span"
-              size="h3"
-              color="white"
-              className="self-center whitespace-nowrap"
-            >
-              Markdown Badges
-            </Typography>
-          </a>
-          <NavMenu />
-          <div>
-            <a
-              href="https://github.com/GFrancV/markdown-badges"
-              class="gap-2 md:flex items-center hidden text-white focus:ring-4 focus:outline-hidden font-medium rounded-lg text-sm px-4 py-2 text-center focus:ring-fuchsia-300"
-              target="_blank"
-              rel="noopener"
-            >
-              <GithubIcon class="w-6 fill-white" />
-              View Repo
-            </a>
-          </div>
-        </div>
-      </nav>
-    </header>
-    <main class="grow w-full max-w-5xl mx-auto pt-36 pb-12 px-6">
+  <body>
+    <AppShell
+      client:load
+      pathname={pathname}
+      category={category}
+      defaultSidebarOpen={defaultSidebarOpen}
+    >
       <slot />
-    </main>
-    <footer class="p-4 flex align-middle justify-center">
-      <Typography color="muted" className="text-center">
-        Created with ❤️ by
-        <a
-          href="https://gfrancv.vercel.app"
-          class="hover:underline"
-          target="_blank"
-          rel="noopener"
-        >
-          GFrancV
-        </a>
-        <br />
-        ©GFrancV - {year}
-      </Typography>
-    </footer>
-    <style is:global>
-      @supports selector(::-webkit-scrollbar) {
-        @media (hover: hover) {
-          ::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
-            border-radius: 10px;
-          }
-
-          ::-webkit-scrollbar-thumb {
-            border-radius: 10px;
-            background-color: #666;
-            border: 2px solid transparent;
-            background-clip: content-box;
-          }
-
-          ::-webkit-scrollbar-thumb:active {
-            background-color: #666;
-          }
-
-          ::-webkit-scrollbar-track {
-            background: #1e1e1e;
-          }
-
-          ::-webkit-scrollbar-corner {
-            background: #1e1e1e;
-          }
-        }
-      }
-
-      @supports not selector(::-webkit-scrollbar) {
-        * {
-          scrollbar-color: #1e1e1e transparent;
-          scrollbar-width: thin;
-        }
-      }
-    </style>
+    </AppShell>
     <Toaster client:load />
   </body>
 </html>

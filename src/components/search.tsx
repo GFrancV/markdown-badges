@@ -2,6 +2,7 @@ import {
   ChevronDownIcon,
   ChevronsDownIcon,
   CommandIcon,
+  ExternalLinkIcon,
   SearchIcon,
   ShieldOffIcon,
   XIcon,
@@ -22,13 +23,20 @@ import {
   ComboboxValue,
 } from "@/components/ui/combobox";
 import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
+import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Kbd } from "@/components/ui/kbd";
-import { Typography } from "@/components/ui/typography";
 import { filterBadges, getBadgeCategories, getBadges } from "@/services/badges";
 
 type SearchProps = {
@@ -49,7 +57,7 @@ export function Search({
   const [categoryQuery, setCategoryQuery] = useState<string | null>(
     initialCategory,
   );
-  const [resultsAmount, setResultsAmount] = useState(20);
+  const [resultsAmount, setResultsAmount] = useState(30);
   const [isReady, setIsReady] = useState(false);
 
   const [debouncedQuery] = useDebounce(query, 450);
@@ -78,10 +86,13 @@ export function Search({
     else url.searchParams.delete("category");
 
     window.history.replaceState({}, "", url);
-    setResultsAmount(20);
+    window.dispatchEvent(new Event("locationchange"));
+    setResultsAmount(30);
   }, [debouncedQuery, categoryQuery, isReady]);
 
   useEffect(() => {
+    if (!categories.includes(initialCategory || "")) setCategoryQuery(null);
+
     setIsReady(true);
   }, []);
 
@@ -101,7 +112,7 @@ export function Search({
   }, []);
 
   const handleLoadMoreResults = () => {
-    setResultsAmount((prev) => prev + 20);
+    setResultsAmount((prev) => prev + 30);
   };
 
   const handleClearQuery = () => {
@@ -110,12 +121,13 @@ export function Search({
 
   return (
     <>
-      <div className="flex md:flex-row flex-col gap-2 mb-10">
+      <div className="flex md:flex-row flex-col gap-2 mb-4">
         <InputGroup>
           <InputGroupInput
             ref={searchInput}
             type="text"
             name="query"
+            autoComplete="off"
             value={query ?? undefined}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={`Search in ${badges.length} badges`}
@@ -149,7 +161,7 @@ export function Search({
         >
           <ComboboxTrigger
             render={
-              <Button variant="outline" className="w-54 justify-between">
+              <Button variant="outline" className="w-50 justify-between">
                 <ComboboxValue placeholder="All Categories" />
                 <ChevronDownIcon className="size-4 opacity-50" />
               </Button>
@@ -189,28 +201,30 @@ export function Search({
       )}
 
       {filteredBadges.length === 0 && query && query.length > 0 && (
-        <div className="font-semibold text-center mt-12">
-          <ShieldOffIcon className="text-gray-500 mx-auto mb-4" size={48} />
-          <Typography size="h4">No badges found</Typography>
-          <Typography size="h4" variant="muted">
-            {query}
-          </Typography>
-
-          <div className="flex justify-center items-center gap-4 mt-4 text-neutral-300">
-            <Button>
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <ShieldOffIcon />
+            </EmptyMedia>
+            <EmptyTitle>No badges found</EmptyTitle>
+            <EmptyDescription>No badges found for "{query}"</EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent className="flex-row justify-center gap-2">
+            <Button asChild>
               <a
                 href="https://github.com/gfrancv/markdown-badges/issues/new?labels=request&title=%5BRequest%5D%3A"
                 target="_blank"
                 rel="noopener noreferrer"
               >
+                <ExternalLinkIcon />
                 Request Badge
               </a>
             </Button>
             <Button variant="secondary" onClick={handleClearQuery}>
               Clear search
             </Button>
-          </div>
-        </div>
+          </EmptyContent>
+        </Empty>
       )}
     </>
   );

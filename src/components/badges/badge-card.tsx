@@ -25,28 +25,33 @@ export const BadgeCard = memo(function BadgeCard({ badge }: { badge: Badge }) {
           open(badge);
         }
       }}
-      className="relative group bg-[#1e1e1e] cursor-pointer text-white rounded-sm border border-transparent transition p-6 text-center flex flex-col hover:bg-primary/20 hover:border-primary badget-element h-full"
+      className="relative group bg-card cursor-pointer rounded-sm border border-transparent transition px-4  py-6  text-center flex flex-col hover:bg-primary/10 hover:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/80 focus:ring-offset-2 focus:ring-offset-card data-[state=open]:bg-primary/10"
     >
-      <Typography as="h3" size="h4" className="mt-1 mb-3">
-        {name}
-      </Typography>
       <img
         src={url}
         alt={`${name} badge`}
-        width="100"
-        height="28"
-        className="mt-auto h-7 w-auto mx-auto mb-4"
+        width="80"
+        height="20"
+        className="h-5 w-auto mx-auto mb-4"
         loading="lazy"
       />
-      <div className="mt-2">
-        <Button
-          variant="outline"
-          className="rounded-full group-hover:border-primary group-hover:text-primary"
-        >
+
+      <Typography as="p" className="mb-2">
+        {name}
+      </Typography>
+
+      <Button
+        asChild
+        variant="outline"
+        size="sm"
+        className="text-muted-foreground"
+      >
+        <a href={`/?category=${category}`} onClick={(e) => e.stopPropagation()}>
           {category}
-        </Button>
-      </div>
-      <div className="absolute top-1 right-1 transition duration-300 flex flex-col items-center gap-1">
+        </a>
+      </Button>
+
+      <div className="absolute top-0.5 right-0.5 transition duration-300 flex flex-col items-center gap-0.5">
         <CopyClipboardButton content={`![${name}](${url})`} />
         <BadgeFavoriteButton
           badge={badge}
