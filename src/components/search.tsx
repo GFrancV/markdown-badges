@@ -161,7 +161,11 @@ export function Search({
         >
           <ComboboxTrigger
             render={
-              <Button variant="outline" className="w-50 justify-between">
+              <Button
+                variant="outline"
+                className="w-50 justify-between"
+                aria-label="Select category"
+              >
                 <ComboboxValue placeholder="All Categories" />
                 <ChevronDownIcon className="size-4 opacity-50" />
               </Button>
