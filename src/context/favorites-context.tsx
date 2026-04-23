@@ -15,6 +15,7 @@ type FavoritesContextType = {
   isFavorite: (id: string) => boolean;
   toggle: (badge: Badge | null) => void;
   copyAll: () => void;
+  clearAll: () => void;
 };
 
 const FavoritesContext = createContext<FavoritesContextType | null>(null);
@@ -64,9 +65,13 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     copy(markdown);
   }, [favorites, copy]);
 
+  const clearAll = useCallback(() => {
+    setFavorites([]);
+  }, []);
+
   const value = useMemo(
-    () => ({ favorites, isFavorite, toggle, copyAll }),
-    [favorites, isFavorite, toggle, copyAll],
+    () => ({ favorites, isFavorite, toggle, copyAll, clearAll }),
+    [favorites, isFavorite, toggle, copyAll, clearAll],
   );
 
   return (
