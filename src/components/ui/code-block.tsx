@@ -7,7 +7,7 @@ import { CopyClipboardButton } from "../copy-clipboard-button";
 
 type CodeBlockProps = {
   code: string;
-  language?: "markdown" | "plaintext" | "html";
+  language?: "markdown" | "plaintext" | "html" | "json";
   className?: string;
   copyable?: boolean;
 };
