@@ -23,63 +23,69 @@ const badgeSEO = getBadgeSEOData(badge);
 ---
 
 <Layout {...badgeSEO}>
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 border-b pb-6 mb-6">
-    <div class="cols-span-full md:col-span-1 flex items-center">
-      <div
-        class="p-4 rounded-sm bg-[#1e1e1e] border border-transparent aspect-video md:aspect-square flex w-full"
-      >
-        <img
-          src={badge.url}
-          alt={`${badge.name} badge`}
-          width={104}
-          height={32}
-          class="h-8 w-auto m-auto"
-        />
+  <div class="max-w-4xl mx-auto space-y-6">
+    <section class="grid grid-cols-1 md:grid-cols-4 gap-6 border-b mb-6">
+      <div class="cols-span-full md:col-span-1 flex items-center">
+        <div
+          class="p-4 rounded-sm bg-[#1e1e1e] border border-transparent aspect-video md:aspect-square flex w-full"
+        >
+          <img
+            src={badge.url}
+            alt={`${badge.name} badge`}
+            width={100}
+            height={32}
+            class="h-8 w-auto m-auto"
+          />
+        </div>
       </div>
-    </div>
-    <div class="cols-span-full md:col-span-3">
-      <header class="border-b pb-4 mb-4">
-        <Typography as="h1" size="h1" className="mb-2">
-          {badge.name} Badge
-        </Typography>
-        <Typography variant="muted">
-          {badge.category}
-        </Typography>
-      </header>
-      <section class="mb-4">
-        <Typography as="h2" size="h4" className="mb-2"> Markdown </Typography>
-        <CodeBlock client:load language="markdown" code={badge.markdown} />
-      </section>
-      <section class="mb-4">
-        <Typography as="h2" size="h4" className="mb-2"> Html Image </Typography>
-        <CodeBlock
-          client:load
-          language="html"
-          code={`<img src="${badge.url}" alt="${badge.name} badge">`}
-        />
-      </section>
-    </div>
-  </div>
-  <div>
-    <Typography as="h2" size="h3" className="mb-4"> Related Badges </Typography>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {
-        relatedBadges?.map((badge) => (
-          <a
-            href={`/badges/${badge?.id}`}
-            class="bg-[#1e1e1e] rounded-sm border border-transparent transition p-6 text-center flex flex-col hover:bg-primary/20 hover:border-primary"
-          >
-            <img
-              src={badge?.url}
-              alt={`${badge?.name} badge`}
-              width={100}
-              height={28}
-              class="h-7 w-auto mx-auto"
-              loading="lazy"
-            />
-          </a>
-        ))
-      }
-    </div>
+      <div class="cols-span-full md:col-span-3">
+        <header class="border-b pb-4 mb-4">
+          <Typography as="h1" size="h1" className="mb-2">
+            {badge.name} Badge
+          </Typography>
+          <Typography variant="muted">
+            {badge.category}
+          </Typography>
+        </header>
+        <section class="mb-4">
+          <Typography as="h2" size="h4" className="mb-2"> Markdown </Typography>
+          <CodeBlock client:load language="markdown" code={badge.markdown} />
+        </section>
+        <section class="mb-4">
+          <Typography as="h2" size="h4" className="mb-2">
+            Html Image
+          </Typography>
+          <CodeBlock
+            client:load
+            language="html"
+            code={`<img src="${badge.url}" alt="${badge.name} badge">`}
+          />
+        </section>
+      </div>
+    </section>
+    <section>
+      <Typography as="h2" size="h3" className="mb-4">
+        Related Badges
+      </Typography>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {
+          relatedBadges?.map((badge) => (
+            <a
+              href={`/badges/${badge?.id}`}
+              class="bg-[#1e1e1e] rounded-sm border border-transparent transition p-6 text-center flex flex-col hover:bg-primary/20 hover:border-primary"
+            >
+              <img
+                src={badge?.url}
+                alt={`${badge?.name} badge`}
+                width={100}
+                height={28}
+                class="h-7 w-auto mx-auto"
+                loading="lazy"
+              />
+            </a>
+          ))
+        }
+      </div>
+    </section>
   </div>
 </Layout>
