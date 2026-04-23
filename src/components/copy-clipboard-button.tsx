@@ -27,6 +27,7 @@ export function CopyClipboardButton({
         className,
         isCopied ? "text-primary" : "text-muted-foreground",
       )}
+      aria-label="Copy to clipboard"
     >
       {isCopied ? <ClipboardCheckIcon /> : <ClipboardIcon />}
     </Button>
