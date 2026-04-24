@@ -3437,8 +3437,8 @@
     "category": "Operating System"
   },
   {
-    "id": "pop!\\_os",
-    "name": "Pop!\\_OS",
+    "id": "pop-os",
+    "name": "Pop!_OS",
     "url": "https://img.shields.io/badge/Pop!_OS-48B9C7?style=for-the-badge&logo=Pop!_OS&logoColor=white",
     "markdown": "![Pop!\\_OS](https://img.shields.io/badge/Pop!_OS-48B9C7?style=for-the-badge&logo=Pop!_OS&logoColor=white)",
     "category": "Operating System"
