@@ -14,23 +14,9 @@ import {
 } from "@/components/ui/combobox";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { escapeHtmlAttr, sanitizeColorHex } from "@/lib/sanitize";
 import { getIcons } from "@/services/simple-icons";
 import { CodeBlock } from "./ui/code-block";
-
-const COLOR_HEX_PATTERN = /^#[0-9a-fA-F]{6}$/;
-
-function sanitizeColorHex(value: string, fallback: string): string {
-  return COLOR_HEX_PATTERN.test(value) ? value : fallback;
-}
-
-function escapeHtmlAttr(value: string): string {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;");
-}
 
 export function BadgeGenerator() {
   const [badgeName, setBadgeName] = useState("GitHub");
