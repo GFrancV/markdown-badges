@@ -28,16 +28,13 @@ const {
   jsonLd,
 } = Astro.props;
 
-const pathname = new URL(Astro.request.url).pathname;
+const pathname = Astro.url.pathname;
 
 const rawCategory = Astro.url.searchParams.get("category");
 const category =
   rawCategory && getBadgeCategories().includes(rawCategory)
     ? rawCategory
     : undefined;
-
-const defaultSidebarOpen =
-  Astro.cookies.get("sidebar_state")?.value !== "false";
 ---
 
 <!doctype html>
@@ -55,12 +52,7 @@ const defaultSidebarOpen =
     <SpeedInsights />
   </head>
   <body>
-    <AppShell
-      client:load
-      pathname={pathname}
-      category={category}
-      defaultSidebarOpen={defaultSidebarOpen}
-    >
+    <AppShell client:load pathname={pathname} category={category}>
       <slot />
     </AppShell>
     <Toaster client:load />
