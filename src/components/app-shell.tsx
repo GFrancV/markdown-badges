@@ -8,15 +8,13 @@ export function AppShell({
   children,
   pathname,
   category,
-  defaultSidebarOpen,
 }: {
   children: ReactNode;
   pathname?: string;
   category?: string;
-  defaultSidebarOpen?: boolean;
 }) {
   return (
-    <SidebarProvider pathname={pathname} category={category} defaultOpen={defaultSidebarOpen}>
+    <SidebarProvider pathname={pathname} category={category}>
       <AppSidebar />
       <SidebarInset>
         <AppHeader />
