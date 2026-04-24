@@ -63,8 +63,7 @@ export function BadgeGenerator() {
   );
 
   const imgCode = useMemo(
-    () =>
-      `<img src="${escapeHtmlAttr(badgeUrl)}" alt="${escapeHtmlAttr(`${badgeName} badge`)}">`,
+    () => `<img src="${badgeUrl}" alt="${escapeHtmlAttr(`${badgeName} badge`)}">`,
     [badgeName, badgeUrl],
   );
 
