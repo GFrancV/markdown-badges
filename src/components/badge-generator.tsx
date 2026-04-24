@@ -17,6 +17,21 @@ import { Input } from "@/components/ui/input";
 import { getIcons } from "@/services/simple-icons";
 import { CodeBlock } from "./ui/code-block";
 
+const COLOR_HEX_PATTERN = /^#[0-9a-fA-F]{6}$/;
+
+function sanitizeColorHex(value: string, fallback: string): string {
+  return COLOR_HEX_PATTERN.test(value) ? value : fallback;
+}
+
+function escapeHtmlAttr(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
 export function BadgeGenerator() {
   const [badgeName, setBadgeName] = useState("GitHub");
   const [logoColor, setLogoColor] = useState("#ffffff");
@@ -47,7 +62,13 @@ export function BadgeGenerator() {
   }, []);
 
   const badgeUrl = useMemo(() => {
-    return `https://img.shields.io/badge/${badgeName}-1000?style=for-the-badge&logo=${logo}&logoColor=${logoColor.slice(1)}&labelColor=${leftColor.slice(1)}&color=${rightColor.slice(1)}`;
+    const safeBadgeName = encodeURIComponent(badgeName);
+    const safeLogo = encodeURIComponent(logo ?? "");
+    const safeLogoColor = sanitizeColorHex(logoColor, "#ffffff").slice(1);
+    const safeLeftColor = sanitizeColorHex(leftColor, "#000000").slice(1);
+    const safeRightColor = sanitizeColorHex(rightColor, "#000000").slice(1);
+
+    return `https://img.shields.io/badge/${safeBadgeName}-1000?style=for-the-badge&logo=${safeLogo}&logoColor=${safeLogoColor}&labelColor=${safeLeftColor}&color=${safeRightColor}`;
   }, [badgeName, logo, logoColor, leftColor, rightColor]);
 
   const markdownCode = useMemo(
@@ -56,7 +77,8 @@ export function BadgeGenerator() {
   );
 
   const imgCode = useMemo(
-    () => `<img src="${badgeUrl}" alt="${badgeName} badge">`,
+    () =>
+      `<img src="${escapeHtmlAttr(badgeUrl)}" alt="${escapeHtmlAttr(`${badgeName} badge`)}">`,
     [badgeName, badgeUrl],
   );
 
