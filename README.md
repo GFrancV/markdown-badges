@@ -20,7 +20,7 @@ All badges provided by this project were extracted from
 <a href="https://github.com/Ileriayo/markdown-badges"				target="_blank">Ileriayo/markdown-badges GitHub repository</a>
 , which come from <a href="https://shields.io/" class="underline" target="_blank">shields.io</a>.
 
-![desktop](https://github.com/GFrancV/markdown-badges/assets/35277540/f96a93f5-cdb1-4042-a7d5-a8f7961d6a7a)
+![desktop](https://github.com/user-attachments/assets/83859e35-b263-4446-a046-b2ade0dc1247)
 
 ## Contribute to the project
 
