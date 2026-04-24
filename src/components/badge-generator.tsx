@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/combobox";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { escapeHtmlAttr, sanitizeColorHex } from "@/lib/sanitize";
 import { getIcons } from "@/services/simple-icons";
 import { CodeBlock } from "./ui/code-block";
 
@@ -47,7 +48,13 @@ export function BadgeGenerator() {
   }, []);
 
   const badgeUrl = useMemo(() => {
-    return `https://img.shields.io/badge/${badgeName}-1000?style=for-the-badge&logo=${logo}&logoColor=${logoColor.slice(1)}&labelColor=${leftColor.slice(1)}&color=${rightColor.slice(1)}`;
+    const safeBadgeName = encodeURIComponent(badgeName);
+    const safeLogo = encodeURIComponent(logo ?? "");
+    const safeLogoColor = sanitizeColorHex(logoColor, "#ffffff").slice(1);
+    const safeLeftColor = sanitizeColorHex(leftColor, "#000000").slice(1);
+    const safeRightColor = sanitizeColorHex(rightColor, "#000000").slice(1);
+
+    return `https://img.shields.io/badge/${safeBadgeName}-1000?style=for-the-badge&logo=${safeLogo}&logoColor=${safeLogoColor}&labelColor=${safeLeftColor}&color=${safeRightColor}`;
   }, [badgeName, logo, logoColor, leftColor, rightColor]);
 
   const markdownCode = useMemo(
@@ -56,7 +63,7 @@ export function BadgeGenerator() {
   );
 
   const imgCode = useMemo(
-    () => `<img src="${badgeUrl}" alt="${badgeName} badge">`,
+    () => `<img src="${badgeUrl}" alt="${escapeHtmlAttr(`${badgeName} badge`)}">`,
     [badgeName, badgeUrl],
   );
 
