@@ -6,7 +6,7 @@ interface Props {
   keywords?: string;
   type?: "website" | "article";
   noIndex?: boolean;
-  jsonLd?: Record<string, any>;
+  jsonLd?: Record<string, any> | Record<string, any>[];
 }
 
 const { title, description, image, keywords, type, noIndex, jsonLd } =
@@ -84,11 +84,20 @@ const ogImage = image.startsWith("http")
 <link rel="sitemap" href="/sitemap-index.xml" />
 
 {
-  jsonLd && (
-    <script
-      is:inline
-      type="application/ld+json"
-      set:html={JSON.stringify(jsonLd)}
-    />
-  )
+  jsonLd &&
+    (Array.isArray(jsonLd) ? (
+      jsonLd.map((ld) => (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify(ld)}
+        />
+      ))
+    ) : (
+      <script
+        is:inline
+        type="application/ld+json"
+        set:html={JSON.stringify(jsonLd)}
+      />
+    ))
 }
