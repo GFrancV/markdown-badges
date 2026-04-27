@@ -30,6 +30,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
+import { Field, FieldLabel } from "@/components/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
@@ -122,36 +123,45 @@ export function Search({
   return (
     <>
       <div className="flex md:flex-row flex-col gap-2 mb-4">
-        <InputGroup>
-          <InputGroupInput
-            ref={searchInput}
-            type="text"
-            name="query"
-            autoComplete="off"
-            value={query ?? undefined}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={`Search in ${badges.length} badges`}
-          />
-          <InputGroupAddon>
-            <SearchIcon className="text-muted-foreground" />
-          </InputGroupAddon>
-          <InputGroupAddon align="inline-end">
-            {!query || query.length === 0 ? (
-              <Kbd>
-                <CommandIcon /> K
-              </Kbd>
-            ) : (
-              <InputGroupButton
-                variant="ghost"
-                aria-label="clear"
-                size="icon-xs"
-                onClick={handleClearQuery}
-              >
-                <XIcon />
-              </InputGroupButton>
-            )}
-          </InputGroupAddon>
-        </InputGroup>
+        <Field>
+          <FieldLabel htmlFor="badge-search" className="sr-only">
+            Search Badges
+          </FieldLabel>
+          <InputGroup>
+            <InputGroupInput
+              id="badge-search"
+              ref={searchInput}
+              type="text"
+              name="query"
+              autoComplete="off"
+              value={query ?? undefined}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={`Search in ${badges.length} badges`}
+            />
+            <InputGroupAddon>
+              <SearchIcon className="text-muted-foreground" />
+            </InputGroupAddon>
+            <InputGroupAddon align="inline-end">
+              {!query || query.length === 0 ? (
+                <Kbd>
+                  {navigator?.platform?.includes("Mac")
+                    ? `${(<CommandIcon />)} `
+                    : "Ctrl "}
+                  K
+                </Kbd>
+              ) : (
+                <InputGroupButton
+                  variant="ghost"
+                  aria-label="clear"
+                  size="icon-xs"
+                  onClick={handleClearQuery}
+                >
+                  <XIcon />
+                </InputGroupButton>
+              )}
+            </InputGroupAddon>
+          </InputGroup>
+        </Field>
 
         <Combobox
           items={categories}
@@ -175,7 +185,7 @@ export function Search({
             <ComboboxInput
               showTrigger={false}
               showClear
-              placeholder="Seach category..."
+              placeholder="Search category..."
             />
             <ComboboxEmpty>No category found.</ComboboxEmpty>
             <ComboboxList>
