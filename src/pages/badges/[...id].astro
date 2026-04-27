@@ -24,6 +24,23 @@ const badgeSEO = getBadgeSEOData(badge);
 
 <Layout {...badgeSEO}>
   <div class="max-w-4xl mx-auto space-y-6">
+    <nav aria-label="Breadcrumb">
+      <ol class="flex items-center gap-1.5 text-sm text-muted-foreground">
+        <li>
+          <a href="/" class="hover:text-foreground transition-colors">Home</a>
+        </li>
+        <li aria-hidden="true">/</li>
+        <li>
+          <a href="/badges" class="hover:text-foreground transition-colors"
+            >Badges</a
+          >
+        </li>
+        <li aria-hidden="true">/</li>
+        <li class="text-foreground font-medium" aria-current="page">
+          {badge.name}
+        </li>
+      </ol>
+    </nav>
     <section class="grid grid-cols-1 md:grid-cols-4 gap-6 border-b mb-6">
       <div class="cols-span-full md:col-span-1 flex items-center">
         <div
@@ -35,6 +52,8 @@ const badgeSEO = getBadgeSEOData(badge);
             width={100}
             height={32}
             class="h-8 w-auto m-auto"
+            fetchpriority="high"
+            loading="eager"
           />
         </div>
       </div>
