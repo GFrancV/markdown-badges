@@ -1,11 +1,26 @@
 ---
 import { Search } from "@/components/search";
+import { Typography } from "@/components/ui/typography";
 import Layout from "@/layouts/Layout.astro";
 
 const query = Astro.url.searchParams.get("query") || null;
 const category = Astro.url.searchParams.get("category") || null;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  url: "https://markdown-badges.vercel.app",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: "https://markdown-badges.vercel.app/?query={search_term_string}",
+    "query-input": "required name=search_term_string",
+  },
+};
 ---
 
-<Layout title="Markdown Badges">
+<Layout title="Markdown Badges" jsonLd={jsonLd}>
+  <Typography as="h1" size="h1" className="sr-only">
+    Markdown Badges
+  </Typography>
   <Search client:load initialQuery={query} initialCategory={category} />
 </Layout>
