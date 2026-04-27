@@ -17,7 +17,7 @@ export function AppHeader() {
           <a
             href="https://github.com/GFrancV/markdown-badges"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             <GithubIcon className="w-6 " />
             View Repo
