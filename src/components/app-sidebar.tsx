@@ -21,7 +21,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Typography } from "@/components/ui/typography";
 import { getBadgeCategories, getBadgeCountByCategory } from "@/services/badges";
 import { AppLogo } from "./app-logo";
 import { ScrollArea } from "./ui/scroll-area";
@@ -129,7 +128,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
                   >
                     <a href={item.url}>
                       <item.icon />
-                      <Typography as="span">{item.name}</Typography>
+                      <span>{item.name}</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -152,7 +151,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
                       isActive={cat === activeCategory}
                     >
                       <a href={`/?category=${cat}`}>
-                        <Typography as="span">{cat}</Typography>
+                        <span>{cat}</span>
                       </a>
                     </SidebarMenuButton>
                     <SidebarMenuBadge>
@@ -169,7 +168,10 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           {nav.navFooter.map((item) => (
             <SidebarMenuItem key={item.name}>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === item.url}
+              >
                 <a href={item.url}>
                   <item.icon />
                   <span>{item.name}</span>
