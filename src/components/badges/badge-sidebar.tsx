@@ -98,7 +98,7 @@ export function BadgeSidebarProvider({ children }: { children: ReactNode }) {
           </SheetHeader>
           <div className="px-6 space-y-8">
             <section>
-              <Typography as="h3" variant="accent" className="mb-1">
+              <Typography as="h3" variant="muted" className="mb-1">
                 Preview
               </Typography>
               <img
@@ -111,13 +111,13 @@ export function BadgeSidebarProvider({ children }: { children: ReactNode }) {
               />
             </section>
             <section>
-              <Typography as="h3" variant="accent" className="mb-1">
+              <Typography as="h3" variant="muted" className="mb-1">
                 Markdown
               </Typography>
               <CodeBlock language="markdown" code={badge?.markdown ?? ""} />
             </section>
             <section>
-              <Typography as="h3" variant="accent" className="mb-1">
+              <Typography as="h3" variant="muted" className="mb-1">
                 Image URL
               </Typography>
               <CodeBlock
@@ -130,13 +130,13 @@ export function BadgeSidebarProvider({ children }: { children: ReactNode }) {
               />
             </section>
             <section>
-              <Typography as="h3" variant="accent" className="mb-1">
+              <Typography as="h3" variant="muted" className="mb-1">
                 Related
               </Typography>
               <div className="grid grid-cols-2 gap-2">
                 {relatedBadges?.map((badge) => (
                   <a key={badge.id} href={`/badges/${badge?.id}`}>
-                    <div className=" bg-[#1e1e1e] rounded-sm border border-transparent transition p-6 text-center flex flex-col hover:bg-primary/20 hover:border-primary">
+                    <div className="bg-card rounded-md border border-transparent transition p-6 text-center flex flex-col hover:bg-primary/20 hover:border-primary">
                       <img
                         src={badge?.url}
                         alt={`${badge?.name} badge`}

@@ -25,7 +25,7 @@ export function BadgeFavoriteButton({
       aria-label={active ? "Remove from favorites" : "Add to favorites"}
       className={cn(
         className,
-        active ? "text-destructive" : "text-muted-foreground hover:text-white",
+        active ? "text-primary" : "text-muted-foreground hover:text-foreground",
       )}
     >
       <HeartIcon className="size-4" fill={active ? "currentColor" : "none"} />
