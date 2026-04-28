@@ -14,6 +14,7 @@ type SelectionContextType = {
   clearAll: () => void;
   copyAll: () => void;
   count: number;
+  badges: Badge[];
 };
 
 const SelectionContext = createContext<SelectionContextType | null>(null);
@@ -24,6 +25,7 @@ const noopSelection: SelectionContextType = {
   clearAll: () => {},
   copyAll: async () => {},
   count: 0,
+  badges: [],
 };
 
 export function SelectionProvider({ children }: { children: ReactNode }) {
@@ -65,8 +67,15 @@ export function SelectionProvider({ children }: { children: ReactNode }) {
   }, [selectedMap]);
 
   const value = useMemo(
-    () => ({ isSelected, toggle, clearAll, copyAll, count: selectedMap.size }),
-    [isSelected, toggle, clearAll, copyAll, selectedMap.size],
+    () => ({
+      isSelected,
+      toggle,
+      clearAll,
+      copyAll,
+      count: selectedMap.size,
+      badges: Array.from(selectedMap.values()),
+    }),
+    [isSelected, toggle, clearAll, copyAll, selectedMap],
   );
 
   return (
