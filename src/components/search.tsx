@@ -1,6 +1,7 @@
 import {
   ChevronDownIcon,
   ChevronsDownIcon,
+  ClipboardIcon,
   CommandIcon,
   ExternalLinkIcon,
   SearchIcon,
@@ -38,6 +39,8 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Kbd } from "@/components/ui/kbd";
+import { SelectionProvider, useSelection } from "@/context/selection-context";
+import { cn } from "@/lib/utils";
 import { filterBadges, getBadgeCategories, getBadges } from "@/services/badges";
 
 type SearchProps = {
@@ -45,10 +48,20 @@ type SearchProps = {
   initialCategory?: string | null;
 };
 
-export function Search({
+export function Search(props: SearchProps) {
+  return (
+    <SelectionProvider>
+      <SearchContent {...props} />
+    </SelectionProvider>
+  );
+}
+
+function SearchContent({
   initialQuery = null,
   initialCategory = null,
 }: SearchProps) {
+  const { count, clearAll, copyAll } = useSelection();
+
   const badges = useMemo(() => getBadges(), []);
   const categories = useMemo(() => getBadgeCategories(), []);
 
@@ -199,9 +212,27 @@ export function Search({
         </Combobox>
       </div>
 
+      <div
+        className={cn(
+          "overflow-hidden transition-all duration-200 flex items-center gap-3 mb-4",
+          count > 0 ? "h-9" : "h-0",
+        )}
+      >
+        <span className="text-sm text-muted-foreground shrink-0">
+          {count} badge{count > 1 ? "s" : ""} selected
+        </span>
+        <Button variant="ghost" size="sm" onClick={clearAll}>
+          Clear selection
+        </Button>
+        <Button size="sm" onClick={copyAll}>
+          <ClipboardIcon />
+          Copy selected
+        </Button>
+      </div>
+
       {results.length > 0 && (
         <div>
-          <BadgesList badges={results} />
+          <BadgesList badges={results} selectable />
 
           {results.length < filteredBadges.length && (
             <div className="flex justify-center items-center gap-4 mt-8">
