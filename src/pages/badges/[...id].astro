@@ -27,7 +27,7 @@ const badgeSEO = getBadgeSEOData(badge);
     <section class="grid grid-cols-1 md:grid-cols-4 gap-6 border-b mb-6">
       <div class="cols-span-full md:col-span-1 flex items-center">
         <div
-          class="p-4 rounded-sm bg-[#1e1e1e] border border-transparent aspect-video md:aspect-square flex w-full"
+          class="p-4 rounded-md bg-card border border-transparent aspect-video md:aspect-square flex w-full"
         >
           <img
             src={badge.url}
@@ -72,7 +72,7 @@ const badgeSEO = getBadgeSEOData(badge);
           relatedBadges?.map((badge) => (
             <a
               href={`/badges/${badge?.id}`}
-              class="bg-[#1e1e1e] rounded-sm border border-transparent transition p-6 text-center flex flex-col hover:bg-primary/20 hover:border-primary"
+              class="bg-card rounded-md border border-transparent transition p-6 text-center flex flex-col hover:bg-primary/20 hover:border-primary"
             >
               <img
                 src={badge?.url}

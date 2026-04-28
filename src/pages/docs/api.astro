@@ -1,5 +1,6 @@
 ---
 import { CodeBlock } from "@/components/ui/code-block";
+import { Link } from "@/components/ui/link";
 import { Typography } from "@/components/ui/typography";
 import Layout from "@/layouts/Layout.astro";
 
@@ -271,11 +272,9 @@ const exampleResponse = `{
         Please do not use this API to build a product or service that replicates
         or directly competes with Markdown Badges as a standalone application.
         If you are unsure whether your use case qualifies, check the source
-        repository on <a
+        repository on <Link
           href="https://github.com/GFrancV/markdown-badges"
-          class="underline"
-          target="_blank"
-          rel="noopener">GitHub</a
+          external>GitHub</Link
         > or open an issue to discuss it.
       </Typography>
     </section>
