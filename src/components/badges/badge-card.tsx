@@ -25,7 +25,7 @@ export const BadgeCard = memo(function BadgeCard({ badge }: { badge: Badge }) {
           open(badge);
         }
       }}
-      className="relative group bg-card cursor-pointer rounded-sm border border-transparent transition px-4  py-6  text-center flex flex-col hover:bg-primary/10 hover:border-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/80 focus:ring-offset-2 focus:ring-offset-card data-[state=open]:bg-primary/10"
+      className="relative group bg-card cursor-pointer rounded-md border border-transparent transition p-4 pt-6 text-center flex flex-col hover:bg-primary/10 hover:border-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/80 focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[state=open]:bg-primary/10"
     >
       <img
         src={url}
