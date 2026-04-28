@@ -1,6 +1,7 @@
 import {
   ChevronDownIcon,
   ChevronsDownIcon,
+  ClipboardIcon,
   CommandIcon,
   ExternalLinkIcon,
   SearchIcon,
@@ -38,6 +39,9 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Kbd } from "@/components/ui/kbd";
+import { Typography } from "@/components/ui/typography";
+import { SelectionProvider, useSelection } from "@/context/selection-context";
+import { cn } from "@/lib/utils";
 import { filterBadges, getBadgeCategories, getBadges } from "@/services/badges";
 
 type SearchProps = {
@@ -45,10 +49,20 @@ type SearchProps = {
   initialCategory?: string | null;
 };
 
-export function Search({
+export function Search(props: SearchProps) {
+  return (
+    <SelectionProvider>
+      <SearchContent {...props} />
+    </SelectionProvider>
+  );
+}
+
+function SearchContent({
   initialQuery = null,
   initialCategory = null,
 }: SearchProps) {
+  const { count, clearAll, copyAll, badges: selectedBadges } = useSelection();
+
   const badges = useMemo(() => getBadges(), []);
   const categories = useMemo(() => getBadgeCategories(), []);
 
@@ -199,9 +213,50 @@ export function Search({
         </Combobox>
       </div>
 
+      <div
+        className={cn(
+          "overflow-hidden transition-all duration-200 flex items-center justify-between gap-3 mb-4",
+          count > 0 ? "h-9" : "h-0",
+        )}
+      >
+        <div className="flex items-center gap-2">
+          <Typography
+            as="span"
+            size="sm"
+            variant="primary"
+            className="shrink-0"
+          >
+            {count} badge{count > 1 ? "s" : ""} selected
+          </Typography>
+          {selectedBadges.length > 0 && (
+            <div className="items-center text-sm text-muted-foreground md:flex hidden">
+              (
+              <Typography
+                as="span"
+                size="sm"
+                variant="muted"
+                className="block xl:max-w-lg lg:max-w-xs max-w-46 truncate"
+              >
+                {selectedBadges.map((b) => b.name).join(", ")}
+              </Typography>
+              )
+            </div>
+          )}
+        </div>
+        <div className="flex items-center gap-3">
+          <Button size="sm" onClick={copyAll}>
+            <ClipboardIcon />
+            Copy selected
+          </Button>
+          <Button variant="ghost" size="sm" onClick={clearAll}>
+            <XIcon /> Clear selection
+          </Button>
+        </div>
+      </div>
+
       {results.length > 0 && (
         <div>
-          <BadgesList badges={results} />
+          <BadgesList badges={results} selectable />
 
           {results.length < filteredBadges.length && (
             <div className="flex justify-center items-center gap-4 mt-8">
