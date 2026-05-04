@@ -1,0 +1,148 @@
+name: Weekly Badges Update
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"
+  workflow_dispatch: # Allow manual triggering from the Actions tab
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-badges:
+    name: Sync badges from upstream README
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # ── Step 1: Backup current badges.json ───────────────────────────────────
+      - name: Backup data/badges.json
+        id: backup
+        run: |
+          if [ ! -f data/badges.json ]; then
+            echo "::warning::data/badges.json not found — starting from an empty baseline"
+            echo "[]" > data/badges.json
+          fi
+          cp data/badges.json data/badges.old.json
+          OLD_COUNT=$(node -p "require('./data/badges.old.json').length")
+          echo "old_count=$OLD_COUNT" >> $GITHUB_OUTPUT
+          echo "Backed up $OLD_COUNT badges to data/badges.old.json"
+
+      # ── Step 2: Generate new badges ──────────────────────────────────────────
+      - name: Generate new badges from upstream README
+        run: pnpm badges:generate
+
+      # ── Step 3: Run tests ────────────────────────────────────────────────────
+      - name: Run test suite on generated badges.json
+        run: pnpm test
+
+      # ── Step 4: Compare SHA-256 hashes ───────────────────────────────────────
+      - name: Compare file hashes
+        id: diff
+        run: |
+          HASH_NEW=$(sha256sum data/badges.json     | awk '{print $1}')
+          HASH_OLD=$(sha256sum data/badges.old.json | awk '{print $1}')
+          NEW_COUNT=$(node -p "require('./data/badges.json').length")
+          OLD_COUNT=${{ steps.backup.outputs.old_count }}
+          DELTA=$((NEW_COUNT - OLD_COUNT))
+          DELTA_DISPLAY=$([ "$DELTA" -ge 0 ] && echo "+$DELTA" || echo "$DELTA")
+
+          echo "new_count=$NEW_COUNT"       >> $GITHUB_OUTPUT
+          echo "delta=$DELTA_DISPLAY"       >> $GITHUB_OUTPUT
+
+          echo "Old hash : $HASH_OLD"
+          echo "New hash : $HASH_NEW"
+          echo "Badges   : $OLD_COUNT → $NEW_COUNT ($DELTA_DISPLAY)"
+
+          if [ "$HASH_NEW" = "$HASH_OLD" ]; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "::notice::No content changes detected — badges.json is already up to date."
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "::notice::Content changed: $OLD_COUNT → $NEW_COUNT badges ($DELTA_DISPLAY)"
+          fi
+
+      # ── Step 5: Clean up backup (always, even on failure) ────────────────────
+      - name: Remove backup file
+        if: always()
+        run: rm -f data/badges.old.json
+
+      # ── Step 6: Write job summary ─────────────────────────────────────────────
+      - name: Write job summary
+        if: always()
+        run: |
+          if [ "${{ steps.diff.outputs.changed }}" = "true" ]; then
+            cat >> $GITHUB_STEP_SUMMARY << 'EOF'
+          ## ✅ Badges updated — PR will be created
+
+          | | Count |
+          |---|---|
+          | Before | ${{ steps.backup.outputs.old_count }} |
+          | After  | ${{ steps.diff.outputs.new_count }} |
+          | Delta  | ${{ steps.diff.outputs.delta }} |
+          EOF
+          elif [ "${{ steps.diff.outputs.changed }}" = "false" ]; then
+            cat >> $GITHUB_STEP_SUMMARY << 'EOF'
+          ## ⏭️ No changes — badges.json is already up to date
+
+          Badge count: ${{ steps.diff.outputs.new_count }}
+          EOF
+          else
+            cat >> $GITHUB_STEP_SUMMARY << 'EOF'
+          ## ❌ Workflow failed
+
+          The workflow stopped before reaching the hash comparison step.
+          Check the step logs above for details.
+          EOF
+          fi
+
+      # ── Step 7: Create Pull Request ───────────────────────────────────────────
+      - name: Create Pull Request
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          add-paths: data/badges.json
+          commit-message: |
+            chore(badges): weekly sync from upstream
+
+            ${{ steps.backup.outputs.old_count }} → ${{ steps.diff.outputs.new_count }} badges (${{ steps.diff.outputs.delta }})
+          title: "chore(badges): weekly sync (${{ steps.diff.outputs.delta }} badges)"
+          body: |
+            ## Weekly Badges Sync
+
+            Automated update pulled from the upstream [Ileriayo/markdown-badges](https://github.com/Ileriayo/markdown-badges) README.
+
+            | | Count |
+            |---|---|
+            | Before | ${{ steps.backup.outputs.old_count }} |
+            | After  | ${{ steps.diff.outputs.new_count }} |
+            | Delta  | **${{ steps.diff.outputs.delta }}** |
+
+            ### Verification passed
+            - ✅ `node scripts/generate-badges.js` completed without errors
+            - ✅ All tests passed (`pnpm test`)
+            - ✅ SHA-256 of `data/badges.json` differs from the previous version
+
+            ---
+            *Generated by the [weekly-update-badges](../../actions/workflows/update-badges.yml) workflow*
+          branch: chore/weekly-badges-update
+          base: main
+          delete-branch: true
