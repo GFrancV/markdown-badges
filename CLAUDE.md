@@ -25,7 +25,7 @@ Key libraries: `fuzzyjs` (badge search), `sonner` (toasts), `next-themes` (dark/
 
 ### Data Flow
 
-1. **Source of truth**: `src/data/badges.json` — static JSON with ~600+ badge definitions (`{ id, name, url, markdown, category }`).
+1. **Source of truth**: `data/badges.json` — static JSON with ~600+ badge definitions (`{ id, name, url, markdown, category }`).
 2. **Service layer**: `src/services/badges.ts` — all badge filtering/retrieval logic using fuzzy search (fuzzyjs). This is where search, category filtering, and related-badge lookups live.
 3. **Icons**: `src/services/icons.ts` — fetches simple-icons metadata dynamically from GitHub at runtime (used in the generator).
 4. **Pages**: Astro pages in `src/pages/` define routes. Badge detail pages (`/badges/[id]`) are statically pre-rendered at build time from the JSON.
@@ -47,4 +47,4 @@ Key libraries: `fuzzyjs` (badge search), `sonner` (toasts), `next-themes` (dark/
 
 ### Adding Badges
 
-New badges are added to `src/data/badges.json`. See `CONTRIBUTING.md` for the exact schema and guidelines.
+New badges are added to `data/badges.json`. See `CONTRIBUTING.md` for the exact schema and guidelines.
