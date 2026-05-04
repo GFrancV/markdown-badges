@@ -129,27 +129,29 @@ export function BadgeSidebarProvider({ children }: { children: ReactNode }) {
                 }
               />
             </section>
-            <section>
-              <Typography as="h3" variant="muted" className="mb-1">
-                Related
-              </Typography>
-              <div className="grid grid-cols-2 gap-2">
-                {relatedBadges?.map((badge) => (
-                  <a key={badge.id} href={`/badges/${badge?.id}`}>
-                    <div className="bg-card rounded-md border border-transparent transition p-6 text-center flex flex-col hover:bg-primary/20 hover:border-primary">
-                      <img
-                        src={badge?.url}
-                        alt={`${badge?.name} badge`}
-                        width="50"
-                        height="20"
-                        className="h-5 w-auto mx-auto"
-                        loading="lazy"
-                      />
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </section>
+            {relatedBadges && relatedBadges?.length > 0 && (
+              <section>
+                <Typography as="h3" variant="muted" className="mb-1">
+                  Related
+                </Typography>
+                <div className="grid grid-cols-2 gap-2">
+                  {relatedBadges?.map((badge) => (
+                    <a key={badge.id} href={`/badges/${badge?.id}`}>
+                      <div className="bg-card rounded-md border border-transparent transition p-6 text-center flex flex-col hover:bg-primary/20 hover:border-primary">
+                        <img
+                          src={badge?.url}
+                          alt={`${badge?.name} badge`}
+                          width="50"
+                          height="20"
+                          className="h-5 w-auto mx-auto"
+                          loading="lazy"
+                        />
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
           <SheetFooter>
             <Button onClick={() => copy(badge?.markdown ?? "")}>
