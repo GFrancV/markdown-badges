@@ -5,6 +5,7 @@ import {
   CommandIcon,
   ExternalLinkIcon,
   SearchIcon,
+  ShieldIcon,
   ShieldOffIcon,
   XIcon,
 } from "lucide-react";
@@ -134,10 +135,12 @@ function SearchContent({
     setQuery("");
   };
 
+  const isFiltered = (query && query.length > 0) || !!categoryQuery;
+
   return (
     <>
-      <div className="flex md:flex-row flex-col gap-2 mb-4">
-        <Field>
+      <div className="flex md:flex-row flex-col gap-2 mb-6">
+        <Field className="flex-1">
           <FieldLabel htmlFor="badge-search" className="sr-only">
             Search Badges
           </FieldLabel>
@@ -150,7 +153,7 @@ function SearchContent({
               autoComplete="off"
               value={query ?? undefined}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder={`Search in ${badges.length} badges`}
+              placeholder="Search badges..."
             />
             <InputGroupAddon>
               <SearchIcon className="text-muted-foreground" />
@@ -187,7 +190,7 @@ function SearchContent({
             render={
               <Button
                 variant="outline"
-                className="w-50 justify-between"
+                className="w-50 justify-between text-muted-foreground"
                 aria-label="Select category"
               >
                 <ComboboxValue placeholder="All Categories" />
@@ -211,6 +214,31 @@ function SearchContent({
             </ComboboxList>
           </ComboboxContent>
         </Combobox>
+      </div>
+
+      <div className="flex items-center justify-end gap-2 mb-3">
+        <div>
+          {isFiltered ? (
+            <Typography
+              as="span"
+              size="sm"
+              variant="muted"
+              className="flex items-center gap-1"
+            >
+              <SearchIcon /> {filteredBadges.length} result
+              {filteredBadges.length !== 1 ? "s" : ""}
+            </Typography>
+          ) : (
+            <Typography
+              as="span"
+              size="sm"
+              variant="muted"
+              className="flex items-center gap-1"
+            >
+              <ShieldIcon /> {badges.length} badges
+            </Typography>
+          )}
+        </div>
       </div>
 
       <div
