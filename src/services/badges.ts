@@ -1,6 +1,6 @@
 import { filter as fuzzy } from "fuzzyjs";
 
-import badges from "@/data/badges.json";
+import badges from "~/data/badges.json";
 
 type BadgeFilters = {
   query?: string | null;
