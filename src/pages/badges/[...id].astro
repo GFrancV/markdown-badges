@@ -63,29 +63,31 @@ const badgeSEO = getBadgeSEOData(badge);
         </section>
       </div>
     </section>
-    <section>
-      <Typography as="h2" size="h3" className="mb-4">
-        Related Badges
-      </Typography>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {
-          relatedBadges?.map((badge) => (
-            <a
-              href={`/badges/${badge?.id}`}
-              class="bg-card rounded-md border border-transparent transition p-6 text-center flex flex-col hover:bg-primary/20 hover:border-primary"
-            >
-              <img
-                src={badge?.url}
-                alt={`${badge?.name} badge`}
-                width={100}
-                height={28}
-                class="h-7 w-auto mx-auto"
-                loading="lazy"
-              />
-            </a>
-          ))
-        }
-      </div>
-    </section>
+    {
+      relatedBadges && relatedBadges?.length > 0 && (
+        <section>
+          <Typography as="h2" size="h3" className="mb-4">
+            Related Badges
+          </Typography>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {relatedBadges?.map((badge) => (
+              <a
+                href={`/badges/${badge?.id}`}
+                class="bg-card rounded-md border border-transparent transition p-6 text-center flex flex-col hover:bg-primary/20 hover:border-primary"
+              >
+                <img
+                  src={badge?.url}
+                  alt={`${badge?.name} badge`}
+                  width={100}
+                  height={28}
+                  class="h-7 w-auto mx-auto"
+                  loading="lazy"
+                />
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
   </div>
 </Layout>
