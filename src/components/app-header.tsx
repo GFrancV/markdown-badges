@@ -1,8 +1,7 @@
-import { GithubIcon } from "lucide-react";
-
 import { AppLogo } from "./app-logo";
 import { Button } from "./ui/button";
 import { SidebarTrigger } from "./ui/sidebar";
+import { GitHub } from "./ui/svgs/github";
 
 export function AppHeader() {
   return (
@@ -19,7 +18,7 @@ export function AppHeader() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <GithubIcon className="w-6 " />
+            <GitHub className="w-6 " />
             View Repo
           </a>
         </Button>
