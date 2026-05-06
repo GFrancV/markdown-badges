@@ -137,6 +137,7 @@ function SearchContent({
 
   const isFiltered = (query && query.length > 0) || !!categoryQuery;
 
+  const isMac = navigator.userAgent.includes("Mac");
   return (
     <>
       <div className="flex md:flex-row flex-col gap-2 mb-6">
@@ -160,12 +161,7 @@ function SearchContent({
             </InputGroupAddon>
             <InputGroupAddon align="inline-end">
               {!query || query.length === 0 ? (
-                <Kbd>
-                  {navigator?.platform?.includes("Mac")
-                    ? `${(<CommandIcon />)} `
-                    : "Ctrl "}
-                  K
-                </Kbd>
+                <Kbd>{isMac ? `${(<CommandIcon />)} ` : "Ctrl "}K</Kbd>
               ) : (
                 <InputGroupButton
                   variant="ghost"
