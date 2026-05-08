@@ -1,15 +1,18 @@
-## Description
+# Title using conventional commit style (e.g. "fix: ...", "feat: ...", "refactor: ...")
 
-Sample description
+## Summary
 
-## Info
+## Type of change
 
-| Name | Category | Background | Color | Logo Color |
-| --- | --- | --- | --- | --- |
-| Google DeepMind | AI and Bots | `#4285F4` | `#ffffff` |
+- [ ] 🐛 Bug fix
+- [ ] ✨ New feature
+- [ ] 💥 Breaking change
+- [ ] ♻️ Refactor
+- [ ] 📝 Docs update
+- [ ] 🔧 CI / Config change
 
-## Preview
+## Changes
 
-| Badge | url |
-| --- | --- |
-| Google Deepmind	![Google Deepmind](https://img.shields.io/badge/deepmind-%234285F4.svg?style=for-the-badge&logo=deepmind&logoColor=white) | `Google Deepmind	![Google Deepmind](https://img.shields.io/badge/deepmind-%234285F4.svg?style=for-the-badge&logo=deepmind&logoColor=white)` |
+## How to test
+
+## Release notes
