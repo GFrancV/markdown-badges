@@ -6,7 +6,7 @@ export function getBadgeSEOData(badge: Badge) {
     `${badge.name} github badge`,
     `${badge.name} badge for github readme`,
     `${badge.name} readme badge`,
-    `${badge.category} badge`,
+    ...badge.categories.map((cat) => `${cat} badge`),
     "markdown badges",
     "github readme badges",
     "github profile badges",

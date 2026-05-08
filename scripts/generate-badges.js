@@ -74,26 +74,40 @@ async function main() {
 
     // sanitizeId encodes # → %23, ? → %3F, \ → %5C so the ID is safe
     // to use as an Astro static route path segment.
-    let id = sanitizeId(nameToId(name));
+    const id = sanitizeId(nameToId(name));
 
-    // Resolve ID collisions by appending the category slug
-    if (seenIds.has(id)) {
-      const suffix = currentCategory.toLowerCase().replace(/[\s/]+/g, "-");
-      id = `${id}-${suffix}`;
-      console.warn(`  ⚠ Collision: renamed to "${id}"`);
+    // Same URL already exists → merge the new category into that entry.
+    const existingByUrl = badges.find((b) => b.url === url);
+    if (existingByUrl) {
+      if (!existingByUrl.categories.includes(currentCategory)) {
+        existingByUrl.categories.push(currentCategory);
+        console.warn(`  ℹ "${name}": merged category "${currentCategory}" (same URL)`);
+      }
+      continue;
     }
-    seenIds.add(id);
 
-    badges.push({ id, name, url, markdown, category: currentCategory });
+    // Same name/ID but different URL (e.g. Bitcoin in Blockchain vs Cryptocurrency
+    // with slightly different badge colours) → merge categories, keep first URL.
+    const existingById = badges.find((b) => b.id === id);
+    if (existingById) {
+      if (!existingById.categories.includes(currentCategory)) {
+        existingById.categories.push(currentCategory);
+        console.warn(`  ℹ "${name}": merged category "${currentCategory}" (same name, different URL)`);
+      }
+      continue;
+    }
+
+    seenIds.add(id);
+    badges.push({ id, name, url, markdown, categories: [currentCategory] });
   }
 
   // ── Summary ─────────────────────────────────────────────────────────────────
-  const categories = [...new Set(badges.map((b) => b.category))];
+  const categories = [...new Set(badges.flatMap((b) => b.categories))];
   console.log(
-    `\nExtracted ${badges.length} badges across ${categories.size ?? categories.length} categories:`,
+    `\nExtracted ${badges.length} badges across ${categories.length} categories:`,
   );
   for (const cat of categories) {
-    const count = badges.filter((b) => b.category === cat).length;
+    const count = badges.filter((b) => b.categories.includes(cat)).length;
     console.log(`  ${cat}: ${count}`);
   }
 

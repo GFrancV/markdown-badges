@@ -6,7 +6,7 @@ interface Badge {
   name: string;
   url: string;
   markdown: string;
-  category: string;
+  categories: string[];
 }
 
 interface SimpleIcon {

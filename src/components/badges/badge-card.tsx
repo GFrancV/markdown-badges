@@ -1,3 +1,4 @@
+import { EllipsisIcon } from "lucide-react";
 import { memo, type MouseEvent } from "react";
 
 import { BadgeFavoriteButton } from "@/components/badges/badge-favorite-button";
@@ -5,6 +6,14 @@ import { useBadgeSidebar } from "@/components/badges/badge-sidebar";
 import { CopyClipboardButton } from "@/components/copy-clipboard-button";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Typography } from "@/components/ui/typography";
 import { useFavorites } from "@/context/favorites-context";
 import { cn } from "@/lib/utils";
@@ -14,6 +23,7 @@ type BadgeCardProps = {
   selectable?: boolean;
   isSelected?: boolean;
   onToggle?: (badge: Badge) => void;
+  activeCategory?: string | null;
 };
 
 export const BadgeCard = memo(function BadgeCard({
@@ -21,11 +31,19 @@ export const BadgeCard = memo(function BadgeCard({
   selectable = false,
   isSelected = false,
   onToggle,
+  activeCategory,
 }: BadgeCardProps) {
-  const { name, url, category } = badge;
+  const { name, url, categories } = badge;
 
   const { isFavorite } = useFavorites();
   const { open } = useBadgeSidebar();
+
+  const primaryCategory =
+    activeCategory && categories.includes(activeCategory)
+      ? activeCategory
+      : categories[0];
+
+  const extraCategories = categories.filter((cat) => cat !== primaryCategory);
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     if (selectable && (e.ctrlKey || e.metaKey)) {
@@ -81,16 +99,58 @@ export const BadgeCard = memo(function BadgeCard({
         {name}
       </Typography>
 
-      <Button
-        asChild
-        variant="outline"
-        size="sm"
-        className="text-muted-foreground"
-      >
-        <a href={`/?category=${category}`} onClick={(e) => e.stopPropagation()}>
-          {category}
-        </a>
-      </Button>
+      <div className="flex flex-wrap justify-center gap-2">
+        <Button
+          asChild
+          variant="outline"
+          size="xs"
+          className="text-muted-foreground"
+        >
+          <a
+            href={`/?category=${primaryCategory}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {primaryCategory}
+          </a>
+        </Button>
+
+        {extraCategories.length > 0 && (
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                size="xs"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <EllipsisIcon className="size-4" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent align="start">
+              <PopoverHeader>
+                <PopoverTitle>More categories</PopoverTitle>
+                <PopoverDescription className="flex flex-col gap-2 mt-2">
+                  {extraCategories.map((cat) => (
+                    <Button
+                      key={cat}
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className="text-muted-foreground"
+                    >
+                      <a
+                        href={`/?category=${cat}`}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {cat}
+                      </a>
+                    </Button>
+                  ))}
+                </PopoverDescription>
+              </PopoverHeader>
+            </PopoverContent>
+          </Popover>
+        )}
+      </div>
 
       <div className="absolute top-0.5 right-0.5 transition duration-300 flex flex-col items-center gap-0.5">
         <CopyClipboardButton content={`![${name}](${url})`} />

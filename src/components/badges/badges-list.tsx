@@ -5,9 +5,14 @@ import { useSelection } from "@/context/selection-context";
 type BadgesListProps = {
   badges: Badge[];
   selectable?: boolean;
+  activeCategory?: string | null;
 };
 
-export function BadgesList({ badges, selectable = false }: BadgesListProps) {
+export function BadgesList({
+  badges,
+  selectable = false,
+  activeCategory,
+}: BadgesListProps) {
   const { isSelected, toggle } = useSelection();
 
   return (
@@ -20,6 +25,7 @@ export function BadgesList({ badges, selectable = false }: BadgesListProps) {
             selectable={selectable}
             isSelected={selectable && isSelected(badge.id)}
             onToggle={toggle}
+            activeCategory={activeCategory}
           />
         ))}
       </div>

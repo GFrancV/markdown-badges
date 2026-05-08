@@ -2,7 +2,7 @@
  * Test suite for generate-badges.js
  *
  * Covers three layers:
- *  1. Output validation  — the generated scripts/badges.json satisfies the schema
+ *  1. Output validation  — the generated data/badges.json satisfies the schema
  *  2. Negative cases     — validateBadge() correctly rejects malformed data
  *  3. Unit tests         — pure helpers (stripEmoji, nameToId, extractUrl, parseTableRow,
  *                          stripMarkdownEscapes, sanitizeId)
@@ -29,7 +29,7 @@ type Badge = {
   name: string;
   url: string;
   markdown: string;
-  category: string;
+  categories: string[];
 };
 
 const __dir = dirname(fileURLToPath(import.meta.url));
@@ -57,30 +57,43 @@ describe("badges.json — output validation", () => {
     });
 
     it("contains at least 800 badges", () => {
-      // sanity guard: upstream README currently has 880+
+      // sanity guard: upstream README currently has 850+
       expect(badges.length).toBeGreaterThanOrEqual(800);
     });
 
     it("spans at least 40 categories", () => {
-      const cats = new Set(badges.map((b) => b.category));
+      const cats = new Set(badges.flatMap((b) => b.categories));
       expect(cats.size).toBeGreaterThanOrEqual(40);
     });
   });
 
   describe("schema — required fields", () => {
-    it("every badge has id, name, url, markdown, category", () => {
+    it("every badge has id, name, url, markdown and a non-empty categories array", () => {
       for (const badge of badges) {
-        expect(badge, `badge: ${JSON.stringify(badge)}`).toMatchObject({
-          id: expect.any(String),
-          name: expect.any(String),
-          url: expect.any(String),
-          markdown: expect.any(String),
-          category: expect.any(String),
-        });
+        expect(
+          typeof badge.id === "string" && badge.id.length > 0,
+          `missing id in: ${JSON.stringify(badge)}`,
+        ).toBe(true);
+        expect(
+          typeof badge.name === "string" && badge.name.length > 0,
+          `missing name`,
+        ).toBe(true);
+        expect(
+          typeof badge.url === "string" && badge.url.length > 0,
+          `missing url in ${badge.name}`,
+        ).toBe(true);
+        expect(
+          typeof badge.markdown === "string" && badge.markdown.length > 0,
+          `missing markdown in ${badge.name}`,
+        ).toBe(true);
+        expect(
+          Array.isArray(badge.categories) && badge.categories.length > 0,
+          `categories must be a non-empty array in ${badge.name}`,
+        ).toBe(true);
       }
     });
 
-    it("no field is an empty string", () => {
+    it("no required field is empty or blank", () => {
       for (const badge of badges) {
         expect(badge.id.trim(), `empty id in ${badge.name}`).not.toBe("");
         expect(badge.name.trim(), `empty name`).not.toBe("");
@@ -89,10 +102,11 @@ describe("badges.json — output validation", () => {
           badge.markdown.trim(),
           `empty markdown in ${badge.name}`,
         ).not.toBe("");
-        expect(
-          badge.category.trim(),
-          `empty category in ${badge.name}`,
-        ).not.toBe("");
+        for (const cat of badge.categories) {
+          expect(cat.trim(), `blank category entry in ${badge.name}`).not.toBe(
+            "",
+          );
+        }
       }
     });
   });
@@ -166,24 +180,26 @@ describe("badges.json — output validation", () => {
   describe("category format", () => {
     it("no category contains emoji", () => {
       const withEmoji = badges.filter((b) =>
-        /\p{Extended_Pictographic}/u.test(b.category),
+        b.categories.some((cat) => /\p{Extended_Pictographic}/u.test(cat)),
       );
       expect(
-        withEmoji.map((b) => ({ name: b.name, category: b.category })),
+        withEmoji.map((b) => ({ name: b.name, categories: b.categories })),
       ).toEqual([]);
     });
 
     it("no category is whitespace-only", () => {
-      const blank = badges.filter((b) => b.category.trim() === "");
+      const blank = badges.filter((b) =>
+        b.categories.some((cat) => cat.trim() === ""),
+      );
       expect(blank.map((b) => b.name)).toEqual([]);
     });
   });
 
   describe("known badges — smoke tests", () => {
-    it("contains the Claude badge", () => {
+    it("contains the Claude badge in Artificial Intelligence", () => {
       const badge = badges.find((b) => b.id === "claude");
       expect(badge).toBeDefined();
-      expect(badge?.category).toBe("Artificial Intelligence");
+      expect(badge?.categories).toContain("Artificial Intelligence");
     });
 
     it('C++ → id "c++" (special chars preserved)', () => {
@@ -228,14 +244,78 @@ describe("badges.json — output validation", () => {
     });
 
     it("Wearables category has no emoji (regression: ⌚ U+231A)", () => {
-      const wearable = badges.find((b) => b.category === "Wearables");
+      const wearable = badges.find((b) => b.categories.includes("Wearables"));
       expect(wearable).toBeDefined();
       expect(/\p{Extended_Pictographic}/u.test("Wearables")).toBe(false);
     });
 
     it("Quantum Programming category is correctly mapped", () => {
-      const badge = badges.find((b) => b.category === "Quantum Programming");
+      const badge = badges.find((b) =>
+        b.categories.includes("Quantum Programming"),
+      );
       expect(badge).toBeDefined();
+    });
+  });
+
+  describe("multi-category badges — merge smoke tests", () => {
+    it("Bitcoin is a single entry covering Blockchain and Cryptocurrency", () => {
+      const allBitcoin = badges.filter((b) => b.name === "Bitcoin");
+      expect(allBitcoin).toHaveLength(1);
+      expect(allBitcoin[0].categories).toContain("Blockchain");
+      expect(allBitcoin[0].categories).toContain("Cryptocurrency");
+    });
+
+    it("Xbox is a single entry covering Gaming, Game Consoles and Social", () => {
+      const allXbox = badges.filter((b) => b.name === "Xbox");
+      expect(allXbox).toHaveLength(1);
+      expect(allXbox[0].categories).toContain("Gaming");
+      expect(allXbox[0].categories).toContain("Game Consoles");
+      expect(allXbox[0].categories).toContain("Social");
+    });
+
+    it("Twitch is a single entry covering its categories", () => {
+      const allTwitch = badges.filter((b) => b.name === "Twitch");
+      expect(allTwitch).toHaveLength(1);
+      expect(allTwitch[0].categories.length).toBeGreaterThanOrEqual(2);
+    });
+
+    it("DuckDuckGo is a single entry (URL casing difference → same badge)", () => {
+      const allDDG = badges.filter(
+        (b) => b.name.toLowerCase() === "duckduckgo",
+      );
+      expect(allDDG).toHaveLength(1);
+      expect(allDDG[0].categories).toContain("Browsers");
+      expect(allDDG[0].categories).toContain("Search Engines");
+    });
+
+    it("HackerRank is a single entry covering Forums and Jobs", () => {
+      const allHR = badges.filter((b) => b.name.toLowerCase() === "hackerrank");
+      expect(allHR).toHaveLength(1);
+      expect(allHR[0].categories).toContain("Forums");
+      expect(allHR[0].categories).toContain("Jobs");
+    });
+
+    it("every badge id matches its name-derived slug (no renamed/suffixed entries)", () => {
+      // If the script ever falls back to appending a category suffix
+      // (e.g. "bitcoin-cryptocurrency"), the stored id will diverge from
+      // sanitizeId(nameToId(badge.name)). All duplicates must be merged instead.
+      const mismatched = badges.filter(
+        (b) => b.id !== sanitizeId(nameToId(b.name)),
+      );
+      expect(
+        mismatched.map((b) => ({
+          id: b.id,
+          name: b.name,
+          expected: sanitizeId(nameToId(b.name)),
+        })),
+      ).toEqual([]);
+    });
+
+    it("categories array has no duplicates within a single badge", () => {
+      const withDuplicateCats = badges.filter(
+        (b) => new Set(b.categories).size !== b.categories.length,
+      );
+      expect(withDuplicateCats.map((b) => b.name)).toEqual([]);
     });
   });
 });
@@ -248,11 +328,17 @@ describe("validateBadge — negative cases", () => {
     name: "Test Badge",
     url: "https://img.shields.io/badge/test-badge-blue",
     markdown: "![Test Badge](https://img.shields.io/badge/test-badge-blue)",
-    category: "Testing",
+    categories: ["Testing"],
   };
 
   it("accepts a fully valid badge (zero errors)", () => {
     expect(validateBadge(VALID)).toEqual([]);
+  });
+
+  it("accepts a valid badge with multiple categories", () => {
+    expect(
+      validateBadge({ ...VALID, categories: ["Testing", "Frameworks"] }),
+    ).toEqual([]);
   });
 
   it("rejects a badge missing the id field", () => {
@@ -276,19 +362,34 @@ describe("validateBadge — negative cases", () => {
     expect(validateBadge(noMd).some((e) => e.includes("markdown"))).toBe(true);
   });
 
-  it("rejects a badge missing the category field", () => {
-    const { category, ...noCat } = VALID;
-    expect(validateBadge(noCat).some((e) => e.includes("category"))).toBe(true);
+  it("rejects a badge missing the categories field", () => {
+    const { categories, ...noCats } = VALID;
+    expect(validateBadge(noCats).some((e) => e.includes("categories"))).toBe(
+      true,
+    );
   });
 
   it("rejects a badge with an empty id", () => {
     expect(validateBadge({ ...VALID, id: "" }).length).toBeGreaterThan(0);
   });
 
-  it("rejects a badge with a whitespace-only category", () => {
-    expect(validateBadge({ ...VALID, category: "   " }).length).toBeGreaterThan(
-      0,
-    );
+  it("rejects a badge with an empty categories array", () => {
+    const errors = validateBadge({ ...VALID, categories: [] });
+    expect(errors.some((e) => e.includes("categories"))).toBe(true);
+  });
+
+  it("rejects a badge with a whitespace-only string in categories", () => {
+    expect(
+      validateBadge({ ...VALID, categories: ["   "] }).length,
+    ).toBeGreaterThan(0);
+  });
+
+  it("rejects a badge with a non-array categories field", () => {
+    expect(
+      validateBadge({ ...VALID, categories: "Testing" }).some((e) =>
+        e.includes("categories"),
+      ),
+    ).toBe(true);
   });
 
   it("rejects a badge with an uppercase id", () => {
@@ -324,14 +425,22 @@ describe("validateBadge — negative cases", () => {
   });
 
   it("rejects a category that still contains emoji (⌚)", () => {
-    const errors = validateBadge({ ...VALID, category: "⌚ Wearables" });
+    const errors = validateBadge({ ...VALID, categories: ["⌚ Wearables"] });
     expect(errors.some((e) => e.includes("emoji"))).toBe(true);
   });
 
   it("rejects a category that still contains emoji (🤖)", () => {
     const errors = validateBadge({
       ...VALID,
-      category: "🤖 Artificial Intelligence",
+      categories: ["🤖 Artificial Intelligence"],
+    });
+    expect(errors.some((e) => e.includes("emoji"))).toBe(true);
+  });
+
+  it("rejects when any category in the array contains emoji", () => {
+    const errors = validateBadge({
+      ...VALID,
+      categories: ["Testing", "🤖 AI"],
     });
     expect(errors.some((e) => e.includes("emoji"))).toBe(true);
   });
