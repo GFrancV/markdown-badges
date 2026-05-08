@@ -9,7 +9,7 @@ const badges = defineCollection({
     name: z.string(),
     url: z.url(),
     markdown: z.string(),
-    category: z.string(),
+    categories: z.array(z.string()),
   }),
 });
 
