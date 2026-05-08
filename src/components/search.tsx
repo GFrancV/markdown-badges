@@ -280,7 +280,7 @@ function SearchContent({
 
       {results.length > 0 && (
         <div>
-          <BadgesList badges={results} selectable />
+          <BadgesList badges={results} selectable activeCategory={categoryQuery} />
 
           {results.length < filteredBadges.length && (
             <div className="flex justify-center items-center gap-4 mt-8">
