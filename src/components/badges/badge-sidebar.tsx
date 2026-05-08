@@ -89,12 +89,22 @@ export function BadgeSidebarProvider({ children }: { children: ReactNode }) {
     <BadgeSidebarContext.Provider value={{ open, close }}>
       {children}
       <Sheet open={isOpen} onOpenChange={close}>
-        <SheetContent>
+        <SheetContent className="z-1000">
           <SheetHeader className="border-b ">
-            <SheetTitle asChild>
+            <SheetTitle>
               <Typography size="h3">{badge?.name}</Typography>
             </SheetTitle>
-            <SheetDescription>{badge?.category}</SheetDescription>
+            <SheetDescription className="flex flex-wrap gap-1">
+              {badge?.categories.map((cat) => (
+                <a
+                  key={cat}
+                  href={`/?category=${cat}`}
+                  className="inline-flex items-center rounded-sm border px-2 py-0.5 text-xs text-muted-foreground hover:bg-primary/10 hover:border-primary/80 transition"
+                >
+                  {cat}
+                </a>
+              ))}
+            </SheetDescription>
           </SheetHeader>
           <div className="px-6 space-y-8">
             <section>

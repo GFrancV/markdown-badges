@@ -43,9 +43,16 @@ const badgeSEO = getBadgeSEOData(badge);
           <Typography as="h1" size="h1" className="mb-2">
             {badge.name} Badge
           </Typography>
-          <Typography variant="muted">
-            {badge.category}
-          </Typography>
+          <div class="flex flex-wrap gap-2">
+            {badge.categories.map((cat) => (
+              <a
+                href={`/?category=${cat}`}
+                class="inline-flex items-center rounded-sm border px-2 py-0.5 text-sm text-muted-foreground hover:bg-primary/10 hover:border-primary/80 transition"
+              >
+                {cat}
+              </a>
+            ))}
+          </div>
         </header>
         <section class="mb-4">
           <Typography as="h2" size="h4" className="mb-2"> Markdown </Typography>
