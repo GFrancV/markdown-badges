@@ -104,8 +104,8 @@ export function parseTableRow(line) {
 export function validateBadge(badge) {
   const errors = [];
 
-  const requiredFields = ['id', 'name', 'url', 'markdown', 'category'];
-  for (const field of requiredFields) {
+  const requiredStringFields = ['id', 'name', 'url', 'markdown'];
+  for (const field of requiredStringFields) {
     if (!Object.hasOwn(badge, field)) {
       errors.push(`missing field: ${field}`);
       continue;
@@ -113,6 +113,14 @@ export function validateBadge(badge) {
     if (typeof badge[field] !== 'string' || badge[field].trim() === '') {
       errors.push(`empty or non-string field: ${field}`);
     }
+  }
+
+  if (!Object.hasOwn(badge, 'categories')) {
+    errors.push(`missing field: categories`);
+  } else if (!Array.isArray(badge.categories) || badge.categories.length === 0) {
+    errors.push(`categories must be a non-empty array`);
+  } else if (badge.categories.some((c) => typeof c !== 'string' || c.trim() === '')) {
+    errors.push(`categories array contains empty or non-string values`);
   }
 
   if (badge.id && badge.id !== badge.id.toLowerCase()) {
@@ -143,8 +151,12 @@ export function validateBadge(badge) {
     }
   }
 
-  if (badge.category && /\p{Extended_Pictographic}/u.test(badge.category)) {
-    errors.push(`category contains emoji: ${badge.category}`);
+  if (Array.isArray(badge.categories)) {
+    for (const cat of badge.categories) {
+      if (typeof cat === 'string' && /\p{Extended_Pictographic}/u.test(cat)) {
+        errors.push(`category contains emoji: ${cat}`);
+      }
+    }
   }
 
   return errors;
