@@ -16,7 +16,7 @@ const exampleResponse = `{
       "name": "React",
       "url": "https://reactjs.org/",
       "markdown": "![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)",
-      "category": "Frameworks"
+      "categories": ["Frameworks"]
     },
     ...
   ]
@@ -89,11 +89,15 @@ const exampleResponse = `{
               </tr>
               <tr>
                 <td class="px-4 py-3 font-mono text-fuchsia-300">limit</td>
-                <td class="px-4 py-3 text-muted-foreground">integer</td>
+                <td class="px-4 py-3 text-muted-foreground"
+                  >integer | <span class="font-mono">"all"</span></td
+                >
                 <td class="px-4 py-3 text-muted-foreground">No</td>
                 <td class="px-4 py-3 font-mono text-muted-foreground">20</td>
                 <td class="px-4 py-3 text-muted-foreground">
                   Maximum number of badges to return. Accepted range: 1–200.
+                  Pass <span class="font-mono text-fuchsia-300">all</span> to
+                  return every matching badge with no cap.
                 </td>
               </tr>
             </tbody>
@@ -122,9 +126,12 @@ const exampleResponse = `{
               </tr>
               <tr class="border-b border-white/10">
                 <td class="px-4 py-3 font-mono text-fuchsia-300">limit</td>
-                <td class="px-4 py-3 text-muted-foreground">integer</td>
+                <td class="px-4 py-3 text-muted-foreground">integer | null</td>
                 <td class="px-4 py-3 text-muted-foreground"
-                  >The effective limit applied to this response.</td
+                  >The effective limit applied to this response. <span
+                    class="font-mono text-fuchsia-300">null</span
+                  > when <span class="font-mono text-fuchsia-300">limit=all</span
+                  > was requested.</td
                 >
               </tr>
               <tr class="border-b border-white/10">
@@ -189,10 +196,10 @@ const exampleResponse = `{
                 >
               </tr>
               <tr>
-                <td class="px-4 py-3 font-mono text-fuchsia-300">category</td>
-                <td class="px-4 py-3 text-muted-foreground">string</td>
+                <td class="px-4 py-3 font-mono text-fuchsia-300">categories</td>
+                <td class="px-4 py-3 text-muted-foreground">string[]</td>
                 <td class="px-4 py-3 text-muted-foreground"
-                  >Category the badge belongs to (e.g. <span
+                  >One or more categories the badge belongs to (e.g. <span
                     class="font-mono text-fuchsia-300">Frameworks</span
                   >, <span class="font-mono text-fuchsia-300">Languages</span
                   >).</td
@@ -243,10 +250,11 @@ const exampleResponse = `{
         <li class="flex gap-3">
           <span class="text-fuchsia-300 mt-0.5 shrink-0">—</span>
           <Typography>
-            <strong class="text-white">Maximum response size:</strong> A single request
-            returns at most 200 badges (<span class="font-mono text-fuchsia-300"
-              >limit=200</span
-            >). Pagination is not supported beyond this cap.
+            <strong class="text-white">Default response size:</strong> Without an
+            explicit <span class="font-mono text-fuchsia-300">limit</span> the API
+            returns 20 badges. The cap is 200 for numeric values; use <span
+              class="font-mono text-fuchsia-300">limit=all</span
+            > to retrieve the full catalogue in a single request.
           </Typography>
         </li>
         <li class="flex gap-3">
