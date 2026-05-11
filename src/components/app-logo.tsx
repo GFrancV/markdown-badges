@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 export function AppLogo({ className }: { className?: string }) {
   return (
     <div className={cn(className, "flex gap-2 items-center")}>
-      <MarkdownDark className="size-9! stroke-2" />
+      <MarkdownDark className="size-9! stroke-2 text-primary" />
       <Typography as="span" size="h4">
         Markdown Badges
       </Typography>
