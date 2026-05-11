@@ -14,15 +14,19 @@ export const GET: APIRoute = ({ url }) => {
   const search = url.searchParams.get("search");
   const limitParam = url.searchParams.get("limit");
 
-  const parsed = limitParam !== null ? parseInt(limitParam, 10) : NaN;
-  const limit = Math.min(
-    Math.max(1, Number.isNaN(parsed) ? DEFAULT_LIMIT : parsed),
-    MAX_LIMIT,
-  );
+  const unlimited = limitParam?.toLowerCase() === "all";
+  const parsed =
+    !unlimited && limitParam !== null ? parseInt(limitParam, 10) : NaN;
+  const limit: number | null = unlimited
+    ? null
+    : Math.min(
+        Math.max(1, Number.isNaN(parsed) ? DEFAULT_LIMIT : parsed),
+        MAX_LIMIT,
+      );
 
   try {
     const badges = search ? filterBadges({ query: search }) : getBadges();
-    const data = badges.slice(0, limit);
+    const data = limit !== null ? badges.slice(0, limit) : badges;
 
     return Response.json(
       { total: badges.length, limit, count: data.length, data },
