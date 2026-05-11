@@ -154,7 +154,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
                         <span>{cat}</span>
                       </a>
                     </SidebarMenuButton>
-                    <SidebarMenuBadge>
+                    <SidebarMenuBadge isActive={cat === activeCategory}>
                       {badgeCountByCategory[cat]}
                     </SidebarMenuBadge>
                   </SidebarMenuItem>
@@ -168,10 +168,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           {nav.navFooter.map((item) => (
             <SidebarMenuItem key={item.name}>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname === item.url}
-              >
+              <SidebarMenuButton asChild isActive={pathname === item.url}>
                 <a href={item.url}>
                   <item.icon />
                   <span>{item.name}</span>
