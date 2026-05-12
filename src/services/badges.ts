@@ -48,6 +48,17 @@ export function getBadgeCountByCategory(): Record<string, number> {
   );
 }
 
+export function slugifyCategory(category: string): string {
+  return category
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export function getCategoryBySlug(slug: string): string | undefined {
+  return getBadgeCategories().find((cat) => slugifyCategory(cat) === slug);
+}
+
 export function getRelatedBadges(badge: Badge, maxBadges: number = 4): Badge[] {
   return getBadges()
     .filter(
