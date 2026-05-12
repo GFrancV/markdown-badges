@@ -3,7 +3,7 @@ import { CodeBlock } from "@/components/ui/code-block";
 import { Typography } from "@/components/ui/typography";
 import Layout from "@/layouts/Layout.astro";
 import { getBadgeSEOData } from "@/lib/badges";
-import { getBadges, getRelatedBadges } from "@/services/badges";
+import { getBadges, getRelatedBadges, slugifyCategory } from "@/services/badges";
 
 export const prerender = true;
 
@@ -46,7 +46,7 @@ const badgeSEO = getBadgeSEOData(badge);
           <div class="flex flex-wrap gap-2">
             {badge.categories.map((cat) => (
               <a
-                href={`/?category=${cat}`}
+                href={`/categories/${slugifyCategory(cat)}`}
                 class="inline-flex items-center rounded-sm border px-2 py-0.5 text-sm text-muted-foreground hover:bg-primary/10 hover:border-primary/80 transition"
               >
                 {cat}
