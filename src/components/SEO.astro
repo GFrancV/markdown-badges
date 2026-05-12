@@ -1,4 +1,6 @@
 ---
+import { getBaseJsonLd, getBreadcrumbJsonLd } from "@/lib/seo";
+
 interface Props {
   title: string;
   description: string;
@@ -13,6 +15,7 @@ const { title, description, image, keywords, type, noIndex, jsonLd } =
   Astro.props;
 
 const url = import.meta.env.SITE;
+const pathSegments = Astro.url.pathname.split("/").filter(Boolean);
 
 const canonicalUrl = new URL(Astro.url.pathname, url).toString();
 const ogImage = image.startsWith("http")
@@ -47,7 +50,7 @@ const ogImage = image.startsWith("http")
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content={title} />
 <meta property="og:site_name" content="Markdown Badges" />
-<meta property="og:type" content={type} />
+<meta property="og:type" content={type ?? "website"} />
 <meta property="og:locale" content="en_US" />
 
 <meta name="twitter:card" content="summary_large_image" />
@@ -72,11 +75,22 @@ const ogImage = image.startsWith("http")
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260512" />
 <link rel="shortcut icon" href="/favicon.ico?v=20260512" />
 <link rel="manifest" href="/site.webmanifest?v=20260512" />
-<meta name="apple-mobile-web-app-title" content="Markdown Bdges" />
+<meta name="apple-mobile-web-app-title" content="Markdown Badges" />
 
 <link rel="canonical" href={canonicalUrl} />
 <link rel="sitemap" href="/sitemap-index.xml" />
 
+<!-- JSON-LD Structured Data -->
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(getBaseJsonLd())}
+/>
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(getBreadcrumbJsonLd(pathSegments))}
+/>
 {
   jsonLd && (
     <script
