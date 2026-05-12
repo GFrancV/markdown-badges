@@ -4,7 +4,6 @@ import { Typography } from "@/components/ui/typography";
 import Layout from "@/layouts/Layout.astro";
 
 const query = Astro.url.searchParams.get("query") || null;
-const category = Astro.url.searchParams.get("category") || null;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -22,5 +21,5 @@ const jsonLd = {
   <Typography as="h1" size="h1" className="sr-only">
     Markdown Badges
   </Typography>
-  <Search client:load initialQuery={query} initialCategory={category} />
+  <Search client:load initialQuery={query} />
 </Layout>

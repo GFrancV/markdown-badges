@@ -1,0 +1,35 @@
+---
+import { Search } from "@/components/search";
+import { Typography } from "@/components/ui/typography";
+import Layout from "@/layouts/Layout.astro";
+import {
+  filterBadges,
+  getBadgeCategories,
+  slugifyCategory,
+} from "@/services/badges";
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return getBadgeCategories().map((category) => ({
+    params: { category: slugifyCategory(category) },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+const query = Astro.url.searchParams.get("query") || null;
+
+const badgeCount = filterBadges({ category }).length;
+---
+
+<Layout
+  title={`${category} Badges | Markdown Badges`}
+  description={`Browse ${badgeCount} ${category} badges for GitHub README. Copy ready-to-use Markdown instantly.`}
+  keywords={`${category} badge, ${category} shield, readme badge, github badge, gfrancv`}
+>
+  <Typography as="h1" size="h1" className="mb-6">
+    {category}
+  </Typography>
+  <Search client:load initialQuery={query} initialCategory={category} />
+</Layout>

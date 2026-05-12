@@ -5,7 +5,7 @@ import {
   HomeIcon,
   InfoIcon,
 } from "lucide-react";
-import { type ComponentProps, useEffect, useRef, useState } from "react";
+import { type ComponentProps, useEffect, useRef } from "react";
 
 import {
   Sidebar,
@@ -21,7 +21,12 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { getBadgeCategories, getBadgeCountByCategory } from "@/services/badges";
+import {
+  getBadgeCategories,
+  getBadgeCountByCategory,
+  getCategoryBySlug,
+  slugifyCategory,
+} from "@/services/badges";
 import { AppLogo } from "./app-logo";
 import { ScrollArea } from "./ui/scroll-area";
 
@@ -62,36 +67,14 @@ const categories = getBadgeCategories();
 const badgeCountByCategory = getBadgeCountByCategory();
 
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
-  const { pathname, category: ssrCategory } = useSidebar();
+  const { pathname } = useSidebar();
   const activeCategoryRef = useRef<HTMLLIElement>(null);
 
-  // Initialized from the server-validated SSR prop — no hydration mismatch.
-  // Category is always valid here because Layout.astro filters invalid values before passing them down.
-  const [activeCategory, setActiveCategory] = useState<string | undefined>(
-    ssrCategory,
-  );
-
-  useEffect(() => {
-    const syncCategoryFromUrl = () => {
-      const cat =
-        new URLSearchParams(window.location.search).get("category") ||
-        undefined;
-      setActiveCategory(cat);
-    };
-
-    // popstate: browser back/forward navigation
-    window.addEventListener("popstate", syncCategoryFromUrl);
-    // locationchange: dispatched by search.tsx after every replaceState call
-    window.addEventListener("locationchange", syncCategoryFromUrl);
-
-    return () => {
-      window.removeEventListener("popstate", syncCategoryFromUrl);
-      window.removeEventListener("locationchange", syncCategoryFromUrl);
-    };
-  }, []);
-
-  const isValidCategory =
-    !!activeCategory && categories.includes(activeCategory);
+  const activeSlug = pathname?.startsWith("/categories/")
+    ? pathname.slice("/categories/".length)
+    : undefined;
+  const activeCategory = activeSlug ? getCategoryBySlug(activeSlug) : undefined;
+  const isValidCategory = !!activeCategory;
 
   useEffect(() => {
     if (isValidCategory && activeCategoryRef.current) {
@@ -150,7 +133,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
                       asChild
                       isActive={cat === activeCategory}
                     >
-                      <a href={`/?category=${cat}`}>
+                      <a href={`/categories/${slugifyCategory(cat)}`}>
                         <span>{cat}</span>
                       </a>
                     </SidebarMenuButton>

@@ -17,6 +17,7 @@ import {
 import { Typography } from "@/components/ui/typography";
 import { useFavorites } from "@/context/favorites-context";
 import { cn } from "@/lib/utils";
+import { slugifyCategory } from "@/services/badges";
 
 type BadgeCardProps = {
   badge: Badge;
@@ -107,7 +108,7 @@ export const BadgeCard = memo(function BadgeCard({
           className="text-muted-foreground"
         >
           <a
-            href={`/?category=${primaryCategory}`}
+            href={`/categories/${slugifyCategory(primaryCategory)}`}
             onClick={(e) => e.stopPropagation()}
           >
             {primaryCategory}
@@ -138,7 +139,7 @@ export const BadgeCard = memo(function BadgeCard({
                       className="text-muted-foreground"
                     >
                       <a
-                        href={`/?category=${cat}`}
+                        href={`/categories/${slugifyCategory(cat)}`}
                         onClick={(e) => e.stopPropagation()}
                       >
                         {cat}

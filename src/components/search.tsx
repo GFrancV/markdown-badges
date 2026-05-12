@@ -1,5 +1,4 @@
 import {
-  ChevronDownIcon,
   ChevronsDownIcon,
   ClipboardIcon,
   CommandIcon,
@@ -14,16 +13,6 @@ import { useDebounce } from "use-debounce";
 
 import { BadgesList } from "@/components/badges/badges-list";
 import { Button } from "@/components/ui/button";
-import {
-  Combobox,
-  ComboboxContent,
-  ComboboxEmpty,
-  ComboboxInput,
-  ComboboxItem,
-  ComboboxList,
-  ComboboxTrigger,
-  ComboboxValue,
-} from "@/components/ui/combobox";
 import {
   Empty,
   EmptyContent,
@@ -43,7 +32,7 @@ import { Kbd } from "@/components/ui/kbd";
 import { Typography } from "@/components/ui/typography";
 import { SelectionProvider, useSelection } from "@/context/selection-context";
 import { cn } from "@/lib/utils";
-import { filterBadges, getBadgeCategories, getBadges } from "@/services/badges";
+import { filterBadges } from "@/services/badges";
 
 type SearchProps = {
   initialQuery?: string | null;
@@ -64,15 +53,9 @@ function SearchContent({
 }: SearchProps) {
   const { count, clearAll, copyAll, badges: selectedBadges } = useSelection();
 
-  const badges = useMemo(() => getBadges(), []);
-  const categories = useMemo(() => getBadgeCategories(), []);
-
   const searchInput = useRef<HTMLInputElement>(null);
 
   const [query, setQuery] = useState<string | null>(initialQuery);
-  const [categoryQuery, setCategoryQuery] = useState<string | null>(
-    initialCategory,
-  );
   const [resultsAmount, setResultsAmount] = useState(30);
   const [isReady, setIsReady] = useState(false);
 
@@ -81,9 +64,9 @@ function SearchContent({
   const filteredBadges = useMemo(() => {
     return filterBadges({
       query: isReady ? debouncedQuery : initialQuery,
-      category: categoryQuery,
+      category: initialCategory,
     });
-  }, [debouncedQuery, categoryQuery, isReady, initialQuery]);
+  }, [debouncedQuery, isReady, initialQuery, initialCategory]);
 
   const results = useMemo(() => {
     return filteredBadges.slice(0, resultsAmount);
@@ -98,17 +81,11 @@ function SearchContent({
       url.searchParams.set("query", debouncedQuery);
     else url.searchParams.delete("query");
 
-    if (categoryQuery) url.searchParams.set("category", categoryQuery);
-    else url.searchParams.delete("category");
-
     window.history.replaceState({}, "", url);
-    window.dispatchEvent(new Event("locationchange"));
     setResultsAmount(30);
-  }, [debouncedQuery, categoryQuery, isReady]);
+  }, [debouncedQuery, isReady]);
 
   useEffect(() => {
-    if (!categories.includes(initialCategory || "")) setCategoryQuery(null);
-
     setIsReady(true);
   }, []);
 
@@ -135,7 +112,7 @@ function SearchContent({
     setQuery("");
   };
 
-  const isFiltered = (query && query.length > 0) || !!categoryQuery;
+  const isFiltered = !!(query && query.length > 0);
 
   const isMac = navigator.userAgent.includes("Mac");
   return (
@@ -175,41 +152,6 @@ function SearchContent({
             </InputGroupAddon>
           </InputGroup>
         </Field>
-
-        <Combobox
-          items={categories}
-          value={categoryQuery}
-          onValueChange={setCategoryQuery}
-          defaultValue={null}
-        >
-          <ComboboxTrigger
-            render={
-              <Button
-                variant="outline"
-                className="w-50 justify-between text-muted-foreground"
-                aria-label="Select category"
-              >
-                <ComboboxValue placeholder="All Categories" />
-                <ChevronDownIcon className="size-4 opacity-50" />
-              </Button>
-            }
-          />
-          <ComboboxContent>
-            <ComboboxInput
-              showTrigger={false}
-              showClear
-              placeholder="Search category..."
-            />
-            <ComboboxEmpty>No category found.</ComboboxEmpty>
-            <ComboboxList>
-              {(item) => (
-                <ComboboxItem key={item} value={item}>
-                  {item}
-                </ComboboxItem>
-              )}
-            </ComboboxList>
-          </ComboboxContent>
-        </Combobox>
       </div>
 
       <div className="flex items-center justify-end gap-2 mb-3">
@@ -231,7 +173,7 @@ function SearchContent({
               variant="muted"
               className="flex items-center gap-1"
             >
-              <ShieldIcon /> {badges.length} badges
+              <ShieldIcon /> {filteredBadges.length} badges
             </Typography>
           )}
         </div>
@@ -280,7 +222,11 @@ function SearchContent({
 
       {results.length > 0 && (
         <div>
-          <BadgesList badges={results} selectable activeCategory={categoryQuery} />
+          <BadgesList
+            badges={results}
+            selectable
+            activeCategory={initialCategory}
+          />
 
           {results.length < filteredBadges.length && (
             <div className="flex justify-center items-center gap-4 mt-8">

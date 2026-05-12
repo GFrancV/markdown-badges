@@ -6,7 +6,7 @@ import SpeedInsights from "@vercel/speed-insights/astro";
 import { AppShell } from "@/components/app-shell";
 import SEO from "@/components/SEO.astro";
 import { Toaster } from "@/components/ui/sonner";
-import { getBadgeCategories } from "@/services/badges";
+import { getCategoryBySlug } from "@/services/badges";
 
 interface Props {
   title: string;
@@ -30,11 +30,10 @@ const {
 
 const pathname = Astro.url.pathname;
 
-const rawCategory = Astro.url.searchParams.get("category");
-const category =
-  rawCategory && getBadgeCategories().includes(rawCategory)
-    ? rawCategory
-    : undefined;
+const categorySlug = pathname.startsWith("/categories/")
+  ? pathname.slice("/categories/".length)
+  : undefined;
+const category = categorySlug ? getCategoryBySlug(categorySlug) : undefined;
 ---
 
 <!doctype html>

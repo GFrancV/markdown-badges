@@ -28,7 +28,7 @@ import {
 import { Typography } from "@/components/ui/typography";
 import { useFavorites } from "@/context/favorites-context";
 import { useCopyClipboard } from "@/hooks/use-copy-clipboard";
-import { getRelatedBadges } from "@/services/badges";
+import { getRelatedBadges, slugifyCategory } from "@/services/badges";
 
 type BadgeSidebarContextType = {
   open: (badge: Badge) => void;
@@ -98,7 +98,7 @@ export function BadgeSidebarProvider({ children }: { children: ReactNode }) {
               {badge?.categories.map((cat) => (
                 <a
                   key={cat}
-                  href={`/?category=${cat}`}
+                  href={`/categories/${slugifyCategory(cat)}`}
                   className="inline-flex items-center rounded-sm border px-2 py-0.5 text-xs text-muted-foreground hover:bg-primary/10 hover:border-primary/80 transition"
                 >
                   {cat}
