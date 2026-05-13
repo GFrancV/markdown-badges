@@ -94,7 +94,7 @@ export function getBadgeJsonLd(badge: Badge, pageUrl: string): object {
     description: getBadgeDescription(badge),
     image: {
       "@type": "ImageObject",
-      url: badge.url,
+      url: `${baseUrl}/og/badges/${badge.id}.png`,
       width: "100",
       height: "32",
     },
@@ -110,7 +110,7 @@ export function getBadgeJsonLd(badge: Badge, pageUrl: string): object {
 
 export function getBadgeCategoryJsonLd(
   categoryName: string,
-  badgeCount: number
+  badgeCount: number,
 ): object {
   const badgeCategoryUrl = `${baseUrl}/categories/${slugifyCategory(categoryName)}`;
 
