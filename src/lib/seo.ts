@@ -68,8 +68,10 @@ export function getBreadcrumbJsonLd(pathSegments: string[]): object {
       breadcrumbItems.push({
         "@type": "ListItem",
         position: index + 2,
-        name:
-          segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, " "),
+        name: segment
+          .split("-")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" "),
         item: `${baseUrl}${currentPath}`,
       });
     });
