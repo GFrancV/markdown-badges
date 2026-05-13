@@ -1,4 +1,6 @@
 ---
+import SpeedInsights from "@vercel/speed-insights/astro";
+
 import { getBaseJsonLd, getBreadcrumbJsonLd } from "@/lib/seo";
 
 interface Props {
@@ -24,43 +26,9 @@ const ogImage = image.startsWith("http")
 ---
 
 <meta charset="UTF-8" />
-
-<title>{title}</title>
-<meta name="description" content={description} />
-
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="theme-color" content="#121212" />
 
-<meta name="keywords" content={keywords} />
-<meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow"} />
-
-<link rel="preconnect" href="https://img.shields.io" />
-<link rel="dns-prefetch" href="https://img.shields.io" />
-
-<meta
-  name="google-site-verification"
-  content="bGA4Cm6PsD4Ug12ZPdf_xqLExFJaZDexlqZHsbL65SQ"
-/>
-
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
-<meta property="og:url" content={canonicalUrl} />
-<meta property="og:image" content={ogImage} />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content={title} />
-<meta property="og:site_name" content="Markdown Badges" />
-<meta property="og:type" content={type ?? "website"} />
-<meta property="og:locale" content="en_US" />
-
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:creator" content="@GFrancV" />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:url" content={canonicalUrl} />
-<meta property="twitter:image" content={ogImage} />
-
-<!-- Favicon y App Icons -->
+<!-- Favicon and App Icons -->
 <link
   rel="icon"
   type="image/png"
@@ -77,8 +45,58 @@ const ogImage = image.startsWith("http")
 <link rel="manifest" href="/site.webmanifest?v=20260512" />
 <meta name="apple-mobile-web-app-title" content="Markdown Badges" />
 
+<!-- SEO Meta Tags Basics -->
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="keywords" content={keywords} />
+<meta name="author" content="GFrancV" />
 <link rel="canonical" href={canonicalUrl} />
 <link rel="sitemap" href="/sitemap-index.xml" />
+
+<!-- Indexing -->
+<meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow"} />
+<meta
+  name="googlebot"
+  content={noIndex ? "noindex, nofollow" : "index, follow"}
+/>
+<meta
+  name="bingbot"
+  content={noIndex ? "noindex, nofollow" : "index, follow"}
+/>
+
+<!-- Theme Color -->
+<meta name="theme-color" content="#121212" />
+<meta name="color-scheme" content="dark light" />
+
+<!-- Open Graph -->
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={title} />
+<meta property="og:site_name" content="Markdown Badges" />
+<meta property="og:type" content={type ?? "website"} />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter Meta Tags -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@GFrancV" />
+<meta name="twitter:creator" content="@GFrancV" />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:url" content={canonicalUrl} />
+<meta property="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={title} />
+<meta name="twitter:domain" content="markdown-badges.vercel.app" />
+
+<!-- LinkedIn -->
+<meta property="linkedin:owner" content="gabriel-chicaiza" />
+
+<!-- Preloads -->
+<link rel="preconnect" href="https://img.shields.io" />
+<link rel="dns-prefetch" href="https://img.shields.io" />
 
 <!-- JSON-LD Structured Data -->
 <script
@@ -100,3 +118,10 @@ const ogImage = image.startsWith("http")
     />
   )
 }
+
+<!-- Analytics -->
+<meta
+  name="google-site-verification"
+  content="bGA4Cm6PsD4Ug12ZPdf_xqLExFJaZDexlqZHsbL65SQ"
+/>
+<SpeedInsights />
