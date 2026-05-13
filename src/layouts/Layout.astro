@@ -1,8 +1,6 @@
 ---
 import "@/styles/global.css";
 
-import SpeedInsights from "@vercel/speed-insights/astro";
-
 import { AppShell } from "@/components/app-shell";
 import SEO from "@/components/SEO.astro";
 import { Toaster } from "@/components/ui/sonner";
@@ -48,7 +46,6 @@ const category = categorySlug ? getCategoryBySlug(categorySlug) : undefined;
       noIndex={noIndex}
       jsonLd={jsonLd}
     />
-    <SpeedInsights />
   </head>
   <body>
     <AppShell client:load pathname={pathname} category={category}>
