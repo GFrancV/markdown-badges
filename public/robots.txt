@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /api/
 
 Sitemap: https://markdown-badges.vercel.app/sitemap-index.xml
