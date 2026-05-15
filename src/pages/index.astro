@@ -2,13 +2,23 @@
 import { Search } from "@/components/search";
 import { Typography } from "@/components/ui/typography";
 import Layout from "@/layouts/Layout.astro";
+import { getHomePageJsonLd } from "@/lib/seo";
+import { getBadges } from "@/services/badges";
 
 const query = Astro.url.searchParams.get("query") || null;
+const badgeCount = getBadges().length;
+
+const title = `Markdown Badges — Browse ${badgeCount}+ GitHub README Badges`;
 ---
 
-<Layout title="Markdown Badges">
+<Layout
+  title={title}
+  description={`Markdown badges generator for GitHub README. Browse ${badgeCount}+ badges for languages, frameworks, tools and platforms and copy ready-to-use Markdown instantly.`}
+  keywords="markdown badge, shield badges, readme badges, github profile badges, github badges, badge generator, developer tools, gfrancv"
+  jsonLd={getHomePageJsonLd(badgeCount)}
+>
   <Typography as="h1" size="h1" className="sr-only">
-    Markdown Badges
+    {title}
   </Typography>
   <Search client:load initialQuery={query} />
 </Layout>
