@@ -94,6 +94,7 @@ function SearchContent({
       if (event.ctrlKey && event.key === "k") {
         event.preventDefault();
         searchInput.current?.focus();
+        searchInput.current?.select();
       }
     };
 
