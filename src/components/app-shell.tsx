@@ -16,8 +16,9 @@ export function AppShell({
   return (
     <SidebarProvider pathname={pathname} category={category}>
       <AppSidebar />
-      <SidebarInset>
+      <SidebarInset className="overflow-hidden">
         <AppHeader />
+        <div className="-top-80 -right-80 w-190 h-190 absolute pointer-events-none bg-radial to-transparent to-65% from-primary/12" />
         <div className="p-6">{children}</div>
       </SidebarInset>
     </SidebarProvider>
