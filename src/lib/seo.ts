@@ -108,6 +108,23 @@ export function getBadgeJsonLd(badge: Badge, pageUrl: string): object {
   };
 }
 
+export function getHomePageJsonLd(badgeCount: number): object {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${baseUrl}/`,
+    url: `${baseUrl}/`,
+    name: "Markdown Badges",
+    headline: `Browse ${badgeCount}+ GitHub README Badges`,
+    description:
+      "Markdown badges generator for GitHub README. Browse badges for languages, frameworks, tools and platforms and copy ready-to-use Markdown instantly.",
+    inLanguage: "en-US",
+    numberOfItems: badgeCount,
+    author: authorObject,
+    isPartOf: { "@id": baseUrl },
+  };
+}
+
 export function getBadgeCategoryJsonLd(
   categoryName: string,
   badgeCount: number,
