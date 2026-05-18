@@ -24,15 +24,27 @@ const query = Astro.url.searchParams.get("query") || null;
 const badgeCount = filterBadges({ category }).length;
 
 const badgeCategoryJsonLd = getBadgeCategoryJsonLd(category, badgeCount);
+const description = `Browse ${badgeCount} ${category} badges for GitHub README. Copy ready-to-use Markdown instantly.`;
 ---
 
 <Layout
   title={`${category} Badges | Markdown Badges`}
-  description={`Browse ${badgeCount} ${category} badges for GitHub README. Copy ready-to-use Markdown instantly.`}
+  description={description}
   jsonLd={badgeCategoryJsonLd}
 >
-  <Typography as="h1" size="h1" className="mb-6">
-    {category} Badges
-  </Typography>
+  <header class="pb-6 mb-6 border-b">
+    <Typography as="div" size="h3" variant="muted" className="mb-2">
+      Category
+    </Typography>
+    <Typography as="h1" size="h1" className="mb-4">
+      {category}
+      <Typography as="span" variant="muted" size="h4" className="ml-2">
+        {badgeCount}
+      </Typography>
+    </Typography>
+    <Typography variant="muted">
+      {description}
+    </Typography>
+  </header>
   <Search client:load initialQuery={query} initialCategory={category} />
 </Layout>
