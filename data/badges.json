@@ -27,6 +27,15 @@
     ]
   },
   {
+    "id": "deepseek",
+    "name": "DeepSeek",
+    "url": "https://img.shields.io/badge/DeepSeek-5786FE?style=for-the-badge&logo=deepseek&logoColor=white",
+    "markdown": "![DeepSeek](https://img.shields.io/badge/DeepSeek-5786FE?style=for-the-badge&logo=deepseek&logoColor=white)",
+    "categories": [
+      "Artificial Intelligence"
+    ]
+  },
+  {
     "id": "dependabot",
     "name": "Dependabot",
     "url": "https://img.shields.io/badge/dependabot-025E8C?style=for-the-badge&logo=dependabot&logoColor=white",
@@ -139,6 +148,15 @@
     "name": "Perplexity",
     "url": "https://img.shields.io/badge/perplexity-000000?style=for-the-badge&logo=perplexity&logoColor=088F8F",
     "markdown": "![Perplexity](https://img.shields.io/badge/perplexity-000000?style=for-the-badge&logo=perplexity&logoColor=088F8F)",
+    "categories": [
+      "Artificial Intelligence"
+    ]
+  },
+  {
+    "id": "qwen",
+    "name": "Qwen",
+    "url": "https://img.shields.io/badge/Qwen-6950EF?style=for-the-badge&logo=qwen&logoColor=white",
+    "markdown": "![Qwen](https://img.shields.io/badge/Qwen-6950EF?style=for-the-badge&logo=qwen&logoColor=white)",
     "categories": [
       "Artificial Intelligence"
     ]
@@ -954,6 +972,15 @@
     "name": "CrateDB",
     "url": "https://img.shields.io/badge/CrateDB-009DC7?style=for-the-badge&logo=CrateDB&logoColor=white",
     "markdown": "![CrateDB](https://img.shields.io/badge/CrateDB-009DC7?style=for-the-badge&logo=CrateDB&logoColor=white)",
+    "categories": [
+      "Databases"
+    ]
+  },
+  {
+    "id": "databricks",
+    "name": "Databricks",
+    "url": "https://img.shields.io/badge/Databricks-%23FF3621.svg?style=for-the-badge&logo=databricks&logoColor=white",
+    "markdown": "![Databricks](https://img.shields.io/badge/Databricks-%23FF3621.svg?style=for-the-badge&logo=databricks&logoColor=white)",
     "categories": [
       "Databases"
     ]
