@@ -1,3 +1,5 @@
+import { MarkdownDark } from "../ui/svgs/markdownDark";
+
 const PRIMARY = "#d47898";
 const BG = "#0f0f0f";
 const SURFACE = "#181818";
@@ -10,23 +12,6 @@ type BadgeOgProps = {
   badgeImage: string | null;
   badgeDims: { width: number; height: number } | null;
 };
-
-function MarkdownLogoSvg() {
-  return (
-    <svg viewBox="0 0 208 128" width="38" height="24" style={{ flexShrink: 0 }}>
-      <path
-        stroke={TEXT}
-        strokeWidth="10"
-        fill="none"
-        d="M15 5h178a10 10 0 0 1 10 10v98a10 10 0 0 1-10 10H15a10 10 0 0 1-10-10V15A10 10 0 0 1 15 5z"
-      />
-      <path
-        fill={TEXT}
-        d="M30 98V30h20l20 25 20-25h20v68H90V59L70 84 50 59v39H30zm125 0-30-33h20V30h20v35h20l-30 33z"
-      />
-    </svg>
-  );
-}
 
 export function BadgeOg({ badge, badgeImage, badgeDims }: BadgeOgProps) {
   const { name, categories, markdown } = badge;
@@ -72,7 +57,7 @@ export function BadgeOg({ badge, badgeImage, badgeDims }: BadgeOgProps) {
           tw="flex items-center justify-between"
         >
           <div style={{ gap: 10 }} tw="flex items-center">
-            <MarkdownLogoSvg />
+            <MarkdownDark width="38" height="24" />
             <span
               style={{
                 fontSize: 20,
@@ -81,7 +66,7 @@ export function BadgeOg({ badge, badgeImage, badgeDims }: BadgeOgProps) {
                 letterSpacing: "-0.3px",
               }}
             >
-              Markdown Badges
+              Markdown Badgesa
             </span>
           </div>
           <span style={{ color: MUTED, fontSize: 16 }}>

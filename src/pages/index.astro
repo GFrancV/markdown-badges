@@ -1,24 +1,31 @@
 ---
+import { getCollection } from "astro:content";
+
 import { Search } from "@/components/search";
 import { Typography } from "@/components/ui/typography";
 import Layout from "@/layouts/Layout.astro";
 import { getHomePageJsonLd } from "@/lib/seo";
-import { getBadges } from "@/services/badges";
 
 const query = Astro.url.searchParams.get("query") || null;
-const badgeCount = getBadges().length;
+const badgeCount = (await getCollection("badges")).length;
 
 const title = `Markdown Badges — Browse ${badgeCount}+ GitHub README Badges`;
+const description = `Markdown badges generator for GitHub README. Browse ${badgeCount}+ badges for languages, frameworks, tools and platforms and copy ready-to-use Markdown instantly.`;
 ---
 
 <Layout
   title={title}
-  description={`Markdown badges generator for GitHub README. Browse ${badgeCount}+ badges for languages, frameworks, tools and platforms and copy ready-to-use Markdown instantly.`}
+  description={description}
   keywords="markdown badge, shield badges, readme badges, github profile badges, github badges, badge generator, developer tools, gfrancv"
   jsonLd={getHomePageJsonLd(badgeCount)}
 >
-  <Typography as="h1" size="h1" className="sr-only">
-    {title}
-  </Typography>
+  <header class="pb-6 mb-6 border-b">
+    <Typography as="h1" size="h1" className="mb-4">
+      Markdown Badges
+    </Typography>
+    <Typography variant="muted">
+      {description}
+    </Typography>
+  </header>
   <Search client:load initialQuery={query} />
 </Layout>
