@@ -7,11 +7,13 @@ import { cn } from "@/lib/utils";
 type CopyClipboardButtonProps = {
   content: string;
   className?: string;
+  onCopy?: () => void;
 };
 
 export function CopyClipboardButton({
   content,
   className,
+  onCopy,
 }: CopyClipboardButtonProps) {
   const { isCopied, copy } = useCopyClipboard();
 
@@ -22,6 +24,7 @@ export function CopyClipboardButton({
       onClick={(e) => {
         e.stopPropagation();
         copy(content);
+        onCopy?.();
       }}
       className={cn(
         className,

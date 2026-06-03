@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/popover";
 import { Typography } from "@/components/ui/typography";
 import { useFavorites } from "@/context/favorites-context";
+import { trackBadgeCopied } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { slugifyCategory } from "@/services/badges";
 
@@ -154,7 +155,10 @@ export const BadgeCard = memo(function BadgeCard({
       </div>
 
       <div className="absolute top-0.5 right-0.5 transition duration-300 flex flex-col items-center gap-0.5">
-        <CopyClipboardButton content={`![${name}](${url})`} />
+        <CopyClipboardButton
+          content={`![${name}](${url})`}
+          onCopy={() => trackBadgeCopied(name, primaryCategory)}
+        />
         <BadgeFavoriteButton
           badge={badge}
           className={cn(
