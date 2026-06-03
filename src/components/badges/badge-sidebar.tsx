@@ -28,6 +28,7 @@ import {
 import { Typography } from "@/components/ui/typography";
 import { useFavorites } from "@/context/favorites-context";
 import { useCopyClipboard } from "@/hooks/use-copy-clipboard";
+import { trackBadgeCopied, trackBadgeSelected } from "@/lib/analytics";
 import { getRelatedBadges, slugifyCategory } from "@/services/badges";
 
 type BadgeSidebarContextType = {
@@ -56,6 +57,7 @@ export function BadgeSidebarProvider({ children }: { children: ReactNode }) {
   const open = useCallback((badge: Badge) => {
     setBadge(badge);
     setIsOpen(true);
+    trackBadgeSelected(badge.name, badge.categories[0]);
   }, []);
 
   const close = useCallback(() => {
@@ -164,7 +166,13 @@ export function BadgeSidebarProvider({ children }: { children: ReactNode }) {
             )}
           </div>
           <SheetFooter>
-            <Button onClick={() => copy(badge?.markdown ?? "")}>
+            <Button
+              onClick={() => {
+                copy(badge?.markdown ?? "");
+                if (badge)
+                  trackBadgeCopied(badge.name, badge.categories[0]);
+              }}
+            >
               <ClipboardIcon className="mr-2" width={12} />
               Copy Markdown
             </Button>

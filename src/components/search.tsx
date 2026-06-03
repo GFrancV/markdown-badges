@@ -31,6 +31,11 @@ import {
 import { Kbd } from "@/components/ui/kbd";
 import { Typography } from "@/components/ui/typography";
 import { SelectionProvider, useSelection } from "@/context/selection-context";
+import {
+  trackBadgeSearch,
+  trackSearchNoResults,
+  trackSelectionCleared,
+} from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { filterBadges } from "@/services/badges";
 
@@ -88,6 +93,13 @@ function SearchContent({
   useEffect(() => {
     setIsReady(true);
   }, []);
+
+  useEffect(() => {
+    if (!debouncedQuery) return;
+    const count = filteredBadges.length;
+    trackBadgeSearch(debouncedQuery.length, count, count > 0);
+    if (count === 0) trackSearchNoResults(debouncedQuery);
+  }, [debouncedQuery, filteredBadges]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -215,7 +227,14 @@ function SearchContent({
             <ClipboardIcon />
             Copy selected
           </Button>
-          <Button variant="ghost" size="sm" onClick={clearAll}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              clearAll();
+              trackSelectionCleared();
+            }}
+          >
             <XIcon /> Clear selection
           </Button>
         </div>

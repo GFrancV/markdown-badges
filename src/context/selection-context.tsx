@@ -8,6 +8,8 @@ import {
 } from "react";
 import { toast } from "sonner";
 
+import { trackMultiCopy } from "@/lib/analytics";
+
 type SelectionContextType = {
   isSelected: (id: string) => boolean;
   toggle: (badge: Badge) => void;
@@ -57,6 +59,7 @@ export function SelectionProvider({ children }: { children: ReactNode }) {
     const markdown = badges.map((b) => b.markdown).join("\n");
     try {
       await navigator.clipboard.writeText(markdown);
+      trackMultiCopy(badges.length);
       clearAll();
       toast.success(
         `${badges.length} badge${badges.length > 1 ? "s" : ""} copied`,

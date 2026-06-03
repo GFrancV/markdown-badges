@@ -9,6 +9,7 @@ import {
 } from "react";
 
 import { useCopyClipboard } from "@/hooks/use-copy-clipboard";
+import { trackFavoriteToggled } from "@/lib/analytics";
 
 type FavoritesContextType = {
   favorites: Badge[];
@@ -53,11 +54,17 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   const toggle = useCallback((badge: Badge | null) => {
     if (!badge) return;
 
-    setFavorites((prev) =>
-      prev.some((b) => b.id === badge.id)
+    setFavorites((prev) => {
+      const isAlreadyFavorite = prev.some((b) => b.id === badge.id);
+      trackFavoriteToggled(
+        badge.name,
+        badge.categories[0],
+        isAlreadyFavorite ? "removed" : "added",
+      );
+      return isAlreadyFavorite
         ? prev.filter((b) => b.id !== badge.id)
-        : [...prev, badge],
-    );
+        : [...prev, badge];
+    });
   }, []);
 
   const copyAll = useCallback(() => {
