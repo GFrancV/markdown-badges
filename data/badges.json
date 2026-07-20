@@ -162,6 +162,15 @@
     ]
   },
   {
+    "id": "weights-and-biases",
+    "name": "Weights and Biases",
+    "url": "https://img.shields.io/badge/weights%20%26%20biases-%23FCBC32.svg?style=for-the-badge&logo=weightsandbiases&logoColor=black",
+    "markdown": "![Weights and Biases](https://img.shields.io/badge/weights%20%26%20biases-%23FCBC32.svg?style=for-the-badge&logo=weightsandbiases&logoColor=black)",
+    "categories": [
+      "Artificial Intelligence"
+    ]
+  },
+  {
     "id": "yolo",
     "name": "YOLO",
     "url": "https://img.shields.io/badge/YOLO-111F68?style=for-the-badge&logo=yolo&logoColor=white",
@@ -5910,6 +5919,15 @@
     ]
   },
   {
+    "id": "ceph",
+    "name": "Ceph",
+    "url": "https://img.shields.io/badge/Ceph-%23EF5C55?style=for-the-badge&logo=ceph&logoColor=white",
+    "markdown": "![Ceph](https://img.shields.io/badge/Ceph-%23EF5C55?style=for-the-badge&logo=ceph&logoColor=white)",
+    "categories": [
+      "Other"
+    ]
+  },
+  {
     "id": "codecov",
     "name": "CodeCov",
     "url": "https://img.shields.io/badge/codecov-%23ff0077.svg?style=for-the-badge&logo=codecov&logoColor=white",
@@ -6040,15 +6058,6 @@
     "name": "Portfolio",
     "url": "https://img.shields.io/badge/Portfolio-%23000000.svg?style=for-the-badge&logo=firefox&logoColor=#FF7139",
     "markdown": "![Portfolio](https://img.shields.io/badge/Portfolio-%23000000.svg?style=for-the-badge&logo=firefox&logoColor=#FF7139)",
-    "categories": [
-      "Other"
-    ]
-  },
-  {
-    "id": "postman",
-    "name": "Postman",
-    "url": "https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white",
-    "markdown": "![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)",
     "categories": [
       "Other"
     ]
@@ -6193,6 +6202,15 @@
     "name": "Ansible",
     "url": "https://img.shields.io/badge/ansible-%231A1918.svg?style=for-the-badge&logo=ansible&logoColor=white",
     "markdown": "![Ansible](https://img.shields.io/badge/ansible-%231A1918.svg?style=for-the-badge&logo=ansible&logoColor=white)",
+    "categories": [
+      "DevOps"
+    ]
+  },
+  {
+    "id": "coolify",
+    "name": "Coolify",
+    "url": "https://img.shields.io/badge/Coolify-6B21A8?style=for-the-badge&logo=coolify&logoColor=white",
+    "markdown": "![Coolify](https://img.shields.io/badge/Coolify-6B21A8?style=for-the-badge&logo=coolify&logoColor=white)",
     "categories": [
       "DevOps"
     ]
@@ -6398,8 +6416,80 @@
   {
     "id": "cisco",
     "name": "Cisco",
-    "url": "https://img.shields.io/badge/cisco-%23049fd9.svg?style=for-the-badge&logo=cisco&logoColor=black",
-    "markdown": "![Cisco](https://img.shields.io/badge/cisco-%23049fd9.svg?style=for-the-badge&logo=cisco&logoColor=black)",
+    "url": "https://img.shields.io/badge/cisco-%23049fd9.svg?style=for-the-badge&logo=cisco&logoColor=white",
+    "markdown": "![Cisco](https://img.shields.io/badge/cisco-%23049fd9.svg?style=for-the-badge&logo=cisco&logoColor=white)",
+    "categories": [
+      "Networking"
+    ]
+  },
+  {
+    "id": "fortinet",
+    "name": "Fortinet",
+    "url": "https://img.shields.io/badge/fortinet-%23EE3124.svg?style=for-the-badge&logo=fortinet&logoColor=white",
+    "markdown": "![Fortinet](https://img.shields.io/badge/fortinet-%23EE3124.svg?style=for-the-badge&logo=fortinet&logoColor=white)",
+    "categories": [
+      "Networking"
+    ]
+  },
+  {
+    "id": "gl.inet",
+    "name": "Gl.iNet",
+    "url": "https://img.shields.io/badge/gl.inet-%23636363.svg?style=for-the-badge&logo=gldotinet&logoColor=white",
+    "markdown": "![Gl.iNet](https://img.shields.io/badge/gl.inet-%23636363.svg?style=for-the-badge&logo=gldotinet&logoColor=white)",
+    "categories": [
+      "Networking"
+    ]
+  },
+  {
+    "id": "juniper-networks",
+    "name": "Juniper Networks",
+    "url": "https://img.shields.io/badge/junipernetworks-%2384B135.svg?style=for-the-badge&logo=junipernetworks&logoColor=white",
+    "markdown": "![Junipernetworks](https://img.shields.io/badge/junipernetworks-%2384B135.svg?style=for-the-badge&logo=junipernetworks&logoColor=white)",
+    "categories": [
+      "Networking"
+    ]
+  },
+  {
+    "id": "linksys",
+    "name": "Linksys",
+    "url": "https://img.shields.io/badge/linksys-%23000000.svg?style=for-the-badge&logo=linksys&logoColor=white",
+    "markdown": "![Linksys](https://img.shields.io/badge/linksys-%23000000.svg?style=for-the-badge&logo=linksys&logoColor=white)",
+    "categories": [
+      "Networking"
+    ]
+  },
+  {
+    "id": "mikrotik",
+    "name": "Mikrotik",
+    "url": "https://img.shields.io/badge/mikrotik-%23293239.svg?style=for-the-badge&logo=mikrotik&logoColor=white",
+    "markdown": "![Mikrotik](https://img.shields.io/badge/mikrotik-%23293239.svg?style=for-the-badge&logo=mikrotik&logoColor=white)",
+    "categories": [
+      "Networking"
+    ]
+  },
+  {
+    "id": "netgear",
+    "name": "Netgear",
+    "url": "https://img.shields.io/badge/netgear-%232C262D.svg?style=for-the-badge&logo=netgear&logoColor=white",
+    "markdown": "![Netgear](https://img.shields.io/badge/netgear-%232C262D.svg?style=for-the-badge&logo=netgear&logoColor=white)",
+    "categories": [
+      "Networking"
+    ]
+  },
+  {
+    "id": "omada",
+    "name": "Omada",
+    "url": "https://img.shields.io/badge/omadacloud-%2310C1D0.svg?style=for-the-badge&logo=omadacloud&logoColor=white",
+    "markdown": "![Omadacloud](https://img.shields.io/badge/omadacloud-%2310C1D0.svg?style=for-the-badge&logo=omadacloud&logoColor=white)",
+    "categories": [
+      "Networking"
+    ]
+  },
+  {
+    "id": "palo-alto-networks",
+    "name": "Palo Alto Networks",
+    "url": "https://img.shields.io/badge/paloaltonetworks-%23F04E23.svg?style=for-the-badge&logo=paloaltonetworks&logoColor=white",
+    "markdown": "![PaloAltoNetworks](https://img.shields.io/badge/paloaltonetworks-%23F04E23.svg?style=for-the-badge&logo=paloaltonetworks&logoColor=white)",
     "categories": [
       "Networking"
     ]
@@ -6414,19 +6504,19 @@
     ]
   },
   {
-    "id": "ubiquiti",
-    "name": "Ubiquiti",
-    "url": "https://img.shields.io/badge/ubiquiti-%230559C9.svg?style=for-the-badge&logo=ubiquiti&logoColor=white",
-    "markdown": "![Ubiquiti](https://img.shields.io/badge/ubiquiti-%230559C9.svg?style=for-the-badge&logo=ubiquiti&logoColor=white)",
+    "id": "tp-link",
+    "name": "TP-Link",
+    "url": "https://img.shields.io/badge/tplink-%234ACBD6.svg?style=for-the-badge&logo=tplink&logoColor=white",
+    "markdown": "![TP-Link](https://img.shields.io/badge/tplink-%234ACBD6.svg?style=for-the-badge&logo=tplink&logoColor=white)",
     "categories": [
       "Networking"
     ]
   },
   {
-    "id": "wireguard",
-    "name": "Wireguard",
-    "url": "https://img.shields.io/badge/wireguard-%2388171A.svg?style=for-the-badge&logo=wireguard&logoColor=white",
-    "markdown": "![Wireguard](https://img.shields.io/badge/wireguard-%2388171A.svg?style=for-the-badge&logo=wireguard&logoColor=white)",
+    "id": "ubiquiti",
+    "name": "Ubiquiti",
+    "url": "https://img.shields.io/badge/ubiquiti-%230559C9.svg?style=for-the-badge&logo=ubiquiti&logoColor=white",
+    "markdown": "![Ubiquiti](https://img.shields.io/badge/ubiquiti-%230559C9.svg?style=for-the-badge&logo=ubiquiti&logoColor=white)",
     "categories": [
       "Networking"
     ]
@@ -7549,6 +7639,15 @@
     ]
   },
   {
+    "id": "postman",
+    "name": "Postman",
+    "url": "https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white",
+    "markdown": "![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)",
+    "categories": [
+      "Testing"
+    ]
+  },
+  {
     "id": "puppeteer",
     "name": "Puppeteer",
     "url": "https://img.shields.io/badge/Puppeteer-%2340B5A4.svg?style=for-the-badge&logo=Puppeteer&logoColor=black",
@@ -7699,6 +7798,69 @@
     "markdown": "![Perforce Helix](https://img.shields.io/badge/-PERFORCE%20HELIX-00AEEF?style=for-the-badge&logo=Perforce&logoColor=white)",
     "categories": [
       "Version Control"
+    ]
+  },
+  {
+    "id": "expressvpn",
+    "name": "ExpressVPN",
+    "url": "https://img.shields.io/badge/nordvpn-%234687FF.svg?style=for-the-badge&logo=nordvpn&logoColor=white",
+    "markdown": "![ExpressVPN](https://img.shields.io/badge/nordvpn-%234687FF.svg?style=for-the-badge&logo=nordvpn&logoColor=white)",
+    "categories": [
+      "VPNs"
+    ]
+  },
+  {
+    "id": "mullvad",
+    "name": "Mullvad",
+    "url": "https://img.shields.io/badge/mullvad-%23294D73.svg?style=for-the-badge&logo=mullvad&logoColor=white",
+    "markdown": "![Mullvad](https://img.shields.io/badge/mullvad-%23294D73.svg?style=for-the-badge&logo=mullvad&logoColor=white)",
+    "categories": [
+      "VPNs"
+    ]
+  },
+  {
+    "id": "openvpn",
+    "name": "OpenVPN",
+    "url": "https://img.shields.io/badge/openvpn-%23EA7E20.svg?style=for-the-badge&logo=openvpn&logoColor=white",
+    "markdown": "![OpenVPN](https://img.shields.io/badge/openvpn-%23EA7E20.svg?style=for-the-badge&logo=openvpn&logoColor=white)",
+    "categories": [
+      "VPNs"
+    ]
+  },
+  {
+    "id": "privateinternetaccess",
+    "name": "PrivateInternetAccess",
+    "url": "https://img.shields.io/badge/privateinternetaccess-%231E811F.svg?style=for-the-badge&logo=privateinternetaccess&logoColor=white",
+    "markdown": "![PrivateInternetAccess](https://img.shields.io/badge/privateinternetaccess-%231E811F.svg?style=for-the-badge&logo=privateinternetaccess&logoColor=white)",
+    "categories": [
+      "VPNs"
+    ]
+  },
+  {
+    "id": "protonvpn",
+    "name": "ProtonVPN",
+    "url": "https://img.shields.io/badge/protonvpn-%2366DEB1.svg?style=for-the-badge&logo=protonvpn&logoColor=black",
+    "markdown": "![ProtonVPN](https://img.shields.io/badge/protonvpn-%2366DEB1.svg?style=for-the-badge&logo=protonvpn&logoColor=black)",
+    "categories": [
+      "VPNs"
+    ]
+  },
+  {
+    "id": "surfshark",
+    "name": "Surfshark",
+    "url": "https://img.shields.io/badge/surfshark-%231EBFBF.svg?style=for-the-badge&logo=surfshark&logoColor=white",
+    "markdown": "![Surfshark](https://img.shields.io/badge/surfshark-%231EBFBF.svg?style=for-the-badge&logo=surfshark&logoColor=white)",
+    "categories": [
+      "VPNs"
+    ]
+  },
+  {
+    "id": "wireguard",
+    "name": "Wireguard",
+    "url": "https://img.shields.io/badge/wireguard-%2388171A.svg?style=for-the-badge&logo=wireguard&logoColor=white",
+    "markdown": "![Wireguard](https://img.shields.io/badge/wireguard-%2388171A.svg?style=for-the-badge&logo=wireguard&logoColor=white)",
+    "categories": [
+      "VPNs"
     ]
   },
   {
