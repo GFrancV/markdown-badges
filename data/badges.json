@@ -27,6 +27,15 @@
     ]
   },
   {
+    "id": "claude-code",
+    "name": "Claude Code",
+    "url": "https://img.shields.io/badge/Claude%20Code-D97757?style=for-the-badge&logo=claudecode&logoColor=white",
+    "markdown": "![Claude Code](https://img.shields.io/badge/Claude%20Code-D97757?style=for-the-badge&logo=claudecode&logoColor=white)",
+    "categories": [
+      "Artificial Intelligence"
+    ]
+  },
+  {
     "id": "deepseek",
     "name": "DeepSeek",
     "url": "https://img.shields.io/badge/DeepSeek-5786FE?style=for-the-badge&logo=deepseek&logoColor=white",
