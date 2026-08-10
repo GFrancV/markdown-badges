@@ -208,15 +208,6 @@ describe("badges.json — output validation", () => {
       expect(badge?.id).toBe("c++");
     });
 
-    it('C# → id "c%23" (# percent-encoded for URL safety)', () => {
-      // Raw # in a URL path is treated as a fragment delimiter by browsers,
-      // making /badges/c# resolve identically to /badges/c — the badge
-      // would be unreachable. We encode it as %23 instead.
-      const badge = badges.find((b) => b.name === "C#");
-      expect(badge).toBeDefined();
-      expect(badge?.id).toBe("c%23");
-    });
-
     it('.NET → id ".net" (leading dot preserved)', () => {
       const badge = badges.find((b) => b.name === ".NET");
       expect(badge).toBeDefined();
@@ -265,12 +256,11 @@ describe("badges.json — output validation", () => {
       expect(allBitcoin[0].categories).toContain("Cryptocurrency");
     });
 
-    it("Xbox is a single entry covering Gaming, Game Consoles and Social", () => {
-      const allXbox = badges.filter((b) => b.name === "Xbox");
-      expect(allXbox).toHaveLength(1);
-      expect(allXbox[0].categories).toContain("Gaming");
-      expect(allXbox[0].categories).toContain("Game Consoles");
-      expect(allXbox[0].categories).toContain("Social");
+    it("AMD is a single entry covering Frameworks and Gaming", () => {
+      const allAmd = badges.filter((b) => b.name === "AMD");
+      expect(allAmd).toHaveLength(1);
+      expect(allAmd[0].categories).toContain("Frameworks");
+      expect(allAmd[0].categories).toContain("Gaming");
     });
 
     it("Twitch is a single entry covering its categories", () => {
