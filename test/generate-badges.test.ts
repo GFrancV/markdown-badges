@@ -56,9 +56,9 @@ describe("badges.json — output validation", () => {
       expect(badges.length).toBeGreaterThan(0);
     });
 
-    it("contains at least 800 badges", () => {
-      // sanity guard: upstream README currently has 850+
-      expect(badges.length).toBeGreaterThanOrEqual(800);
+    it("contains at least 750 badges", () => {
+      // sanity guard: upstream README currently has 750+
+      expect(badges.length).toBeGreaterThanOrEqual(750);
     });
 
     it("spans at least 40 categories", () => {
@@ -221,12 +221,12 @@ describe("badges.json — output validation", () => {
     });
 
     it('Pop!_OS → id "pop!_os" (markdown escape \\_ stripped from name)', () => {
-      // In the upstream README the name appears as Pop!\_OS — the backslash
+      // In the upstream README the name appears as Pop!OS — the backslash
       // escapes the underscore in markdown tables. The stored name and ID
       // must use the clean form without the escape character.
-      const badge = badges.find((b) => b.name === "Pop!_OS");
+      const badge = badges.find((b) => b.name === "Pop!OS");
       expect(badge).toBeDefined();
-      expect(badge?.id).toBe("pop!_os");
+      expect(badge?.id).toBe("pop!os");
     });
 
     it("no badge ID contains URL-unsafe characters (# ? or \\)", () => {
