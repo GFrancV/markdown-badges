@@ -8,8 +8,9 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "prebuild": "pnpm badges:generate",
+    "prebuild": "pnpm badges:generate && pnpm llms:generate",
     "badges:generate": "node scripts/generate-badges.js",
+    "llms:generate": "node scripts/generate-llms-txt.js",
     "test": "vitest run",
     "test:watch": "vitest"
   },
