@@ -3,5 +3,3 @@ Allow: /
 Disallow: /api/
 
 Sitemap: https://markdown-badges.vercel.app/sitemap-index.xml
-# https://llmstxt.org/
-LLMs: https://markdown-badges.vercel.app/llms.txt
