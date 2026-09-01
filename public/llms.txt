@@ -1,0 +1,70 @@
+# Markdown Badges
+
+> Search, browse, and copy ready-made Markdown badges (shields.io-style) for READMEs and other project docs.
+
+Markdown Badges is a static catalog of 795 badges across 54 categories, sourced from the Ileriayo/markdown-badges GitHub repository. Badges can be searched, multi-selected and copied as Markdown, built from scratch in the generator using any simple-icons logo, or fetched programmatically via the public read-only API.
+
+## Pages
+
+- [Home](https://markdown-badges.vercel.app/): Search and browse all badges, filter by category, multi-select and copy.
+- [Generator](https://markdown-badges.vercel.app/generator): Build a custom badge from any simple-icons logo, label, and colors.
+- [Favorites](https://markdown-badges.vercel.app/favorites): Badges saved locally by the visitor.
+- [API Reference](https://markdown-badges.vercel.app/docs/api): Public read-only HTTP API returning badge data as JSON, no auth required.
+- [About](https://markdown-badges.vercel.app/about): Project background and attribution.
+
+## Categories
+
+- [Artificial Intelligence](https://markdown-badges.vercel.app/categories/artificial-intelligence): 21 badges
+- [Blockchain](https://markdown-badges.vercel.app/categories/blockchain): 7 badges
+- [Cryptocurrency](https://markdown-badges.vercel.app/categories/cryptocurrency): 18 badges
+- [Blog](https://markdown-badges.vercel.app/categories/blog): 11 badges
+- [Browsers](https://markdown-badges.vercel.app/categories/browsers): 11 badges
+- [Search Engines](https://markdown-badges.vercel.app/categories/search-engines): 11 badges
+- [Security](https://markdown-badges.vercel.app/categories/security): 3 badges
+- [CAD](https://markdown-badges.vercel.app/categories/cad): 11 badges
+- [Design](https://markdown-badges.vercel.app/categories/design): 16 badges
+- [CI](https://markdown-badges.vercel.app/categories/ci): 7 badges
+- [CD](https://markdown-badges.vercel.app/categories/cd): 1 badge
+- [Cloud Storage](https://markdown-badges.vercel.app/categories/cloud-storage): 8 badges
+- [DE/WM](https://markdown-badges.vercel.app/categories/de-wm): 11 badges
+- [Databases](https://markdown-badges.vercel.app/categories/databases): 25 badges
+- [SaaS](https://markdown-badges.vercel.app/categories/saas): 24 badges
+- [Forums](https://markdown-badges.vercel.app/categories/forums): 15 badges
+- [Jobs](https://markdown-badges.vercel.app/categories/jobs): 7 badges
+- [Social](https://markdown-badges.vercel.app/categories/social): 46 badges
+- [Documentation Platforms](https://markdown-badges.vercel.app/categories/documentation-platforms): 13 badges
+- [Education](https://markdown-badges.vercel.app/categories/education): 24 badges
+- [Funding](https://markdown-badges.vercel.app/categories/funding): 13 badges
+- [Frameworks](https://markdown-badges.vercel.app/categories/frameworks): 130 badges
+- [Gaming](https://markdown-badges.vercel.app/categories/gaming): 21 badges
+- [Other](https://markdown-badges.vercel.app/categories/other): 24 badges
+- [Testing](https://markdown-badges.vercel.app/categories/testing): 12 badges
+- [Build Toolchains](https://markdown-badges.vercel.app/categories/build-toolchains): 4 badges
+- [ML/DL](https://markdown-badges.vercel.app/categories/ml-dl): 14 badges
+- [Frontend](https://markdown-badges.vercel.app/categories/frontend): 7 badges
+- [CSS Frameworks](https://markdown-badges.vercel.app/categories/css-frameworks): 8 badges
+- [Backend](https://markdown-badges.vercel.app/categories/backend): 9 badges
+- [Mobile](https://markdown-badges.vercel.app/categories/mobile): 5 badges
+- [ML/AI](https://markdown-badges.vercel.app/categories/ml-ai): 6 badges
+- [Build Tools](https://markdown-badges.vercel.app/categories/build-tools): 7 badges
+- [Geospatial](https://markdown-badges.vercel.app/categories/geospatial): 2 badges
+- [Game Consoles](https://markdown-badges.vercel.app/categories/game-consoles): 6 badges
+- [Hardware](https://markdown-badges.vercel.app/categories/hardware): 3 badges
+- [IDEs](https://markdown-badges.vercel.app/categories/ides): 34 badges
+- [Languages](https://markdown-badges.vercel.app/categories/languages): 55 badges
+- [Music](https://markdown-badges.vercel.app/categories/music): 10 badges
+- [Office](https://markdown-badges.vercel.app/categories/office): 2 badges
+- [Operating System](https://markdown-badges.vercel.app/categories/operating-system): 40 badges
+- [ORM](https://markdown-badges.vercel.app/categories/orm): 8 badges
+- [DevOps](https://markdown-badges.vercel.app/categories/devops): 15 badges
+- [Home Automation](https://markdown-badges.vercel.app/categories/home-automation): 7 badges
+- [Networking](https://markdown-badges.vercel.app/categories/networking): 12 badges
+- [Quantum Programming](https://markdown-badges.vercel.app/categories/quantum-programming): 2 badges
+- [Servers](https://markdown-badges.vercel.app/categories/servers): 13 badges
+- [Streaming](https://markdown-badges.vercel.app/categories/streaming): 13 badges
+- [Smartphone](https://markdown-badges.vercel.app/categories/smartphone): 13 badges
+- [Store](https://markdown-badges.vercel.app/categories/store): 4 badges
+- [Terminals](https://markdown-badges.vercel.app/categories/terminals): 9 badges
+- [Version Control](https://markdown-badges.vercel.app/categories/version-control): 11 badges
+- [VPNs](https://markdown-badges.vercel.app/categories/vpns): 7 badges
+- [Wearables](https://markdown-badges.vercel.app/categories/wearables): 1 badge
