@@ -84,6 +84,16 @@ describe("badge params", () => {
     ).toEqual(DEFAULT_BADGE);
   });
 
+  it("keeps a cleared logo across reloads", () => {
+    const cfg = { ...DEFAULT_BADGE, logo: "" };
+    expect(parseBadgeParams(`?${serializeBadgeParams(cfg)}`).logo).toBe("");
+  });
+
+  it("treats any icon value other than 0 as shown", () => {
+    expect(parseBadgeParams("?icon=1").showIcon).toBe(true);
+    expect(parseBadgeParams("?icon=0").showIcon).toBe(false);
+  });
+
   it("drops non-slug logos", () => {
     expect(parseBadgeParams("?logo=%3Cscript%3E").logo).toBe(
       DEFAULT_BADGE.logo,

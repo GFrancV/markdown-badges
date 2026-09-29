@@ -81,7 +81,7 @@ export function parseBadgeParams(search: string): BadgeConfig {
   return {
     name: p.get("name") ?? d.name,
     showIcon: p.get("icon") !== "0",
-    logo: SLUG_PATTERN.test(logo) ? logo : d.logo,
+    logo: logo === "" || SLUG_PATTERN.test(logo) ? logo : d.logo,
     logoColor: hex("logoColor", d.logoColor),
     labelColor: hex("labelColor", d.labelColor),
     color: hex("color", d.color),
