@@ -14,17 +14,20 @@ import {
 } from "@/components/ui/combobox";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { escapeHtmlAttr, sanitizeColorHex } from "@/lib/sanitize";
+import { buildBadgeUrl } from "@/lib/badge-url";
+import { escapeHtmlAttr } from "@/lib/sanitize";
 import { getIcons } from "@/services/simple-icons";
 import { CodeBlock } from "./ui/code-block";
+
+const DEFAULT_ICON: SimpleIcon = { title: "GitHub", slug: "github", hex: "181717" };
 
 export function BadgeGenerator() {
   const [badgeName, setBadgeName] = useState("GitHub");
   const [logoColor, setLogoColor] = useState("#ffffff");
   const [leftColor, setLeftColor] = useState("#000000");
   const [rightColor, setRightColor] = useState("#000000");
-  const [logo, setLogo] = useState<string | null>("github");
-  const [simpleIcons, setSimpleIcons] = useState<string[]>([]);
+  const [logo, setLogo] = useState<SimpleIcon | null>(DEFAULT_ICON);
+  const [simpleIcons, setSimpleIcons] = useState<SimpleIcon[]>([]);
   const [iconsLoading, setIconsLoading] = useState(true);
 
   useEffect(() => {
@@ -34,7 +37,7 @@ export function BadgeGenerator() {
       try {
         const icons = await getIcons(controller.signal);
         if (!controller.signal.aborted) {
-          setSimpleIcons([...new Set(icons.map((icon) => icon.title))]);
+          setSimpleIcons(icons);
         }
       } finally {
         if (!controller.signal.aborted) {
@@ -47,15 +50,19 @@ export function BadgeGenerator() {
     return () => controller.abort();
   }, []);
 
-  const badgeUrl = useMemo(() => {
-    const safeBadgeName = encodeURIComponent(badgeName);
-    const safeLogo = encodeURIComponent(logo ?? "");
-    const safeLogoColor = sanitizeColorHex(logoColor, "#ffffff").slice(1);
-    const safeLeftColor = sanitizeColorHex(leftColor, "#000000").slice(1);
-    const safeRightColor = sanitizeColorHex(rightColor, "#000000").slice(1);
-
-    return `https://img.shields.io/badge/${safeBadgeName}-1000?style=for-the-badge&logo=${safeLogo}&logoColor=${safeLogoColor}&labelColor=${safeLeftColor}&color=${safeRightColor}`;
-  }, [badgeName, logo, logoColor, leftColor, rightColor]);
+  const badgeUrl = useMemo(
+    () =>
+      buildBadgeUrl({
+        name: badgeName,
+        showIcon: true,
+        logo: logo?.slug ?? "",
+        logoColor,
+        labelColor: leftColor,
+        color: rightColor,
+        style: "for-the-badge",
+      }),
+    [badgeName, logo, logoColor, leftColor, rightColor],
+  );
 
   const markdownCode = useMemo(
     () => `![${badgeName}](${badgeUrl})`,
@@ -112,7 +119,14 @@ export function BadgeGenerator() {
         </div>
         <Field>
           <FieldLabel>Logo</FieldLabel>
-          <Combobox items={simpleIcons} value={logo} onValueChange={setLogo}>
+          <Combobox
+            items={simpleIcons}
+            value={logo}
+            onValueChange={setLogo}
+            itemToStringLabel={(icon) => icon.title}
+            isItemEqualToValue={(icon, value) => icon.slug === value.slug}
+            limit={50}
+          >
             <ComboboxTrigger
               render={
                 <Button variant="outline" className="w-full justify-between">
@@ -130,8 +144,8 @@ export function BadgeGenerator() {
               <ComboboxEmpty>No items found.</ComboboxEmpty>
               <ComboboxList>
                 {(item) => (
-                  <ComboboxItem key={item} value={item}>
-                    {item}
+                  <ComboboxItem key={item.slug} value={item}>
+                    {item.title}
                   </ComboboxItem>
                 )}
               </ComboboxList>
