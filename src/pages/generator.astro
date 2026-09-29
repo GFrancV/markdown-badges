@@ -2,6 +2,8 @@
 import { BadgeGenerator } from "@/components/badge-generator";
 import { Typography } from "@/components/ui/typography";
 import Layout from "@/layouts/Layout.astro";
+
+const initialSearch = Astro.url.search;
 ---
 
 <Layout
@@ -12,6 +14,6 @@ import Layout from "@/layouts/Layout.astro";
     <Typography as="h1" size="h1" className="mb-8">
       Badges generator
     </Typography>
-    <BadgeGenerator client:load />
+    <BadgeGenerator client:load initialSearch={initialSearch} />
   </div>
 </Layout>

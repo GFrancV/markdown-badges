@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
   buildBadgeUrl,
+  DEFAULT_BADGE,
   escapeShieldsText,
+  parseBadgeParams,
+  serializeBadgeParams,
   type BadgeConfig,
 } from "../src/lib/badge-url";
 
@@ -54,5 +57,36 @@ describe("buildBadgeUrl", () => {
     expect(url).toContain("color=000000");
     expect(url).toContain("logoColor=ffffff");
     expect(url).toContain("style=for-the-badge");
+  });
+});
+
+describe("badge params", () => {
+  it("round-trips a config", () => {
+    const cfg: BadgeConfig = {
+      name: "Next-Auth & co",
+      showIcon: false,
+      logo: "nodedotjs",
+      logoColor: "#123abc",
+      labelColor: "#ff0000",
+      color: "#00ff00",
+      style: "flat-square",
+    };
+    expect(parseBadgeParams(`?${serializeBadgeParams(cfg)}`)).toEqual(cfg);
+  });
+
+  it("defaults empty params", () => {
+    expect(parseBadgeParams("")).toEqual(DEFAULT_BADGE);
+  });
+
+  it("falls back on invalid values", () => {
+    expect(
+      parseBadgeParams("?style=evil&labelColor=zzz&logoColor=12&color=%3Cx"),
+    ).toEqual(DEFAULT_BADGE);
+  });
+
+  it("drops non-slug logos", () => {
+    expect(parseBadgeParams("?logo=%3Cscript%3E").logo).toBe(
+      DEFAULT_BADGE.logo,
+    );
   });
 });
