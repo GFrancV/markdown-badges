@@ -5493,6 +5493,15 @@
     ]
   },
   {
+    "id": "raycast",
+    "name": "Raycast",
+    "url": "https://img.shields.io/badge/raycast-%23FF6363?style=for-the-badge&logo=raycast&logoColor=F2F2F2",
+    "markdown": "![Raycast](https://img.shields.io/badge/raycast-%23FF6363?style=for-the-badge&logo=raycast&logoColor=F2F2F2)",
+    "categories": [
+      "Other"
+    ]
+  },
+  {
     "id": "sonarqube",
     "name": "SonarQube",
     "url": "https://img.shields.io/badge/sonarqube-%23126ED3.svg?style=for-the-badge&logo=sonarqubecloud&logoColor=white",
