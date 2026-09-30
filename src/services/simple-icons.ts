@@ -1,9 +1,6 @@
+// Generated at build time by scripts/generate-simple-icons.js
 export async function getIcons(signal?: AbortSignal): Promise<SimpleIcon[]> {
-  const req = await fetch(
-    "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/data/simple-icons.json",
-    { signal },
-  );
-  const data = await req.json();
-
-  return data;
+  const req = await fetch("/simple-icons.json", { signal });
+  if (!req.ok) throw new Error(`Failed to load icons: HTTP ${req.status}`);
+  return req.json();
 }

@@ -8,9 +8,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev       # Start development server (Astro)
 npm run build     # Type-check (astro check) then build
 npm run preview   # Preview production build locally
+npm test          # Run Vitest suites in test/
+npm run icons:generate  # Regenerate public/simple-icons.json (also runs in prebuild)
 ```
-
-There is no test runner configured in this project.
 
 ## Stack
 
@@ -27,14 +27,14 @@ Key libraries: `fuzzyjs` (badge search), `sonner` (toasts), `next-themes` (dark/
 
 1. **Source of truth**: `data/badges.json` — static JSON with ~600+ badge definitions (`{ id, name, url, markdown, category }`).
 2. **Service layer**: `src/services/badges.ts` — all badge filtering/retrieval logic using fuzzy search (fuzzyjs). This is where search, category filtering, and related-badge lookups live.
-3. **Icons**: `src/services/icons.ts` — fetches simple-icons metadata dynamically from GitHub at runtime (used in the generator).
+3. **Icons**: `scripts/generate-simple-icons.js` writes a slim `public/simple-icons.json` (`{ title, slug, hex }`) at build time; `src/services/simple-icons.ts` fetches it same-origin for the generator. Never fetch simple-icons from GitHub at runtime.
 4. **Pages**: Astro pages in `src/pages/` define routes. Badge detail pages (`/badges/[id]`) are statically pre-rendered at build time from the JSON.
 
 ### State Management
 
 - **Favorites**: `src/context/favorites-context.tsx` — React Context backed by localStorage (`mb:favorites`). Wrap components with `BadgeSidebarProvider` (sidebar slide-over) and consume via `useBadgeSidebar`.
 - **Search state**: Stored in URL query params (`?query=X&category=Y`) for shareability; debounced 450ms via `use-debounce`.
-- **Generator state**: Component-local `useState` in `src/pages/generator.astro` / generator components.
+- **Generator state**: A single `BadgeConfig` in `src/components/badge-generator.tsx`, synced to query params. URL building/parsing lives in `src/lib/badge-url.ts` (tested); `generator.astro` passes `Astro.url.search` so SSR and client start from the same state.
 
 ### Key Conventions
 
