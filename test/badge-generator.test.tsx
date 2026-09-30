@@ -46,7 +46,12 @@ describe("BadgeGenerator (SSR)", () => {
   });
 
   it("escapes the name in the HTML snippet", () => {
-    const html = render(`?name=${encodeURIComponent('"><script>')}`);
-    expect(html).not.toContain("<script>");
+    // hljs and React already escape "<" once; a second level only comes
+    // from escapeHtmlAttr in the copied <img alt="...">
+    const html = renderToString(
+      <BadgeGenerator initialSearch={`?name=${encodeURIComponent('"><script>')}`} />,
+    );
+    const text = html.replaceAll(/<[^>]+>/g, "");
+    expect(text).toContain("&amp;lt;script&amp;gt; badge");
   });
 });

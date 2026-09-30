@@ -1,7 +1,8 @@
-import { readFileSync, statSync } from "fs";
+import { readFileSync } from "fs";
 import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 import { describe, expect, it } from "vitest";
+import { gzipSync } from "zlib";
 import { slimIcons, titleToSlug } from "../scripts/utils";
 
 const OUTPUT = join(
@@ -44,7 +45,8 @@ describe("public/simple-icons.json", () => {
   const icons = JSON.parse(readFileSync(OUTPUT, "utf8"));
 
   it("is small and well-formed", () => {
-    expect(statSync(OUTPUT).size).toBeLessThanOrEqual(200 * 1024);
+    // Transfer size is what matters; raw size grows with upstream
+    expect(gzipSync(readFileSync(OUTPUT)).length).toBeLessThanOrEqual(80 * 1024);
     expect(icons.length).toBeGreaterThan(1000);
     for (const icon of icons) {
       expect(Object.keys(icon).sort()).toEqual(["hex", "slug", "title"]);

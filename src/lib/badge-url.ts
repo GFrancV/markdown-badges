@@ -29,7 +29,13 @@ export const DEFAULT_BADGE: BadgeConfig = {
   style: "for-the-badge",
 };
 
-const SLUG_PATTERN = /^[a-z0-9]+$/;
+// A few real slugs contain "_" (e.g. hive_blockchain)
+const SLUG_PATTERN = /^[a-z0-9_]+$/;
+// Control, format (zero-width, bidi) and line-separator characters: invisible
+// in the input, but they survive into the copied snippets (a blank line
+// breaks the markdown image)
+const UNSAFE_TEXT = /[\p{Cc}\p{Cf}\p{Zl}\p{Zp}]+/gu;
+const MAX_NAME_LENGTH = 100;
 
 function isBadgeStyle(value: string | null): value is BadgeStyle {
   return BADGE_STYLES.includes(value as BadgeStyle);
@@ -92,7 +98,9 @@ export function parseBadgeParams(search: string): BadgeConfig {
   const style = p.get("style");
 
   return {
-    name: p.get("name") ?? d.name,
+    name: (p.get("name") ?? d.name)
+      .replaceAll(UNSAFE_TEXT, " ")
+      .slice(0, MAX_NAME_LENGTH),
     showIcon: p.get("icon") !== "0",
     logo: logo === "" || SLUG_PATTERN.test(logo) ? logo : d.logo,
     logoColor: hex("logoColor", d.logoColor),

@@ -1,3 +1,4 @@
+import { readFileSync } from "fs";
 import { describe, expect, it } from "vitest";
 import {
   buildBadgeUrl,
@@ -48,6 +49,11 @@ describe("contrastLogoColor", () => {
     expect(contrastLogoColor("181717")).toBe("#ffffff"); // GitHub
     expect(contrastLogoColor("5FA04E")).toBe("#ffffff"); // Node.js
   });
+
+  it("switches around the 0.6 luminance threshold", () => {
+    expect(contrastLogoColor("969696")).toBe("#ffffff"); // ~0.59
+    expect(contrastLogoColor("A0A0A0")).toBe("#000000"); // ~0.63
+  });
 });
 
 describe("buildBadgeUrl", () => {
@@ -73,10 +79,11 @@ describe("buildBadgeUrl", () => {
       logoColor: "javascript:",
       style: "evil" as BadgeConfig["style"],
     });
-    expect(url).toContain("labelColor=000000");
-    expect(url).toContain("color=000000");
-    expect(url).toContain("logoColor=ffffff");
-    expect(url).toContain("style=for-the-badge");
+    const q = new URL(url).searchParams;
+    expect(q.get("labelColor")).toBe("000000");
+    expect(q.get("color")).toBe("000000");
+    expect(q.get("logoColor")).toBe("ffffff");
+    expect(q.get("style")).toBe("for-the-badge");
   });
 });
 
@@ -112,6 +119,29 @@ describe("badge params", () => {
   it("treats any icon value other than 0 as shown", () => {
     expect(parseBadgeParams("?icon=1").showIcon).toBe(true);
     expect(parseBadgeParams("?icon=0").showIcon).toBe(false);
+  });
+
+  it("keeps every real simple-icons slug across reloads", () => {
+    const icons: { slug: string }[] = JSON.parse(
+      readFileSync(new URL("../public/simple-icons.json", import.meta.url), "utf8"),
+    );
+    const lost = icons
+      .map(({ slug }) => slug)
+      .filter(
+        (slug) =>
+          parseBadgeParams(`?${serializeBadgeParams({ ...DEFAULT_BADGE, logo: slug })}`)
+            .logo !== slug,
+      );
+    expect(lost).toEqual([]);
+  });
+
+  it("strips control and invisible characters from shared names", () => {
+    expect(parseBadgeParams("?name=a%0A%0Ab").name).toBe("a b");
+    expect(parseBadgeParams("?name=x%E2%80%AEy%E2%80%8Bz").name).toBe("x y z");
+  });
+
+  it("caps shared names at 100 characters", () => {
+    expect(parseBadgeParams(`?name=${"x".repeat(200)}`).name).toHaveLength(100);
   });
 
   it("drops non-slug logos", () => {
