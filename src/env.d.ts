@@ -11,17 +11,6 @@ interface Badge {
 
 interface SimpleIcon {
   title: string;
+  slug: string;
   hex: string;
-  source: string;
-  aliases?: Aliases;
-  license?: License;
-  guidelines?: string;
-}
-
-interface Aliases {
-  aka: string[];
-}
-
-interface License {
-  type: string;
 }

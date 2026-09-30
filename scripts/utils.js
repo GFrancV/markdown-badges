@@ -161,3 +161,47 @@ export function validateBadge(badge) {
 
   return errors;
 }
+
+// Port of simple-icons' titleToSlug (sdk.mjs)
+const TITLE_TO_SLUG_REPLACEMENTS = {
+  "+": "plus",
+  ".": "dot",
+  "&": "and",
+  đ: "d",
+  ħ: "h",
+  ı: "i",
+  ĸ: "k",
+  ŀ: "l",
+  ł: "l",
+  ß: "ss",
+  ŧ: "t",
+  ø: "o",
+};
+const TITLE_TO_SLUG_REGEX = new RegExp(
+  `[${Object.keys(TITLE_TO_SLUG_REPLACEMENTS).join("")}]`,
+  "g",
+);
+
+export function titleToSlug(title) {
+  return title
+    .toLowerCase()
+    .replaceAll(TITLE_TO_SLUG_REGEX, (char) => TITLE_TO_SLUG_REPLACEMENTS[char])
+    .normalize("NFD")
+    .replaceAll(/[^a-z\d]/g, "");
+}
+
+/**
+ * Reduces the upstream simple-icons.json to { title, slug, hex }, deduped by slug.
+ */
+export function slimIcons(data) {
+  if (!Array.isArray(data)) throw new Error("Expected an array of icons");
+  const seen = new Set();
+  const icons = [];
+  for (const { title, slug, hex } of data) {
+    const s = slug ?? titleToSlug(title);
+    if (seen.has(s)) continue;
+    seen.add(s);
+    icons.push({ title, slug: s, hex });
+  }
+  return icons;
+}

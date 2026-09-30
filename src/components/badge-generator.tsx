@@ -1,7 +1,9 @@
 import { ChevronDownIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { useDebounce } from "use-debounce";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Combobox,
   ComboboxContent,
@@ -14,58 +16,100 @@ import {
 } from "@/components/ui/combobox";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { escapeHtmlAttr, sanitizeColorHex } from "@/lib/sanitize";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  BADGE_STYLES,
+  buildBadgeUrl,
+  buildImgSnippet,
+  buildMarkdownSnippet,
+  contrastLogoColor,
+  parseBadgeParams,
+  serializeBadgeParams,
+  type BadgeConfig,
+  type BadgeStyle,
+} from "@/lib/badge-url";
 import { getIcons } from "@/services/simple-icons";
 import { CodeBlock } from "./ui/code-block";
 
-export function BadgeGenerator() {
-  const [badgeName, setBadgeName] = useState("GitHub");
-  const [logoColor, setLogoColor] = useState("#ffffff");
-  const [leftColor, setLeftColor] = useState("#000000");
-  const [rightColor, setRightColor] = useState("#000000");
-  const [logo, setLogo] = useState<string | null>("github");
-  const [simpleIcons, setSimpleIcons] = useState<string[]>([]);
-  const [iconsLoading, setIconsLoading] = useState(true);
+const DEFAULT_ICON: SimpleIcon = { title: "GitHub", slug: "github", hex: "181717" };
+const HEX_PATTERN = /^[0-9a-fA-F]{6}$/;
+const SEARCH_PLACEHOLDER = {
+  loading: "Loading icons…",
+  ready: "Search",
+  error: "Couldn't load icons",
+} as const;
+
+interface Props {
+  initialSearch?: string;
+}
+
+export function BadgeGenerator({ initialSearch = "" }: Props) {
+  const [config, setConfig] = useState<BadgeConfig>(() =>
+    parseBadgeParams(initialSearch),
+  );
+  const [simpleIcons, setSimpleIcons] = useState<SimpleIcon[]>([]);
+  const [iconsStatus, setIconsStatus] =
+    useState<keyof typeof SEARCH_PLACEHOLDER>("loading");
+  const [debouncedConfig] = useDebounce(config, 450);
+
+  const update = (patch: Partial<BadgeConfig>) =>
+    setConfig((prev) => ({ ...prev, ...patch }));
 
   useEffect(() => {
     const controller = new AbortController();
 
-    async function loadIcons() {
-      try {
-        const icons = await getIcons(controller.signal);
-        if (!controller.signal.aborted) {
-          setSimpleIcons([...new Set(icons.map((icon) => icon.title))]);
-        }
-      } finally {
-        if (!controller.signal.aborted) {
-          setIconsLoading(false);
-        }
-      }
-    }
+    getIcons(controller.signal)
+      .then((icons) => {
+        setSimpleIcons(icons);
+        setIconsStatus("ready");
+      })
+      .catch((error) => {
+        if (controller.signal.aborted) return;
+        console.error(error);
+        setIconsStatus("error");
+      });
 
-    loadIcons();
     return () => controller.abort();
   }, []);
 
-  const badgeUrl = useMemo(() => {
-    const safeBadgeName = encodeURIComponent(badgeName);
-    const safeLogo = encodeURIComponent(logo ?? "");
-    const safeLogoColor = sanitizeColorHex(logoColor, "#ffffff").slice(1);
-    const safeLeftColor = sanitizeColorHex(leftColor, "#000000").slice(1);
-    const safeRightColor = sanitizeColorHex(rightColor, "#000000").slice(1);
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    url.search = serializeBadgeParams(debouncedConfig);
+    window.history.replaceState({}, "", url);
+  }, [debouncedConfig]);
 
-    return `https://img.shields.io/badge/${safeBadgeName}-1000?style=for-the-badge&logo=${safeLogo}&logoColor=${safeLogoColor}&labelColor=${safeLeftColor}&color=${safeRightColor}`;
-  }, [badgeName, logo, logoColor, leftColor, rightColor]);
+  // Slug from the URL shows as-is until the icon list resolves its title
+  const selectedIcon = useMemo<SimpleIcon | null>(() => {
+    if (!config.logo) return null;
+    return (
+      simpleIcons.find((icon) => icon.slug === config.logo) ??
+      (config.logo === DEFAULT_ICON.slug
+        ? DEFAULT_ICON
+        : { title: config.logo, slug: config.logo, hex: "" })
+    );
+  }, [config.logo, simpleIcons]);
 
-  const markdownCode = useMemo(
-    () => `![${badgeName}](${badgeUrl})`,
-    [badgeName, badgeUrl],
-  );
+  const handleIconChange = (icon: SimpleIcon | null) => {
+    if (icon && HEX_PATTERN.test(icon.hex)) {
+      update({
+        logo: icon.slug,
+        labelColor: `#${icon.hex}`,
+        logoColor: contrastLogoColor(icon.hex),
+      });
+    } else {
+      update({ logo: icon?.slug ?? "" });
+    }
+  };
 
-  const imgCode = useMemo(
-    () => `<img src="${badgeUrl}" alt="${escapeHtmlAttr(`${badgeName} badge`)}">`,
-    [badgeName, badgeUrl],
-  );
+  const badgeUrl = buildBadgeUrl(config);
+  const markdownCode = buildMarkdownSnippet(config.name, badgeUrl);
+  const imgCode = buildImgSnippet(config.name, badgeUrl);
 
   return (
     <section className="grid md:grid-cols-2 gap-12">
@@ -74,29 +118,33 @@ export function BadgeGenerator() {
           <FieldLabel htmlFor="badgeName">Badge name</FieldLabel>
           <Input
             id="badgeName"
-            onChange={(e) => setBadgeName(e.target.value)}
-            value={badgeName}
+            onChange={(e) => update({ name: e.target.value })}
+            value={config.name}
             autoComplete="off"
             placeholder="Badge name"
           />
         </Field>
 
-        <div className="grid grid-cols-3 gap-4">
-          <Field>
-            <FieldLabel htmlFor="logoColor"> Logo color</FieldLabel>
-            <Input
-              id="logoColor"
-              onChange={(e) => setLogoColor(e.target.value)}
-              value={logoColor}
-              type="color"
-            />
-          </Field>
+        <div
+          className={`grid gap-4 ${config.showIcon ? "grid-cols-3" : "grid-cols-2"}`}
+        >
+          {config.showIcon && (
+            <Field>
+              <FieldLabel htmlFor="logoColor"> Logo color</FieldLabel>
+              <Input
+                id="logoColor"
+                onChange={(e) => update({ logoColor: e.target.value })}
+                value={config.logoColor}
+                type="color"
+              />
+            </Field>
+          )}
           <Field>
             <FieldLabel htmlFor="leftColor"> Left color</FieldLabel>
             <Input
               id="leftColor"
-              onChange={(e) => setLeftColor(e.target.value)}
-              value={leftColor}
+              onChange={(e) => update({ labelColor: e.target.value })}
+              value={config.labelColor}
               type="color"
             />
           </Field>
@@ -104,45 +152,83 @@ export function BadgeGenerator() {
             <FieldLabel htmlFor="rightColor"> Right color</FieldLabel>
             <Input
               id="rightColor"
-              onChange={(e) => setRightColor(e.target.value)}
-              value={rightColor}
+              onChange={(e) => update({ color: e.target.value })}
+              value={config.color}
               type="color"
             />
           </Field>
         </div>
+
         <Field>
-          <FieldLabel>Logo</FieldLabel>
-          <Combobox items={simpleIcons} value={logo} onValueChange={setLogo}>
-            <ComboboxTrigger
-              render={
-                <Button variant="outline" className="w-full justify-between">
-                  <ComboboxValue />
-                  <ChevronDownIcon className="size-4 opacity-50" />
-                </Button>
-              }
-            />
-            <ComboboxContent>
-              <ComboboxInput
-                showTrigger={false}
-                placeholder={iconsLoading ? "Loading icons…" : "Search"}
-                disabled={iconsLoading}
-              />
-              <ComboboxEmpty>No items found.</ComboboxEmpty>
-              <ComboboxList>
-                {(item) => (
-                  <ComboboxItem key={item} value={item}>
-                    {item}
-                  </ComboboxItem>
-                )}
-              </ComboboxList>
-            </ComboboxContent>
-          </Combobox>
+          <FieldLabel htmlFor="badgeStyle">Style</FieldLabel>
+          <Select
+            value={config.style}
+            onValueChange={(style) => update({ style: style as BadgeStyle })}
+          >
+            <SelectTrigger id="badgeStyle" className="w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {BADGE_STYLES.map((style) => (
+                <SelectItem key={style} value={style}>
+                  {style}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </Field>
+
+        <Field orientation="horizontal">
+          <Checkbox
+            id="showIcon"
+            checked={config.showIcon}
+            onCheckedChange={(checked) => update({ showIcon: checked === true })}
+          />
+          <FieldLabel htmlFor="showIcon">Show icon</FieldLabel>
+        </Field>
+
+        {config.showIcon && (
+          <Field>
+            <FieldLabel>Logo</FieldLabel>
+            <Combobox
+              items={simpleIcons}
+              value={selectedIcon}
+              onValueChange={handleIconChange}
+              itemToStringLabel={(icon) => icon.title}
+              isItemEqualToValue={(icon, value) => icon.slug === value.slug}
+              limit={50}
+            >
+              <ComboboxTrigger
+                render={
+                  <Button variant="outline" className="w-full justify-between">
+                    <ComboboxValue />
+                    <ChevronDownIcon className="size-4 opacity-50" />
+                  </Button>
+                }
+              />
+              <ComboboxContent>
+                <ComboboxInput
+                  showTrigger={false}
+                  placeholder={SEARCH_PLACEHOLDER[iconsStatus]}
+                  disabled={iconsStatus !== "ready"}
+                />
+                <ComboboxEmpty>No items found.</ComboboxEmpty>
+                <ComboboxList>
+                  {(item) => (
+                    <ComboboxItem key={item.slug} value={item}>
+                      {item.title}
+                    </ComboboxItem>
+                  )}
+                </ComboboxList>
+              </ComboboxContent>
+            </Combobox>
+          </Field>
+        )}
       </div>
       <div className="flex flex-col gap-6 items-center justify-center">
         <img
           src={badgeUrl}
-          alt={`${badgeName} badge`}
+          alt={`${config.name} badge`}
           className="w-auto"
           loading="lazy"
           width="128"

@@ -63,6 +63,7 @@ function SearchContent({
   const [query, setQuery] = useState<string | null>(initialQuery);
   const [resultsAmount, setResultsAmount] = useState(30);
   const [isReady, setIsReady] = useState(false);
+  const [isMac, setIsMac] = useState(false);
 
   const [debouncedQuery] = useDebounce(query, 450);
 
@@ -92,6 +93,7 @@ function SearchContent({
 
   useEffect(() => {
     setIsReady(true);
+    setIsMac(navigator.userAgent.includes("Mac"));
   }, []);
 
   useEffect(() => {
@@ -127,7 +129,6 @@ function SearchContent({
 
   const isFiltered = !!(query && query.length > 0);
 
-  const isMac = navigator.userAgent.includes("Mac");
   return (
     <>
       <div className="flex md:flex-row flex-col gap-2 mb-6">
@@ -151,7 +152,7 @@ function SearchContent({
             </InputGroupAddon>
             <InputGroupAddon align="inline-end">
               {!query || query.length === 0 ? (
-                <Kbd>{isMac ? `${(<CommandIcon />)} ` : "Ctrl "}K</Kbd>
+                <Kbd>{isMac ? <CommandIcon /> : "Ctrl"} K</Kbd>
               ) : (
                 <InputGroupButton
                   variant="ghost"

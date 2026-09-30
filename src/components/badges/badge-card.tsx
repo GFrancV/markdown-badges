@@ -84,7 +84,6 @@ export const BadgeCard = memo(function BadgeCard({
           )}
           checked={isSelected}
           aria-label={isSelected ? "Deselect badge" : "Select badge"}
-          aria-pressed={isSelected}
         />
       )}
 
@@ -122,6 +121,7 @@ export const BadgeCard = memo(function BadgeCard({
               <Button
                 variant="outline"
                 size="xs"
+                aria-label="More categories"
                 onClick={(e) => e.stopPropagation()}
               >
                 <EllipsisIcon className="size-4" />
