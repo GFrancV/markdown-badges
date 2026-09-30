@@ -26,6 +26,8 @@ import {
 import {
   BADGE_STYLES,
   buildBadgeUrl,
+  contrastLogoColor,
+  escapeMarkdownText,
   parseBadgeParams,
   serializeBadgeParams,
   type BadgeConfig,
@@ -48,6 +50,7 @@ export function BadgeGenerator({ initialSearch = "" }: Props) {
   );
   const [simpleIcons, setSimpleIcons] = useState<SimpleIcon[]>([]);
   const [iconsLoading, setIconsLoading] = useState(true);
+  const [iconsError, setIconsError] = useState(false);
   const [debouncedConfig] = useDebounce(config, 450);
 
   const update = (patch: Partial<BadgeConfig>) =>
@@ -61,6 +64,11 @@ export function BadgeGenerator({ initialSearch = "" }: Props) {
         const icons = await getIcons(controller.signal);
         if (!controller.signal.aborted) {
           setSimpleIcons(icons);
+        }
+      } catch (error) {
+        if (!controller.signal.aborted) {
+          console.error(error);
+          setIconsError(true);
         }
       } finally {
         if (!controller.signal.aborted) {
@@ -91,16 +99,21 @@ export function BadgeGenerator({ initialSearch = "" }: Props) {
   }, [config.logo, simpleIcons]);
 
   const handleIconChange = (icon: SimpleIcon | null) => {
-    update({
-      logo: icon?.slug ?? "",
-      ...(icon && HEX_PATTERN.test(icon.hex) && { labelColor: `#${icon.hex}` }),
-    });
+    if (icon && HEX_PATTERN.test(icon.hex)) {
+      update({
+        logo: icon.slug,
+        labelColor: `#${icon.hex}`,
+        logoColor: contrastLogoColor(icon.hex),
+      });
+    } else {
+      update({ logo: icon?.slug ?? "" });
+    }
   };
 
   const badgeUrl = useMemo(() => buildBadgeUrl(config), [config]);
 
   const markdownCode = useMemo(
-    () => `![${config.name}](${badgeUrl})`,
+    () => `![${escapeMarkdownText(config.name)}](${badgeUrl})`,
     [config.name, badgeUrl],
   );
 
@@ -124,17 +137,20 @@ export function BadgeGenerator({ initialSearch = "" }: Props) {
           />
         </Field>
 
-        <div className="grid grid-cols-3 gap-4">
-          <Field>
-            <FieldLabel htmlFor="logoColor"> Logo color</FieldLabel>
-            <Input
-              id="logoColor"
-              onChange={(e) => update({ logoColor: e.target.value })}
-              value={config.logoColor}
-              type="color"
-              disabled={!config.showIcon}
-            />
-          </Field>
+        <div
+          className={`grid gap-4 ${config.showIcon ? "grid-cols-3" : "grid-cols-2"}`}
+        >
+          {config.showIcon && (
+            <Field>
+              <FieldLabel htmlFor="logoColor"> Logo color</FieldLabel>
+              <Input
+                id="logoColor"
+                onChange={(e) => update({ logoColor: e.target.value })}
+                value={config.logoColor}
+                type="color"
+              />
+            </Field>
+          )}
           <Field>
             <FieldLabel htmlFor="leftColor"> Left color</FieldLabel>
             <Input
@@ -205,8 +221,14 @@ export function BadgeGenerator({ initialSearch = "" }: Props) {
               <ComboboxContent>
                 <ComboboxInput
                   showTrigger={false}
-                  placeholder={iconsLoading ? "Loading icons…" : "Search"}
-                  disabled={iconsLoading}
+                  placeholder={
+                    iconsLoading
+                      ? "Loading icons…"
+                      : iconsError
+                        ? "Couldn't load icons"
+                        : "Search"
+                  }
+                  disabled={iconsLoading || iconsError}
                 />
                 <ComboboxEmpty>No items found.</ComboboxEmpty>
                 <ComboboxList>

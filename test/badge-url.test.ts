@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
   buildBadgeUrl,
+  contrastLogoColor,
   DEFAULT_BADGE,
+  escapeMarkdownText,
   escapeShieldsText,
   parseBadgeParams,
   serializeBadgeParams,
@@ -27,6 +29,24 @@ describe("escapeShieldsText", () => {
 
   it("percent-encodes the rest", () => {
     expect(escapeShieldsText("C#/ñ")).toBe("C%23%2F%C3%B1");
+  });
+});
+
+describe("escapeMarkdownText", () => {
+  it("prevents breaking out of the image alt text", () => {
+    expect(escapeMarkdownText("x](https://evil.example) [y")).toBe(
+      String.raw`x\](https://evil.example) \[y`,
+    );
+    expect(escapeMarkdownText(String.raw`a\b`)).toBe(String.raw`a\\b`);
+  });
+});
+
+describe("contrastLogoColor", () => {
+  it("picks black on light brands and white on dark ones", () => {
+    expect(contrastLogoColor("F7DF1E")).toBe("#000000"); // JavaScript
+    expect(contrastLogoColor("FFFFFF")).toBe("#000000");
+    expect(contrastLogoColor("181717")).toBe("#ffffff"); // GitHub
+    expect(contrastLogoColor("5FA04E")).toBe("#ffffff"); // Node.js
   });
 });
 

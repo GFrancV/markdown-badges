@@ -35,6 +35,14 @@ describe("BadgeGenerator (SSR)", () => {
     const html = render("?icon=0");
     expect(html).not.toContain("logo=");
     expect(html).not.toContain(">Logo<");
+    expect(html).not.toContain("Logo color");
+  });
+
+  it("keeps a shared name inside the markdown alt text", () => {
+    const html = render(`?name=${encodeURIComponent("x](https://evil.example) [y")}`);
+    // hljs wraps tokens in spans; compare the visible text
+    const text = html.replaceAll(/<[^>]+>/g, "");
+    expect(text).toContain(String.raw`![x\](https://evil.example) \[y](`);
   });
 
   it("escapes the name in the HTML snippet", () => {

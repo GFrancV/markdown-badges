@@ -42,6 +42,19 @@ export function escapeShieldsText(text: string): string {
   );
 }
 
+// Keeps user text inside the `![alt](url)` brackets
+export function escapeMarkdownText(text: string): string {
+  return text.replaceAll(/[\\[\]]/g, "\\$&");
+}
+
+// White or black logo, whichever reads better on the brand color
+export function contrastLogoColor(hex: string): string {
+  const n = parseInt(hex, 16);
+  const luminance =
+    (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255;
+  return luminance > 0.6 ? "#000000" : "#ffffff";
+}
+
 export function buildBadgeUrl(c: BadgeConfig): string {
   const d = DEFAULT_BADGE;
   const params = new URLSearchParams({
