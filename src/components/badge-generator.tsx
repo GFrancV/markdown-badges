@@ -39,6 +39,11 @@ import { CodeBlock } from "./ui/code-block";
 
 const DEFAULT_ICON: SimpleIcon = { title: "GitHub", slug: "github", hex: "181717" };
 const HEX_PATTERN = /^[0-9a-fA-F]{6}$/;
+const SEARCH_PLACEHOLDER = {
+  loading: "Loading icons…",
+  ready: "Search",
+  error: "Couldn't load icons",
+} as const;
 
 interface Props {
   initialSearch?: string;
@@ -49,8 +54,8 @@ export function BadgeGenerator({ initialSearch = "" }: Props) {
     parseBadgeParams(initialSearch),
   );
   const [simpleIcons, setSimpleIcons] = useState<SimpleIcon[]>([]);
-  const [iconsLoading, setIconsLoading] = useState(true);
-  const [iconsError, setIconsError] = useState(false);
+  const [iconsStatus, setIconsStatus] =
+    useState<keyof typeof SEARCH_PLACEHOLDER>("loading");
   const [debouncedConfig] = useDebounce(config, 450);
 
   const update = (patch: Partial<BadgeConfig>) =>
@@ -59,25 +64,17 @@ export function BadgeGenerator({ initialSearch = "" }: Props) {
   useEffect(() => {
     const controller = new AbortController();
 
-    async function loadIcons() {
-      try {
-        const icons = await getIcons(controller.signal);
-        if (!controller.signal.aborted) {
-          setSimpleIcons(icons);
-        }
-      } catch (error) {
-        if (!controller.signal.aborted) {
-          console.error(error);
-          setIconsError(true);
-        }
-      } finally {
-        if (!controller.signal.aborted) {
-          setIconsLoading(false);
-        }
-      }
-    }
+    getIcons(controller.signal)
+      .then((icons) => {
+        setSimpleIcons(icons);
+        setIconsStatus("ready");
+      })
+      .catch((error) => {
+        if (controller.signal.aborted) return;
+        console.error(error);
+        setIconsStatus("error");
+      });
 
-    loadIcons();
     return () => controller.abort();
   }, []);
 
@@ -110,18 +107,9 @@ export function BadgeGenerator({ initialSearch = "" }: Props) {
     }
   };
 
-  const badgeUrl = useMemo(() => buildBadgeUrl(config), [config]);
-
-  const markdownCode = useMemo(
-    () => `![${escapeMarkdownText(config.name)}](${badgeUrl})`,
-    [config.name, badgeUrl],
-  );
-
-  const imgCode = useMemo(
-    () =>
-      `<img src="${badgeUrl}" alt="${escapeHtmlAttr(`${config.name} badge`)}">`,
-    [config.name, badgeUrl],
-  );
+  const badgeUrl = buildBadgeUrl(config);
+  const markdownCode = `![${escapeMarkdownText(config.name)}](${badgeUrl})`;
+  const imgCode = `<img src="${badgeUrl}" alt="${escapeHtmlAttr(`${config.name} badge`)}">`;
 
   return (
     <section className="grid md:grid-cols-2 gap-12">
@@ -221,14 +209,8 @@ export function BadgeGenerator({ initialSearch = "" }: Props) {
               <ComboboxContent>
                 <ComboboxInput
                   showTrigger={false}
-                  placeholder={
-                    iconsLoading
-                      ? "Loading icons…"
-                      : iconsError
-                        ? "Couldn't load icons"
-                        : "Search"
-                  }
-                  disabled={iconsLoading || iconsError}
+                  placeholder={SEARCH_PLACEHOLDER[iconsStatus]}
+                  disabled={iconsStatus !== "ready"}
                 />
                 <ComboboxEmpty>No items found.</ComboboxEmpty>
                 <ComboboxList>
