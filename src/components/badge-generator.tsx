@@ -26,14 +26,14 @@ import {
 import {
   BADGE_STYLES,
   buildBadgeUrl,
+  buildImgSnippet,
+  buildMarkdownSnippet,
   contrastLogoColor,
-  escapeMarkdownText,
   parseBadgeParams,
   serializeBadgeParams,
   type BadgeConfig,
   type BadgeStyle,
 } from "@/lib/badge-url";
-import { escapeHtmlAttr } from "@/lib/sanitize";
 import { getIcons } from "@/services/simple-icons";
 import { CodeBlock } from "./ui/code-block";
 
@@ -108,8 +108,8 @@ export function BadgeGenerator({ initialSearch = "" }: Props) {
   };
 
   const badgeUrl = buildBadgeUrl(config);
-  const markdownCode = `![${escapeMarkdownText(config.name)}](${badgeUrl})`;
-  const imgCode = `<img src="${badgeUrl}" alt="${escapeHtmlAttr(`${config.name} badge`)}">`;
+  const markdownCode = buildMarkdownSnippet(config.name, badgeUrl);
+  const imgCode = buildImgSnippet(config.name, badgeUrl);
 
   return (
     <section className="grid md:grid-cols-2 gap-12">

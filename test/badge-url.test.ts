@@ -2,6 +2,8 @@ import { readFileSync } from "fs";
 import { describe, expect, it } from "vitest";
 import {
   buildBadgeUrl,
+  buildImgSnippet,
+  buildMarkdownSnippet,
   contrastLogoColor,
   DEFAULT_BADGE,
   escapeMarkdownText,
@@ -147,6 +149,22 @@ describe("badge params", () => {
   it("drops non-slug logos", () => {
     expect(parseBadgeParams("?logo=%3Cscript%3E").logo).toBe(
       DEFAULT_BADGE.logo,
+    );
+  });
+});
+
+describe("snippets", () => {
+  const url = "https://img.shields.io/badge/x-1000";
+
+  it("keeps a shared name inside the markdown alt text", () => {
+    expect(buildMarkdownSnippet("x](https://evil.example) [y", url)).toBe(
+      String.raw`![x\](https://evil.example) \[y](${url})`,
+    );
+  });
+
+  it("escapes the name in the HTML alt attribute", () => {
+    expect(buildImgSnippet('"><script>', url)).toBe(
+      `<img src="${url}" alt="&quot;&gt;&lt;script&gt; badge">`,
     );
   });
 });

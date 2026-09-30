@@ -1,4 +1,4 @@
-import { sanitizeColorHex } from "@/lib/sanitize";
+import { escapeHtmlAttr, sanitizeColorHex } from "@/lib/sanitize";
 
 export const BADGE_STYLES = [
   "flat",
@@ -73,6 +73,14 @@ export function buildBadgeUrl(c: BadgeConfig): string {
   params.set("labelColor", sanitizeColorHex(c.labelColor, d.labelColor).slice(1));
   params.set("color", sanitizeColorHex(c.color, d.color).slice(1));
   return `https://img.shields.io/badge/${escapeShieldsText(c.name)}-1000?${params}`;
+}
+
+export function buildMarkdownSnippet(name: string, badgeUrl: string): string {
+  return `![${escapeMarkdownText(name)}](${badgeUrl})`;
+}
+
+export function buildImgSnippet(name: string, badgeUrl: string): string {
+  return `<img src="${badgeUrl}" alt="${escapeHtmlAttr(`${name} badge`)}">`;
 }
 
 // Generator state <-> page query string (colors stored without "#")

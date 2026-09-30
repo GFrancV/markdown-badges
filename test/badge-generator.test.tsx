@@ -38,20 +38,4 @@ describe("BadgeGenerator (SSR)", () => {
     expect(html).not.toContain("Logo color");
   });
 
-  it("keeps a shared name inside the markdown alt text", () => {
-    const html = render(`?name=${encodeURIComponent("x](https://evil.example) [y")}`);
-    // hljs wraps tokens in spans; compare the visible text
-    const text = html.replaceAll(/<[^>]+>/g, "");
-    expect(text).toContain(String.raw`![x\](https://evil.example) \[y](`);
-  });
-
-  it("escapes the name in the HTML snippet", () => {
-    // hljs and React already escape "<" once; a second level only comes
-    // from escapeHtmlAttr in the copied <img alt="...">
-    const html = renderToString(
-      <BadgeGenerator initialSearch={`?name=${encodeURIComponent('"><script>')}`} />,
-    );
-    const text = html.replaceAll(/<[^>]+>/g, "");
-    expect(text).toContain("&amp;lt;script&amp;gt; badge");
-  });
 });
