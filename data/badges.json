@@ -4352,8 +4352,8 @@
   {
     "id": "elixir",
     "name": "Elixir",
-    "url": "https://img.shields.io/badge/elixir-%234B275F.svg?style=for-the-badge&logo=elixir&logoColor=white",
-    "markdown": "![Elixir](https://img.shields.io/badge/elixir-%234B275F.svg?style=for-the-badge&logo=elixir&logoColor=white)",
+    "url": "https://img.shields.io/badge/elixir-%238847B9.svg?style=for-the-badge&logo=elixir&logoColor=white",
+    "markdown": "![Elixir](https://img.shields.io/badge/elixir-%238847B9.svg?style=for-the-badge&logo=elixir&logoColor=white)",
     "categories": [
       "Languages"
     ]
