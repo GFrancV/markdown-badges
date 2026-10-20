@@ -14,6 +14,7 @@ import { fileURLToPath } from "url";
 import { beforeAll, describe, expect, it } from "vitest";
 import {
   extractUrl,
+  mergeCustomBadges,
   nameToId,
   parseTableRow,
   sanitizeId,
@@ -459,6 +460,55 @@ describe("validateBadge — negative cases", () => {
 });
 
 // ── 3. Unit tests — pure helper functions ────────────────────────────────────
+
+describe("mergeCustomBadges", () => {
+  const badge = (id: string, color = "blue") => {
+    const url = `https://img.shields.io/badge/${id}-${color}`;
+    return { id, name: id, url, markdown: `![${id}](${url})`, categories: ["Testing"] };
+  };
+
+  it("appends custom badges after upstream ones", () => {
+    const { badges, overridden } = mergeCustomBadges([badge("a")], [badge("b")]);
+    expect(badges.map((b) => b.id)).toEqual(["a", "b"]);
+    expect(overridden).toEqual([]);
+  });
+
+  it("returns upstream unchanged when there are no custom badges", () => {
+    expect(mergeCustomBadges([badge("a")], []).badges).toEqual([badge("a")]);
+  });
+
+  it("custom badge overrides upstream with the same id", () => {
+    const { badges, overridden } = mergeCustomBadges(
+      [badge("a", "blue"), badge("b")],
+      [badge("a", "red")],
+    );
+    expect(badges).toEqual([badge("b"), badge("a", "red")]);
+    expect(overridden).toEqual(["a"]);
+  });
+
+  it("custom badge overrides upstream with the same url", () => {
+    const upstreamDup = { ...badge("a"), id: "a-old", name: "a-old" };
+    const { badges, overridden } = mergeCustomBadges([upstreamDup], [badge("a")]);
+    expect(badges).toEqual([badge("a")]);
+    expect(overridden).toEqual(["a-old"]);
+  });
+
+  it("throws on an invalid custom badge", () => {
+    expect(() => mergeCustomBadges([], [{ ...badge("a"), categories: [] }])).toThrow(
+      /Invalid custom badge "a"/,
+    );
+  });
+
+  it("throws on duplicate custom ids", () => {
+    expect(() => mergeCustomBadges([], [badge("a"), badge("a", "red")])).toThrow(
+      /Duplicate custom badge id/,
+    );
+  });
+
+  it("throws when custom data is not an array", () => {
+    expect(() => mergeCustomBadges([], {})).toThrow(/must be an array/);
+  });
+});
 
 describe("stripEmoji", () => {
   it("removes standard emoji 🤖 (U+1F916)", () => {

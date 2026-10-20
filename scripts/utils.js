@@ -162,6 +162,35 @@ export function validateBadge(badge) {
   return errors;
 }
 
+/**
+ * Merge project-owned badges into the upstream list. Throws if any custom badge
+ * is invalid. A custom badge overrides any upstream badge sharing its id or url.
+ * Returns { badges, overridden } where overridden lists the replaced upstream ids.
+ */
+export function mergeCustomBadges(upstream, custom) {
+  if (!Array.isArray(custom)) throw new Error("badges.custom.json must be an array");
+
+  const ids = new Set();
+  for (const badge of custom) {
+    const errors = validateBadge(badge);
+    if (errors.length) {
+      throw new Error(`Invalid custom badge "${badge.id ?? badge.name}": ${errors.join("; ")}`);
+    }
+    if (ids.has(badge.id)) throw new Error(`Duplicate custom badge id: ${badge.id}`);
+    ids.add(badge.id);
+  }
+
+  const urls = new Set(custom.map((b) => b.url));
+  const overridden = [];
+  const kept = upstream.filter((b) => {
+    const clash = ids.has(b.id) || urls.has(b.url);
+    if (clash) overridden.push(b.id);
+    return !clash;
+  });
+
+  return { badges: [...kept, ...custom], overridden };
+}
+
 // Port of simple-icons' titleToSlug (sdk.mjs)
 const TITLE_TO_SLUG_REPLACEMENTS = {
   "+": "plus",
