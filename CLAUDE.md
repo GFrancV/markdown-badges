@@ -47,4 +47,4 @@ Key libraries: `fuzzyjs` (badge search), `sonner` (toasts), `next-themes` (dark/
 
 ### Adding Badges
 
-New badges are added to `data/badges.json`. See `CONTRIBUTING.md` for the exact schema and guidelines.
+`data/badges.json` is generated (upstream sync + `data/badges.custom.json` merged by `scripts/generate-badges.js`); never edit it by hand. Project-owned badges go in `data/badges.custom.json`. See `CONTRIBUTING.md` for the exact schema and guidelines.
