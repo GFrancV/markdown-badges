@@ -6,6 +6,16 @@
     "markdown": "![Newman](https://img.shields.io/badge/Newman-%23FF6C37.svg?style=for-the-badge&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI%2BPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTIgM2E5IDkgMCAxIDAgMCAxOCA5IDkgMCAwIDAgMC0xOHpNOSA4aDZhMyAzIDAgMCAxIDMgM3YzYTMgMyAwIDAgMS0zIDNIOWEzIDMgMCAwIDEtMy0zdi0zYTMgMyAwIDAgMSAzLTN6Ii8%2BPHBhdGggZD0iTTEuNSAxMGgydjRoLTJ6bTE5IDBoMnY0aC0yek04LjUgMTAuMmwzIDEuOC0zIDEuOHYtMS4ybDEuMi0uNi0xLjItLjZ6TTEyIDE0LjVoMy41djFIMTJ6Ii8%2BPC9zdmc%2B)",
     "categories": [
       "Testing"
+     ]
+  },
+  {
+    "id": "verilog",
+    "name": "Verilog",
+    "url": "https://img.shields.io/badge/Verilog-%23B2B7F8.svg?style=for-the-badge&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzMzMyI%2BPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNyA1aDEwYTIgMiAwIDAgMSAyIDJ2MTBhMiAyIDAgMCAxLTIgMkg3YTIgMiAwIDAgMS0yLTJWN2EyIDIgMCAwIDEgMi0yem0yIDR2Nmg2Vjl6Ii8%2BPHBhdGggZD0iTTggMWgydjNIOHptNiAwaDJ2M2gtMnpNOCAyMGgydjNIOHptNiAwaDJ2M2gtMnpNMSA4aDN2Mkgxem0wIDZoM3YySDF6bTE5LTZoM3YyaC0zem0wIDZoM3YyaC0zeiIvPjwvc3ZnPg%3D%3D",
+    "markdown": "![Verilog](https://img.shields.io/badge/Verilog-%23B2B7F8.svg?style=for-the-badge&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzMzMyI%2BPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNyA1aDEwYTIgMiAwIDAgMSAyIDJ2MTBhMiAyIDAgMCAxLTIgMkg3YTIgMiAwIDAgMS0yLTJWN2EyIDIgMCAwIDEgMi0yem0yIDR2Nmg2Vjl6Ii8%2BPHBhdGggZD0iTTggMWgydjNIOHptNiAwaDJ2M2gtMnpNOCAyMGgydjNIOHptNiAwaDJ2M2gtMnpNMSA4aDN2Mkgxem0wIDZoM3YySDF6bTE5LTZoM3YyaC0zem0wIDZoM3YyaC0zeiIvPjwvc3ZnPg%3D%3D)",
+    "categories": [
+      "Languages",
+      "Hardware"
     ]
   }
 ]
