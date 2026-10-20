@@ -22,6 +22,7 @@ export default defineConfig({
     react(),
   ],
   output: "server",
+  compressHTML: true,
 
   adapter: vercel({
     webAnalytics: { enabled: true },
