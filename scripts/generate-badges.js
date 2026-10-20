@@ -1,18 +1,20 @@
 /**
  * Fetches the Ileriayo/markdown-badges README and extracts all badge definitions
  * into badges.json with the schema expected by src/content.config.ts:
- *   { id, name, url, markdown, category }
+ *   { id, name, url, markdown, categories }
+ * Project-owned badges in data/badges.custom.json are merged on top.
  *
  * Run with:  node scripts/generate-badges.js
- * Output:    scripts/badges.json
+ * Output:    data/badges.json
  */
 
-import { mkdirSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 import {
   CATEGORY_MAP,
   extractUrl,
+  mergeCustomBadges,
   nameToId,
   parseTableRow,
   sanitizeId,
@@ -30,7 +32,7 @@ async function main() {
   const text = await res.text();
 
   const lines = text.split("\n");
-  const badges = [];
+  const upstream = [];
   const seenIds = new Set();
   let currentCategory = null;
 
@@ -77,7 +79,7 @@ async function main() {
     const id = sanitizeId(nameToId(name));
 
     // Same URL already exists → merge the new category into that entry.
-    const existingByUrl = badges.find((b) => b.url === url);
+    const existingByUrl = upstream.find((b) => b.url === url);
     if (existingByUrl) {
       if (!existingByUrl.categories.includes(currentCategory)) {
         existingByUrl.categories.push(currentCategory);
@@ -88,7 +90,7 @@ async function main() {
 
     // Same name/ID but different URL (e.g. Bitcoin in Blockchain vs Cryptocurrency
     // with slightly different badge colours) → merge categories, keep first URL.
-    const existingById = badges.find((b) => b.id === id);
+    const existingById = upstream.find((b) => b.id === id);
     if (existingById) {
       if (!existingById.categories.includes(currentCategory)) {
         existingById.categories.push(currentCategory);
@@ -98,13 +100,30 @@ async function main() {
     }
 
     seenIds.add(id);
-    badges.push({ id, name, url, markdown, categories: [currentCategory] });
+    upstream.push({ id, name, url, markdown, categories: [currentCategory] });
+  }
+
+  // ── Merge project-owned badges (never touched by the upstream sync) ─────────
+  const __filename = fileURLToPath(import.meta.url);
+  const __dir = dirname(__filename);
+  const rootDir = resolve(__dir, "..");
+  const dataDir = join(rootDir, "data");
+  const outputPath = join(dataDir, "badges.json");
+  const customPath = join(dataDir, "badges.custom.json");
+
+  const custom = existsSync(customPath)
+    ? JSON.parse(readFileSync(customPath, "utf-8"))
+    : [];
+  const { badges, overridden } = mergeCustomBadges(upstream, custom);
+  console.log(`\nMerged ${custom.length} custom badges from ${customPath}`);
+  for (const id of overridden) {
+    console.warn(`  ℹ custom badge overrides upstream "${id}"`);
   }
 
   // ── Summary ─────────────────────────────────────────────────────────────────
   const categories = [...new Set(badges.flatMap((b) => b.categories))];
   console.log(
-    `\nExtracted ${badges.length} badges across ${categories.length} categories:`,
+    `\nTotal ${badges.length} badges across ${categories.length} categories:`,
   );
   for (const cat of categories) {
     const count = badges.filter((b) => b.categories.includes(cat)).length;
@@ -112,12 +131,6 @@ async function main() {
   }
 
   // ── Write output ─────────────────────────────────────────────────────────────
-  const __filename = fileURLToPath(import.meta.url);
-  const __dir = dirname(__filename);
-  const rootDir = resolve(__dir, "..");
-  const dataDir = join(rootDir, "data");
-  const outputPath = join(dataDir, "badges.json");
-
   mkdirSync(dataDir, { recursive: true });
 
   writeFileSync(outputPath, JSON.stringify(badges, null, 2), "utf-8");
