@@ -1,0 +1,41 @@
+name: Badge request
+description: Ask for a badge that is not in the library yet
+title: "[Request]: "
+labels: ["badge-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before opening a request, search for the badge on [markdown-badges.vercel.app](https://markdown-badges.vercel.app/badges). Want to add it yourself? See [How to add a new badge](https://github.com/GFrancV/markdown-badges/blob/main/CONTRIBUTING.md#how-to-add-a-new-badge).
+  - type: input
+    id: name
+    attributes:
+      label: Badge name
+      description: The tool, language or service the badge represents.
+      placeholder: Cucumber
+    validations:
+      required: true
+  - type: input
+    id: website
+    attributes:
+      label: Official website
+      placeholder: https://cucumber.io
+    validations:
+      required: true
+  - type: input
+    id: logo
+    attributes:
+      label: Logo
+      description: Its [Simple Icons](https://simpleicons.org/) link, or a link to an official SVG if Simple Icons doesn't have it.
+      placeholder: https://simpleicons.org/?q=cucumber
+  - type: input
+    id: category
+    attributes:
+      label: Category
+      description: Reuse one of the [existing categories](https://markdown-badges.vercel.app/badges) if possible.
+      placeholder: Testing
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional notes
+      description: Brand color, an existing badge you'd like it to look like, or anything else.
