@@ -26,4 +26,5 @@ pnpm-debug.log*
 .vercel
 
 # badge generation artifacts
-data/badges.old.json
+data/badges.json
+data/badges.upstream.old.json

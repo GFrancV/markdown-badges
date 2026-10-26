@@ -13,7 +13,7 @@ Bellow you can see a quick guide:
 
 ## How to add a new badge
 
-Most badges are synced weekly from [Ileriayo/markdown-badges](https://github.com/Ileriayo/markdown-badges) into `data/badges.json`. **Do not edit `data/badges.json` by hand**, it is regenerated on every sync and build. Badges owned by this project live in `data/badges.custom.json` and are merged on top of the synced ones (a custom badge with the same `id` or `url` replaces the upstream one).
+Most badges are synced weekly from [Ileriayo/markdown-badges](https://github.com/Ileriayo/markdown-badges) into `data/badges.upstream.json`. **Do not edit `data/badges.upstream.json` by hand**, it is overwritten by every sync. `data/badges.json` is a gitignored build artifact. Badges owned by this project live in `data/badges.custom.json` and are merged on top of the synced ones (a custom badge with the same `id` or `url` replaces the upstream one).
 
 You can create new badges directly on the official [shields.io](https://shields.io/badges) site by following their documentation.  
 When you have created your personalized badge and want it to be added to the badge library, follow these steps below
@@ -22,7 +22,7 @@ When you have created your personalized badge and want it to be added to the bad
 2. Clone the forked project (`git clone <URL>`)
 3. Create a new branch (`git checkout -b badge/badge-name`)
 4. Add the badge to `data/badges.custom.json` (see the format below)
-5. Run `pnpm badges:generate && pnpm test` to check it
+5. Run `pnpm test` to check it (it regenerates `data/badges.json` first)
 6. Commit your changes (`git commit -m 'feat(badges): add badge-name badge'`)
 7. Push to the branch (`git push origin badge/badge-name`)
 8. Create a new [Pull Request](https://github.com/GFrancV/markdown-badges/pulls)
