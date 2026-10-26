@@ -4206,6 +4206,15 @@
     ]
   },
   {
+    "id": "vscodium",
+    "name": "VSCodium",
+    "url": "https://img.shields.io/badge/VSCodium-%232F80ED.svg?style=for-the-badge&logo=vscodium&logoColor=white",
+    "markdown": "![VSCodium](https://img.shields.io/badge/VSCodium-%232F80ED.svg?style=for-the-badge&logo=vscodium&logoColor=white)",
+    "categories": [
+      "IDEs"
+    ]
+  },
+  {
     "id": "webstorm",
     "name": "WebStorm",
     "url": "https://img.shields.io/badge/webstorm-%23000000.svg?style=for-the-badge&logo=webstorm&logoColor=white",
@@ -5902,6 +5911,15 @@
     "name": "Bitwarden",
     "url": "https://img.shields.io/badge/bitwarden-%23175DDC.svg?style=for-the-badge&logo=bitwarden&logoColor=white",
     "markdown": "![Bitwarden](https://img.shields.io/badge/bitwarden-%23175DDC.svg?style=for-the-badge&logo=bitwarden&logoColor=white)",
+    "categories": [
+      "Security"
+    ]
+  },
+  {
+    "id": "hackthebox",
+    "name": "HackTheBox",
+    "url": "https://img.shields.io/badge/HackTheBox-%239FEF00.svg?style=for-the-badge&logo=hackthebox&logoColor=black",
+    "markdown": "![HackTheBox](https://img.shields.io/badge/HackTheBox-%239FEF00.svg?style=for-the-badge&logo=hackthebox&logoColor=black)",
     "categories": [
       "Security"
     ]

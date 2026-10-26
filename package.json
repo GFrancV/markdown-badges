@@ -3,15 +3,18 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "predev": "pnpm badges:generate",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "prebuild": "pnpm badges:generate && pnpm llms:generate && pnpm icons:generate",
+    "badges:sync": "node scripts/sync-upstream.js",
     "badges:generate": "node scripts/generate-badges.js",
     "llms:generate": "node scripts/generate-llms-txt.js",
     "icons:generate": "node scripts/generate-simple-icons.js",
+    "pretest": "pnpm badges:generate",
     "test": "vitest run",
     "test:watch": "vitest"
   },
