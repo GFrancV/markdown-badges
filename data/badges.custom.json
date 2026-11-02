@@ -26,5 +26,14 @@
       "Languages",
       "Hardware"
     ]
+  },
+  {
+    "id": "xposed",
+    "name": "Xposed",
+    "url": "https://img.shields.io/badge/Xposed-%23212222.svg?style=for-the-badge&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzUwQzVENiI%2BPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTEgMmg4YTIgMiAwIDAgMSAyIDJ2MTZhMiAyIDAgMCAxLTIgMmgtOGEyIDIgMCAwIDEtMi0yVjRhMiAyIDAgMCAxIDItMnptMCAzdjE0aDhWNXoiLz48cGF0aCBkPSJNMiAxMGgzLjJhMS44IDEuOCAwIDEgMCAzLjYgMEgxMnYxLjJhMS44IDEuOCAwIDEgMSAwIDMuNlYxNkgyeiIvPjwvc3ZnPg%3D%3D",
+    "markdown": "![Xposed](https://img.shields.io/badge/Xposed-%23212222.svg?style=for-the-badge&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzUwQzVENiI%2BPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTEgMmg4YTIgMiAwIDAgMSAyIDJ2MTZhMiAyIDAgMCAxLTIgMmgtOGEyIDIgMCAwIDEtMi0yVjRhMiAyIDAgMCAxIDItMnptMCAzdjE0aDhWNXoiLz48cGF0aCBkPSJNMiAxMGgzLjJhMS44IDEuOCAwIDEgMCAzLjYgMEgxMnYxLjJhMS44IDEuOCAwIDEgMSAwIDMuNlYxNkgyeiIvPjwvc3ZnPg%3D%3D)",
+    "categories": [
+      "Mobile"
+    ]
   }
 ]
